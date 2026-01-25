@@ -1,0 +1,29 @@
+# Source files
+tokens/
+config.js
+*.config.js
+*.config.ts
+
+# Build artifacts (will be included via files field)
+build/
+
+# Development files
+node_modules/
+.cursor/
+.git/
+.gitignore
+*.log
+*.lock
+
+# Documentation (optional - remove if you want to include README)
+# README.md
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

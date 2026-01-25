@@ -1,0 +1,41 @@
+{
+  "color": {
+    "border": {
+      "default": {
+        "value": "{color.neutral.700}"
+      },
+      "default-hover": {
+        "value": "{color.neutral.500}"
+      },
+      "subtle": {
+        "value": "{color.neutral.800}"
+      },
+      "strong": {
+        "value": "{color.neutral.100}"
+      },
+      "knockout": {
+        "value": "{color.neutral.600}"
+      },
+      "brand": {
+        "value": "{color.brand.gray.700}"
+      },
+      "utility": {
+        "error": {
+          "value": "{color.utility.red.300}"
+        },
+        "warning": {
+          "value": "{color.utility.yellow.300}"
+        },
+        "success": {
+          "value": "{color.utility.green.300}"
+        },
+        "info": {
+          "value": "{color.utility.blue.300}"
+        }
+      },
+      "disabled": {
+        "value": "{color.neutral.800}"
+      }
+    }
+  }
+}
