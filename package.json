@@ -10,7 +10,8 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "jest"
   },
   "dependencies": {
     "next": "16.2.6",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
+    "@jest/globals": "^30.4.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -27,8 +29,11 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "lint-staged": "^17.0.5",
     "prettier": "^3.8.3",
+    "ts-jest": "^29.4.11",
     "typescript": "^5"
   },
   "lint-staged": {
