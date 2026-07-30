@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import InboxScreen from '.';
 
 import { MockedState } from '../../components/TaskList/TaskList.stories';
-import store from '../../lib/store';
+import store from '../../store';
 
 const meta = {
   component: InboxScreen,

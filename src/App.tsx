@@ -1,8 +1,7 @@
-import './index.css';
-import store from './lib/store';
+import store from './store';
 
 import { Provider } from 'react-redux';
-import InboxScreen from './components/InboxScreen';
+import InboxScreen from './pages/InboxScreen';
 
 function App() {
   return (

@@ -1,11 +1,11 @@
 
-import type { RootState, AppDispatch } from '../../lib/store';
+import type { RootState, AppDispatch } from '../../store';
 
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchTasks } from '../../lib/store';
+import { fetchTasks } from '../../store';
 
 import TaskList from '../../components/TaskList';
 
