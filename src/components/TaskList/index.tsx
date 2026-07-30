@@ -1,11 +1,11 @@
 
-import type { RootState, AppDispatch } from '../lib/store';
+import type { RootState, AppDispatch } from '../../lib/store';
 
-import Task from './Task';
+import Task from '../Task';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateTaskState } from '../lib/store';
+import { updateTaskState } from '../../lib/store';
 
 export default function TaskList() {
   // We're retrieving our state from the store

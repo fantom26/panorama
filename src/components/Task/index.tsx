@@ -1,4 +1,4 @@
-import type {TaskData} from '../types';
+import type {TaskData} from '../../types';
 
 type TaskProps = {
   /** Composition of the task */

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { fn } from 'storybook/test';
 
-import Task from './Task';
+import Task from '.';
 
 export const ActionsData = {
   onArchiveTask: fn(),

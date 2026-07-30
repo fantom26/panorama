@@ -1,15 +1,15 @@
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import type { TaskData } from '../types';
+import type { TaskData } from '../../types';
 
 import { Provider } from 'react-redux';
 
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-import TaskList from './TaskList';
+import TaskList from '.';
 
-import * as TaskStories from './Task.stories';
+import * as TaskStories from '../Task/Task.stories';
 
 export const MockedState = {
   tasks: [

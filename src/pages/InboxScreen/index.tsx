@@ -1,13 +1,13 @@
 
-import type { RootState, AppDispatch } from '../lib/store';
+import type { RootState, AppDispatch } from '../../lib/store';
 
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchTasks } from '../lib/store';
+import { fetchTasks } from '../../lib/store';
 
-import TaskList from './TaskList';
+import TaskList from '../../components/TaskList';
 
 export default function InboxScreen() {
   const dispatch = useDispatch<AppDispatch>();

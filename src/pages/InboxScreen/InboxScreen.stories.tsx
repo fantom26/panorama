@@ -5,13 +5,13 @@ import { waitFor, waitForElementToBeRemoved } from 'storybook/test';
 
 import { http, HttpResponse } from 'msw';
 
-import { MockedState } from './TaskList.stories';
 
 import { Provider } from 'react-redux';
 
-import InboxScreen from './InboxScreen';
+import InboxScreen from '.';
 
-import store from '../lib/store';
+import { MockedState } from '../../components/TaskList/TaskList.stories';
+import store from '../../lib/store';
 
 const meta = {
   component: InboxScreen,
