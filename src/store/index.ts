@@ -1,5 +1,5 @@
 
-import type { TaskData } from '../types/task.types';
+import type { TaskData } from '@/types/task.types';
 
 import {
   configureStore,

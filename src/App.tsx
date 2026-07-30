@@ -1,7 +1,7 @@
-import store from './store';
+import store from '@/store';
 
 import { Provider } from 'react-redux';
-import InboxScreen from './pages/InboxScreen';
+import InboxScreen from '@/pages/InboxScreen';
 
 function App() {
   return (

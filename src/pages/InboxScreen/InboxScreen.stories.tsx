@@ -10,8 +10,8 @@ import { Provider } from 'react-redux';
 
 import InboxScreen from '.';
 
-import { MockedState } from '../../components/TaskList/TaskList.stories';
-import store from '../../store';
+import { MockedState } from '@/components/TaskList/TaskList.stories';
+import store from '@/store';
 
 const meta = {
   component: InboxScreen,
