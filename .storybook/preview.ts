@@ -9,6 +9,7 @@ import '../src/styles/index.css';
 initialize();
 
 const preview: Preview = {
+  tags: ['autodocs'], // to automatically generate documentation for our components
   parameters: {
     controls: {
       matchers: {

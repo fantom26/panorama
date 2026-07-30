@@ -5,7 +5,6 @@ import { waitFor, waitForElementToBeRemoved } from 'storybook/test';
 
 import { http, HttpResponse } from 'msw';
 
-
 import { Provider } from 'react-redux';
 
 import InboxScreen from '.';
@@ -17,7 +16,6 @@ const meta = {
   component: InboxScreen,
   title: 'InboxScreen',
   decorators: [(story) => <Provider store={store}>{story()}</Provider>],
-  tags: ['autodocs'],
 } satisfies Meta<typeof InboxScreen>;
 
 export default meta;

@@ -58,7 +58,6 @@ const meta = {
   component: TaskList,
   title: 'TaskList',
   decorators: [(story) => <div style={{ margin: '3rem' }}>{story()}</div>],
-  tags: ['autodocs'],
   excludeStories: /.*MockedState$/,
 } satisfies Meta<typeof TaskList>;
 

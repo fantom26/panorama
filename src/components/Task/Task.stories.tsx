@@ -13,7 +13,6 @@ export const ActionsData = {
 const meta = {
   component: Task,
   title: 'Task', // how to group or categorize the component in the Storybook sidebar
-  tags: ['autodocs'], // to automatically generate documentation for our components
   //👇 Our exports that end in "Data" are not stories.
   excludeStories: /.*Data$/, // additional information required by the story but should not be rendered in Storybook
   args: {
