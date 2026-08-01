@@ -1,0 +1,85 @@
+{
+  "color": {
+    "background": {
+      "default": {
+        "value": "{color.neutral.black}"
+      },
+      "default-hover": {
+        "value": "{color.neutral.900}"
+      },
+      "subtle": {
+        "value": "{color.neutral.900}"
+      },
+      "subtle-hover": {
+        "value": "{color.neutral.800}"
+      },
+      "knockout": {
+        "value": "{color.neutral.white}"
+      },
+      "brand": {
+        "value": "{color.brand.gray.900}"
+      },
+      "brand-hover": {
+        "value": "{color.brand.gray.800}"
+      },
+      "brand-disabled": {
+        "value": "{color.neutral.800}"
+      },
+      "brand-knockout": {
+        "value": "{color.brand.gray.200}"
+      },
+      "brand-knockout-hover": {
+        "value": "{color.brand.gray.300}"
+      },
+      "utility": {
+        "error": {
+          "value": "{color.utility.red.900}"
+        },
+        "error-knockout": {
+          "value": "{color.utility.red.300}"
+        },
+        "warning": {
+          "value": "{color.utility.yellow.900}"
+        },
+        "warning-knockout": {
+          "value": "{color.utility.yellow.300}"
+        },
+        "success": {
+          "value": "{color.utility.green.900}"
+        },
+        "success-knockout": {
+          "value": "{color.utility.green.300}"
+        },
+        "info": {
+          "value": "{color.utility.blue.900}"
+        },
+        "info-knockout": {
+          "value": "{color.utility.blue.300}"
+        }
+      },
+      "dataviz": {
+        "primary": {
+          "value": "{color.brand.gray.300}"
+        },
+        "primary-subtle": {
+          "value": "{color.transparent.25}"
+        },
+        "secondary": {
+          "value": "{color.neutral.800}"
+        },
+        "tertiary": {
+          "value": "{color.neutral.600}"
+        }
+      },
+      "disabled": {
+        "value": "{color.neutral.800}"
+      },
+      "transparent": {
+        "value": "{color.transparent.25}"
+      },
+      "transparent-strong": {
+        "value": "{color.transparent.90}"
+      }
+    }
+  }
+}
