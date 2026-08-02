@@ -1,5 +1,6 @@
 {
   "name": "panorama",
+  "description": "Panorama monorepo — Turborepo + pnpm workspaces for the web app and shared packages.",
   "private": true,
   "scripts": {
     "build": "turbo run build",

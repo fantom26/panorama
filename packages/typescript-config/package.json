@@ -1,9 +1,6 @@
 {
   "name": "@repo/typescript-config",
   "version": "0.0.0",
-  "private": true,
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  }
+  "description": "Shared TypeScript configs for the Panorama monorepo.",
+  "private": true
 }

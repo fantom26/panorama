@@ -1,10 +1,9 @@
 {
-  "name": "token-system",
-  "version": "1.0.0",
+  "name": "@repo/tokens",
+  "version": "0.0.0",
   "description": "Production-ready design token system with multi-theme support using Style Dictionary",
   "type": "module",
-  "main": "index.js",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "build:tokens": "node config.js --verbose",
     "build:tokens:light": "pnpm build:tokens -- --theme=light",
@@ -17,11 +16,5 @@
     "sass": "^1.97.2",
     "storybook": "^10.1.11",
     "style-dictionary": "^5.1.4"
-  },
-  "files": [
-    "light/build",
-    "dark/build",
-    "high-contrast/build",
-    "core"
-  ]
+  }
 }

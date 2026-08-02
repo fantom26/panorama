@@ -1,6 +1,7 @@
 {
   "name": "@repo/eslint-config",
   "version": "0.0.0",
+  "description": "Shared ESLint flat-config presets for the Panorama monorepo.",
   "type": "module",
   "private": true,
   "exports": {

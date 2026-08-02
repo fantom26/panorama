@@ -1,6 +1,7 @@
 {
-  "name": "panorama",
+  "name": "web",
   "version": "0.1.0",
+  "description": "Panorama web app (Next.js).",
   "private": true,
   "scripts": {
     "dev": "next dev",
