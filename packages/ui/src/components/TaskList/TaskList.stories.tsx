@@ -40,9 +40,9 @@ const Mockstore = ({
           reducers: {
             updateTaskState: (state, action) => {
               const { id, newTaskState } = action.payload;
-              const task = state.tasks.findIndex((task) => task.id === id);
-              if (task >= 0) {
-                state.tasks[task].state = newTaskState;
+              const task = state.tasks.find((task) => task.id === id);
+              if (task) {
+                task.state = newTaskState;
               }
             },
           },

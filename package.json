@@ -2,6 +2,7 @@
   "name": "panorama",
   "description": "Panorama monorepo — Turborepo + pnpm workspaces for the web app and shared packages.",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -24,7 +25,9 @@
     "node": ">=18"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix",
+    "apps/web/**/*.{ts,tsx}": "pnpm --dir apps/web exec eslint --fix",
+    "packages/ui/**/*.{ts,tsx}": "pnpm --dir packages/ui exec eslint --fix",
+    "packages/tokens/**/*.{js,ts}": "pnpm --dir packages/tokens exec eslint --fix",
     "*.{html,css,json}": "prettier --write"
   }
 }
