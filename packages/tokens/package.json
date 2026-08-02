@@ -5,6 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "build": "pnpm build:tokens",
     "build:tokens": "node config.js --verbose",
     "build:tokens:light": "pnpm build:tokens -- --theme=light",
     "build:tokens:dark": "pnpm build:tokens -- --theme=dark",
