@@ -11,16 +11,14 @@ This token system follows industry best practices and demonstrates a professiona
 - **Multi-theme support**: Light, Dark, and High Contrast themes
 - **Multiple output formats**: CSS custom properties, JavaScript/TypeScript modules, and JSON
 
-## Installation
+## Usage
 
-```bash
-pnmp add token-system
-```
+This is an internal workspace package (`@repo/tokens`), not published to npm. To use it from another package in this monorepo, add it as a workspace dependency:
 
-Or with npm:
-
-```bash
-npm install token-system
+```json
+"dependencies": {
+  "@repo/tokens": "workspace:*"
+}
 ```
 
 ## Quick Start
@@ -30,13 +28,13 @@ npm install token-system
 Import the CSS file for your theme:
 
 ```css
-@import 'token-system/light/build/css/tokens.css';
+@import '@repo/tokens/light/build/css/tokens.css';
 ```
 
 Or use the theme class variant:
 
 ```css
-@import 'token-system/light/build/css/light.css';
+@import '@repo/tokens/light/build/css/light.css';
 ```
 
 Then use the tokens in your CSS:
@@ -53,7 +51,7 @@ Then use the tokens in your CSS:
 ### JavaScript/TypeScript Usage
 
 ```javascript
-import tokens from 'token-system/light/build/js/tokens.js';
+import tokens from '@repo/tokens/light/build/js/tokens.js';
 
 console.log(tokens.DsThemeColorBackgroundBrand);
 console.log(tokens.DsThemeSpacingMd);
@@ -62,7 +60,7 @@ console.log(tokens.DsThemeSpacingMd);
 With TypeScript, you'll get full type safety:
 
 ```typescript
-import tokens from 'token-system/light/build/js/tokens.js';
+import tokens from '@repo/tokens/light/build/js/tokens.js';
 
 const spacing: string = tokens.DsThemeSpacingMd; // Type-safe!
 ```
@@ -70,7 +68,7 @@ const spacing: string = tokens.DsThemeSpacingMd; // Type-safe!
 ### JSON Usage
 
 ```javascript
-import tokens from 'token-system/light/build/json/tokens.json';
+import tokens from '@repo/tokens/light/build/json/tokens.json';
 
 console.log(tokens['ds-theme-color-background-brand']);
 ```
@@ -107,7 +105,7 @@ Semantic tokens reference Tier 1 tokens and are theme-specific:
 Default light theme with neutral colors and standard contrast.
 
 ```css
-@import 'token-system/light/build/css/tokens.css';
+@import '@repo/tokens/light/build/css/tokens.css';
 ```
 
 ### Dark Theme
@@ -115,7 +113,7 @@ Default light theme with neutral colors and standard contrast.
 Dark theme optimized for low-light environments.
 
 ```css
-@import 'token-system/dark/build/css/tokens.css';
+@import '@repo/tokens/dark/build/css/tokens.css';
 ```
 
 ### High Contrast Theme
@@ -123,7 +121,7 @@ Dark theme optimized for low-light environments.
 High contrast theme for improved accessibility.
 
 ```css
-@import 'token-system/high-contrast/build/css/tokens.css';
+@import '@repo/tokens/high-contrast/build/css/tokens.css';
 ```
 
 ## Building Tokens
@@ -131,15 +129,15 @@ High contrast theme for improved accessibility.
 To build all themes:
 
 ```bash
-pnmp build:tokens
+pnpm build:tokens
 ```
 
 To build a specific theme:
 
 ```bash
-pnmp build:tokens:light
-pnmp build:tokens:dark
-pnmp build:tokens:high-contrast
+pnpm build:tokens:light
+pnpm build:tokens:dark
+pnpm build:tokens:high-contrast
 ```
 
 Build outputs are generated in `{theme}/build/` directories:
@@ -188,7 +186,7 @@ This architecture ensures:
 ## File Organization
 
 ```
-token-system/
+packages/tokens/
 ├── core/                        # Shared Tier 1 tokens
 │   └── tier-1-definitions/
 │       ├── colors.json
@@ -212,14 +210,3 @@ When contributing tokens:
 2. Never hardcode values in Tier 2 tokens
 3. Maintain consistent token structure across all themes
 4. Follow the naming conventions (kebab-case for CSS, PascalCase for JS)
-
-## Versioning
-
-This package follows [Semantic Versioning](https://semver.org/):
-- **MAJOR**: Breaking changes to token structure or naming
-- **MINOR**: New tokens or themes added
-- **PATCH**: Bug fixes or value adjustments
-
-## License
-
-MIT

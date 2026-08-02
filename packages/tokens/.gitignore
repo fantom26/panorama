@@ -1,8 +1,9 @@
 # Dependencies
 node_modules/
 
-# Lock files (using yarn, not npm)
+# Lock files (using pnpm)
 package-lock.json
+yarn.lock
 
 # Build outputs
 */build/

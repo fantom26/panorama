@@ -9,8 +9,7 @@
     "build:tokens:light": "pnpm build:tokens -- --theme=light",
     "build:tokens:dark": "pnpm build:tokens -- --theme=dark",
     "build:tokens:high-contrast": "pnpm build:tokens -- --theme=high-contrast",
-    "lint": "eslint",
-    "prepublishOnly": "pnpm build:tokens"
+    "lint": "eslint"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
