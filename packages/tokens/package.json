@@ -9,9 +9,13 @@
     "build:tokens:light": "pnpm build:tokens -- --theme=light",
     "build:tokens:dark": "pnpm build:tokens -- --theme=dark",
     "build:tokens:high-contrast": "pnpm build:tokens -- --theme=high-contrast",
+    "lint": "eslint",
     "prepublishOnly": "pnpm build:tokens"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
     "minimist": "^1.2.8",
     "sass": "^1.97.2",
     "storybook": "^10.1.11",

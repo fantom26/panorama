@@ -1,11 +1,9 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import { nextJsConfig } from "@repo/eslint-config/next-js";
 import jestPlugin from 'eslint-plugin-jest';
 
 const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
+  ...nextJsConfig,
   {
     files: ['**/*.{test,spec}.{js,jsx,ts,tsx}'],
     ...jestPlugin.configs['flat/recommended'],
