@@ -7,10 +7,10 @@
   "license": "MIT",
   "scripts": {
     "build:tokens": "node config.js --verbose",
-    "build:tokens:light": "yarn build:tokens -- --theme=light",
-    "build:tokens:dark": "yarn build:tokens -- --theme=dark",
-    "build:tokens:high-contrast": "yarn build:tokens -- --theme=high-contrast",
-    "prepublishOnly": "yarn build:tokens"
+    "build:tokens:light": "pnpm build:tokens -- --theme=light",
+    "build:tokens:dark": "pnpm build:tokens -- --theme=dark",
+    "build:tokens:high-contrast": "pnpm build:tokens -- --theme=high-contrast",
+    "prepublishOnly": "pnpm build:tokens"
   },
   "devDependencies": {
     "minimist": "^1.2.8",

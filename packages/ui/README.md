@@ -10,14 +10,12 @@ A quick look at the top-level files and directories included with this template.
     ├── src
     ├── .eslintrc.cjs
     ├── .gitignore
-    ├── .yarnrc.yml
     ├── index.html
     ├── LICENSE
     ├── package.json
     ├── tsconfig.app.json
     ├── tsconfig.json
     ├── tsconfig.node.json
-    ├── yarn.lock
     ├── vite.config.ts
     ├── vitest.shims.d.ts
     └── README.md

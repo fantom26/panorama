@@ -14,7 +14,7 @@ This token system follows industry best practices and demonstrates a professiona
 ## Installation
 
 ```bash
-yarn add token-system
+pnmp add token-system
 ```
 
 Or with npm:
@@ -131,15 +131,15 @@ High contrast theme for improved accessibility.
 To build all themes:
 
 ```bash
-yarn build:tokens
+pnmp build:tokens
 ```
 
 To build a specific theme:
 
 ```bash
-yarn build:tokens:light
-yarn build:tokens:dark
-yarn build:tokens:high-contrast
+pnmp build:tokens:light
+pnmp build:tokens:dark
+pnmp build:tokens:high-contrast
 ```
 
 Build outputs are generated in `{theme}/build/` directories:
