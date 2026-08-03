@@ -4,6 +4,24 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+#root {
+  /*
+    The isolation property determines whether an element must create a new stacking context
+    isolate - A new stacking context must be created
+  */
+  isolation: isolate;
+}
+
+body {
+  /*
+    Starting with iOS 26, Safari allows content beneath the UI chrome to be visible.
+    Backdrops such as those used by dialogs must use position: absolute instead of position:
+    fixed to cover the entire visual viewport. For this to work after the page is scrolled,
+    the following style must be added to your global styles
+  */
+  position: relative;
+}
+
 html,
 body {
   margin: 0;
@@ -219,8 +237,8 @@ textarea {
 @font-face {
   font-family: "percolate";
   src: url("@/assets/icons/percolate.eot?-5w3um4");
-  src: url("@/assets/icons/percolate.eot?#iefix5w3um4")
-      format("embedded-opentype"),
+  src:
+    url("@/assets/icons/percolate.eot?#iefix5w3um4") format("embedded-opentype"),
     url("@/assets/icons/percolate.woff?5w3um4") format("woff"),
     url("@/assets/icons/percolate.ttf?5w3um4") format("truetype"),
     url("@/assets/icons/percolate.svg?5w3um4") format("svg");
