@@ -1,3 +1,7 @@
+@import "@repo/tokens/light/build/css/light.css";
+@import "@repo/tokens/dark/build/css/dark.css";
+@import "@repo/tokens/high-contrast/build/css/high-contrast.css";
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

@@ -1,6 +1,7 @@
 
 import type { Preview } from '@storybook/react-vite';
 
+import { withThemeByClassName } from '@storybook/addon-themes';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 
 import '../src/styles/index.css';
@@ -19,6 +20,16 @@ const preview: Preview = {
     },
   },
   loaders: [mswLoader],
+  decorators: [
+    withThemeByClassName({
+      themes: {
+        light: 'light',
+        dark: 'dark',
+        'high-contrast': 'high-contrast',
+      },
+      defaultTheme: 'light',
+    }),
+  ],
 };
 
 export default preview;

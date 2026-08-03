@@ -23,7 +23,7 @@
 npm-debug.log*
 .pnpm-debug.log*
 
-
+/storybook-static
 build-storybook.log
 
 .pnp.*

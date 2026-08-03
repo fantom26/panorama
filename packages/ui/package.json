@@ -7,6 +7,7 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@reduxjs/toolkit": "^2.12.0",
+    "@repo/tokens": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.3.0"
@@ -27,6 +28,7 @@
     "@repo/typescript-config": "workspace:*",
     "@storybook/addon-a11y": "^10.1.11",
     "@storybook/addon-docs": "^10.1.11",
+    "@storybook/addon-themes": "^10.5.6",
     "@storybook/addon-vitest": "^10.1.11",
     "@storybook/react-vite": "^10.1.11",
     "@types/node": "^24.10.1",
