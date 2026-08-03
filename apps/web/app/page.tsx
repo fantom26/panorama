@@ -1,3 +1,7 @@
+import { Button } from '@repo/ui'
+
 export default function Home() {
-  return <h1>Panorama</h1>
+  return (
+      <Button>Click me</Button>
+  )
 }
