@@ -10,11 +10,16 @@
     "build:tokens:light": "pnpm build:tokens -- --theme=light",
     "build:tokens:dark": "pnpm build:tokens -- --theme=dark",
     "build:tokens:high-contrast": "pnpm build:tokens -- --theme=high-contrast",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "format:check": "prettier --check . --ignore-path ../../.prettierignore"
   },
+  "prettier": "@repo/prettier-config",
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "eslint": "^9.39.1",
+    "prettier": "^3.8.3",
     "globals": "^16.5.0",
     "minimist": "^1.2.8",
     "sass": "^1.97.2",

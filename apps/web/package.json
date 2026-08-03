@@ -10,8 +10,8 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "format:check": "prettier --check . --ignore-path ../../.prettierignore",
     "test": "jest"
   },
   "dependencies": {
@@ -19,11 +19,12 @@
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
+  "prettier": "@repo/prettier-config",
   "devDependencies": {
     "@jest/globals": "^30.4.1",
     "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

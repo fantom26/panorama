@@ -2,5 +2,14 @@
   "name": "@repo/typescript-config",
   "version": "0.0.0",
   "description": "Shared TypeScript configs for the Panorama monorepo.",
-  "private": true
+  "private": true,
+  "scripts": {
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "format:check": "prettier --check . --ignore-path ../../.prettierignore"
+  },
+  "prettier": "@repo/prettier-config",
+  "devDependencies": {
+    "@repo/prettier-config": "workspace:*",
+    "prettier": "^3.8.3"
+  }
 }

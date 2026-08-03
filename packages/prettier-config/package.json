@@ -1,0 +1,23 @@
+{
+  "name": "@repo/prettier-config",
+  "version": "0.0.0",
+  "description": "Shared Prettier config for the Panorama monorepo.",
+  "type": "module",
+  "private": true,
+  "main": "index.js",
+  "exports": "./index.js",
+  "scripts": {
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "format:check": "prettier --check . --ignore-path ../../.prettierignore"
+  },
+  "prettier": "./index.js",
+  "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2"
+  },
+  "peerDependencies": {
+    "prettier": "^3.8.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3"
+  }
+}
