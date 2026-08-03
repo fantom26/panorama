@@ -1,14 +1,14 @@
-import store from '@/store';
+import { Provider } from 'react-redux'
 
-import { Provider } from 'react-redux';
-import InboxScreen from '@/pages/InboxScreen';
+import InboxScreen from '@/pages/InboxScreen'
+import store from '@/store'
 
 function App() {
   return (
     <Provider store={store}>
       <InboxScreen />
     </Provider>
-  );
+  )
 }
 
-export default App;
+export default App

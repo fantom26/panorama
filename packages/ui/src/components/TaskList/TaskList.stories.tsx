@@ -1,15 +1,11 @@
+import { configureStore, createSlice } from '@reduxjs/toolkit'
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Provider } from 'react-redux'
 
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import * as TaskStories from '@/components/Task/Task.stories'
+import type { TaskData } from '@/types/task.types'
 
-import type { TaskData } from '@/types/task.types';
-
-import { Provider } from 'react-redux';
-
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-
-import TaskList from '.';
-
-import * as TaskStories from '@/components/Task/Task.stories';
+import TaskList from '.'
 
 export const MockedState = {
   tasks: [
@@ -18,79 +14,77 @@ export const MockedState = {
     { ...TaskStories.Default.args.task, id: '3', title: 'Task 3' },
     { ...TaskStories.Default.args.task, id: '4', title: 'Task 4' },
     { ...TaskStories.Default.args.task, id: '5', title: 'Task 5' },
-    { ...TaskStories.Default.args.task, id: '6', title: 'Task 6' },
+    { ...TaskStories.Default.args.task, id: '6', title: 'Task 6' }
   ] as TaskData[],
   status: 'idle',
-  error: null,
-};
+  error: null
+}
 
 const Mockstore = ({
   taskboxState,
-  children,
+  children
 }: {
-  taskboxState: typeof MockedState;
-  children: React.ReactNode;
+  taskboxState: typeof MockedState
+  children: React.ReactNode
 }) => (
   <Provider
     store={configureStore({
       reducer: {
         taskbox: createSlice({
-          name: "taskbox",
+          name: 'taskbox',
           initialState: taskboxState,
           reducers: {
             updateTaskState: (state, action) => {
-              const { id, newTaskState } = action.payload;
-              const task = state.tasks.find((task) => task.id === id);
+              const { id, newTaskState } = action.payload
+              const task = state.tasks.find((task) => task.id === id)
               if (task) {
-                task.state = newTaskState;
+                task.state = newTaskState
               }
-            },
-          },
-        }).reducer,
-      },
+            }
+          }
+        }).reducer
+      }
     })}
   >
     {children}
   </Provider>
-);
+)
 
 const meta = {
   component: TaskList,
   title: 'TaskList',
   decorators: [(story) => <div style={{ margin: '3rem' }}>{story()}</div>],
-  excludeStories: /.*MockedState$/,
-} satisfies Meta<typeof TaskList>;
+  excludeStories: /.*MockedState$/
+} satisfies Meta<typeof TaskList>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  decorators: [
-    (story) => <Mockstore taskboxState={MockedState}>{story()}</Mockstore>,
-  ],
-};
+  decorators: [(story) => <Mockstore taskboxState={MockedState}>{story()}</Mockstore>]
+}
 
 export const WithPinnedTasks: Story = {
   decorators: [
     (story) => {
       const pinnedtasks: TaskData[] = [
         ...MockedState.tasks.slice(0, 5),
-        { id: '6', title: 'Task 6 (pinned)', state: 'TASK_PINNED' },
-      ];
+        { id: '6', title: 'Task 6 (pinned)', state: 'TASK_PINNED' }
+      ]
 
       return (
         <Mockstore
           taskboxState={{
             ...MockedState,
-            tasks: pinnedtasks,
+            tasks: pinnedtasks
           }}
         >
           {story()}
         </Mockstore>
-      );
-    },
-  ],
-};
+      )
+    }
+  ]
+}
 
 export const Loading: Story = {
   decorators: [
@@ -98,14 +92,14 @@ export const Loading: Story = {
       <Mockstore
         taskboxState={{
           ...MockedState,
-          status: 'loading',
+          status: 'loading'
         }}
       >
         {story()}
       </Mockstore>
-    ),
-  ],
-};
+    )
+  ]
+}
 
 export const Empty: Story = {
   decorators: [
@@ -113,11 +107,11 @@ export const Empty: Story = {
       <Mockstore
         taskboxState={{
           ...MockedState,
-          tasks: [],
+          tasks: []
         }}
       >
         {story()}
       </Mockstore>
-    ),
-  ],
-};
+    )
+  ]
+}

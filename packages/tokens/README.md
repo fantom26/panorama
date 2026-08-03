@@ -51,26 +51,26 @@ Then use the tokens in your CSS:
 ### JavaScript/TypeScript Usage
 
 ```javascript
-import tokens from '@repo/tokens/light/build/js/tokens.js';
+import tokens from '@repo/tokens/light/build/js/tokens.js'
 
-console.log(tokens.DsThemeColorBackgroundBrand);
-console.log(tokens.DsThemeSpacingMd);
+console.log(tokens.DsThemeColorBackgroundBrand)
+console.log(tokens.DsThemeSpacingMd)
 ```
 
 With TypeScript, you'll get full type safety:
 
 ```typescript
-import tokens from '@repo/tokens/light/build/js/tokens.js';
+import tokens from '@repo/tokens/light/build/js/tokens.js'
 
-const spacing: string = tokens.DsThemeSpacingMd; // Type-safe!
+const spacing: string = tokens.DsThemeSpacingMd // Type-safe!
 ```
 
 ### JSON Usage
 
 ```javascript
-import tokens from '@repo/tokens/light/build/json/tokens.json';
+import tokens from '@repo/tokens/light/build/json/tokens.json'
 
-console.log(tokens['ds-theme-color-background-brand']);
+console.log(tokens['ds-theme-color-background-brand'])
 ```
 
 ## Token Structure
@@ -141,6 +141,7 @@ pnpm build:tokens:high-contrast
 ```
 
 Build outputs are generated in `{theme}/build/` directories:
+
 - `css/` - CSS custom properties
 - `js/` - JavaScript/TypeScript modules
 - `json/` - Flattened JSON
@@ -153,6 +154,7 @@ Build outputs are generated in `{theme}/build/` directories:
 - Tier 2 tokens: `--ds-theme-{token-name}` (kebab-case with theme prefix)
 
 Example:
+
 ```css
 --ds-color-neutral-100
 --ds-theme-color-background-brand
@@ -164,6 +166,7 @@ Example:
 - Tier 2 tokens: `DsTheme{TokenName}` (PascalCase with theme prefix)
 
 Example:
+
 ```javascript
 DsColorNeutral100
 DsThemeColorBackgroundBrand
@@ -178,6 +181,7 @@ The token system uses a two-tier architecture:
 3. **Semantic Tier 2 tokens** (`{theme}/tier-2-usage/`): Semantic tokens that reference Tier 1
 
 This architecture ensures:
+
 - Consistency across themes
 - Easy theme customization
 - Clear separation of concerns

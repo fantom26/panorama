@@ -7,8 +7,7 @@
   height: 2rem;
   padding: 0 0.75rem;
   margin: 0;
-  border: var(--ds-theme-border-width-sm) solid
-    var(--ds-theme-color-border-default);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   border-radius: var(--ds-theme-border-radius-md);
   background-color: var(--ds-theme-color-background-default);
   font-family: inherit;
@@ -36,8 +35,7 @@
   }
 
   &:focus-visible {
-    outline: var(--ds-theme-border-width-md) solid
-      var(--ds-theme-color-border-strong);
+    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
     outline-offset: -1px;
   }
 }

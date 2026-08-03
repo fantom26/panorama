@@ -1,14 +1,12 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 
-import type { Meta, StoryObj } from '@storybook/react-vite';
-
-import { fn } from 'storybook/test';
-
-import Task from '.';
+import Task from '.'
 
 export const ActionsData = {
   onArchiveTask: fn(),
-  onPinTask: fn(),
-};
+  onPinTask: fn()
+}
 
 const meta = {
   component: Task,
@@ -16,37 +14,37 @@ const meta = {
   //👇 Our exports that end in "Data" are not stories.
   excludeStories: /.*Data$/, // additional information required by the story but should not be rendered in Storybook
   args: {
-    ...ActionsData, // define the action args that the component expects to mock out the custom events
-  },
-} satisfies Meta<typeof Task>;
+    ...ActionsData // define the action args that the component expects to mock out the custom events
+  }
+} satisfies Meta<typeof Task>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
     task: {
       id: '1',
       title: 'Test Task',
-      state: 'TASK_INBOX',
-    },
-  },
-};
+      state: 'TASK_INBOX'
+    }
+  }
+}
 
 export const Pinned: Story = {
   args: {
     task: {
       ...Default.args.task,
-      state: 'TASK_PINNED',
-    },
-  },
-};
+      state: 'TASK_PINNED'
+    }
+  }
+}
 
 export const Archived: Story = {
   args: {
     task: {
       ...Default.args.task,
-      state: 'TASK_ARCHIVED',
-    },
-  },
-};
+      state: 'TASK_ARCHIVED'
+    }
+  }
+}

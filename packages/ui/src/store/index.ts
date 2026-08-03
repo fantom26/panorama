@@ -1,43 +1,33 @@
+import { type PayloadAction, configureStore, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import type { TaskData } from '@/types/task.types';
-
-import {
-  configureStore,
-  createSlice,
-  createAsyncThunk,
-  type PayloadAction,
-} from '@reduxjs/toolkit';
+import type { TaskData } from '@/types/task.types'
 
 interface TaskBoxState {
-  tasks: TaskData[];
-  status: 'idle' | 'loading' | 'failed' | 'succeeded';
-  error: string | null;
+  tasks: TaskData[]
+  status: 'idle' | 'loading' | 'failed' | 'succeeded'
+  error: string | null
 }
 
 const TaskBoxData: TaskBoxState = {
   tasks: [],
   status: 'idle',
-  error: null,
-};
+  error: null
+}
 /*
  * Creates an asyncThunk to fetch tasks from a remote endpoint.
  * You can read more about Redux Toolkit's thunks in the docs:
  * https://redux-toolkit.js.org/api/createAsyncThunk
  */
 export const fetchTasks = createAsyncThunk('taskbox/fetchTasks', async () => {
-  const response = await fetch(
-    'https://jsonplaceholder.typicode.com/todos?userId=1'
-  );
-  const data = await response.json();
-  const result = data.map(
-    (task: { id: number; title: string; completed: boolean }) => ({
-      id: `${task.id}`,
-      title: task.title,
-      state: task.completed ? 'TASK_ARCHIVED' : 'TASK_INBOX',
-    })
-  );
-  return result;
-});
+  const response = await fetch('https://jsonplaceholder.typicode.com/todos?userId=1')
+  const data = await response.json()
+  const result = data.map((task: { id: number; title: string; completed: boolean }) => ({
+    id: `${task.id}`,
+    title: task.title,
+    state: task.completed ? 'TASK_ARCHIVED' : 'TASK_INBOX'
+  }))
+  return result
+})
 
 /*
  * The store is created here.
@@ -52,11 +42,11 @@ const TasksSlice = createSlice({
       state,
       action: PayloadAction<{ id: string; newTaskState: TaskData['state'] }>
     ) => {
-      const task = state.tasks.find((task) => task.id === action.payload.id);
+      const task = state.tasks.find((task) => task.id === action.payload.id)
       if (task) {
-        task.state = action.payload.newTaskState;
+        task.state = action.payload.newTaskState
       }
-    },
+    }
   },
   /*
    * Extends the reducer for the async actions
@@ -65,34 +55,34 @@ const TasksSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchTasks.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-        state.tasks = [];
+        state.status = 'loading'
+        state.error = null
+        state.tasks = []
       })
       .addCase(fetchTasks.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.error = null;
-        state.tasks = action.payload;
+        state.status = 'succeeded'
+        state.error = null
+        state.tasks = action.payload
       })
       .addCase(fetchTasks.rejected, (state) => {
-        state.status = 'failed';
-        state.error = 'Something went wrong';
-        state.tasks = [];
-      });
-  },
-});
+        state.status = 'failed'
+        state.error = 'Something went wrong'
+        state.tasks = []
+      })
+  }
+})
 
 // The actions contained in the slice are exported for usage in our components
-export const { updateTaskState } = TasksSlice.actions;
+export const { updateTaskState } = TasksSlice.actions
 
 const store = configureStore({
   reducer: {
-    taskbox: TasksSlice.reducer,
-  },
-});
+    taskbox: TasksSlice.reducer
+  }
+})
 
 // Define RootState and AppDispatch types
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
-export default store;
+export default store

@@ -1,13 +1,11 @@
+import { withThemeByClassName } from '@storybook/addon-themes'
+import type { Preview } from '@storybook/react-vite'
+import { initialize, mswLoader } from 'msw-storybook-addon'
 
-import type { Preview } from '@storybook/react-vite';
-
-import { withThemeByClassName } from '@storybook/addon-themes';
-import { initialize, mswLoader } from 'msw-storybook-addon';
-
-import '../src/styles/index.css';
+import '../src/styles/index.css'
 
 // Registers the msw addon
-initialize();
+initialize()
 
 const preview: Preview = {
   tags: ['autodocs'], // to automatically generate documentation for our components
@@ -15,9 +13,9 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
-      },
-    },
+        date: /Date$/
+      }
+    }
   },
   loaders: [mswLoader],
   decorators: [
@@ -25,11 +23,11 @@ const preview: Preview = {
       themes: {
         light: 'light',
         dark: 'dark',
-        'high-contrast': 'high-contrast',
+        'high-contrast': 'high-contrast'
       },
-      defaultTheme: 'light',
-    }),
-  ],
-};
+      defaultTheme: 'light'
+    })
+  ]
+}
 
-export default preview;
+export default preview
