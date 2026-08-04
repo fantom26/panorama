@@ -15,3 +15,25 @@ export const Default: Story = {
     children: 'Submit'
   }
 }
+
+export const Outlined: Story = {
+  args: {
+    variant: 'outlined',
+    children: '← Back'
+  }
+}
+
+export const Contained: Story = {
+  args: {
+    variant: 'contained',
+    children: '+ Add to Compare'
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    variant: 'contained',
+    children: 'Submit',
+    disabled: true
+  }
+}
