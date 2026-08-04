@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
+    "@fontsource/geist-sans": "^5.3.0",
     "@reduxjs/toolkit": "^2.12.0",
     "@repo/tokens": "workspace:*",
     "react": "^19.2.0",

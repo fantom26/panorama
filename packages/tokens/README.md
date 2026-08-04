@@ -31,11 +31,19 @@ Import the CSS file for your theme:
 @import '@repo/tokens/light/build/css/tokens.css';
 ```
 
-Or use the theme class variant:
+Or use the data-theme attribute variant — the same import, but scoped to a `[data-theme="light"]` selector instead of `:root`, so multiple themes can be imported side by side and switched at runtime:
 
 ```css
 @import '@repo/tokens/light/build/css/light.css';
+@import '@repo/tokens/dark/build/css/dark.css';
+@import '@repo/tokens/high-contrast/build/css/high-contrast.css';
 ```
+
+```html
+<html data-theme="dark"></html>
+```
+
+Set `data-theme="light" | "dark" | "high-contrast"` on an ancestor element (commonly `<html>`) to activate that theme's tokens — not a class.
 
 Then use the tokens in your CSS:
 
@@ -81,7 +89,7 @@ Core tokens are theme-agnostic foundational values:
 
 - **Colors**: Neutral palette, utility colors (shared in `core/`)
 - **Z-index**: Layering scale (shared in `core/`)
-- **Typography**: Font families, sizes, weights, line heights, letter spacing
+- **Typography**: Font families, sizes, weights, line heights, letter spacing. The font-family primitive is Geist Sans, self-hosted via `@fontsource/geist-sans` (imported once by `packages/ui/src/styles/index.css`) — not a CDN import, and not dependent on a consuming app's own font loader.
 - **Spacing**: Global dimension scale
 - **Shadows**: Shadow definitions with individual properties
 - **Borders**: Border radius and width scales
@@ -214,3 +222,4 @@ When contributing tokens:
 2. Never hardcode values in Tier 2 tokens
 3. Maintain consistent token structure across all themes
 4. Follow the naming conventions (kebab-case for CSS, PascalCase for JS)
+5. Add component-specific tokens (colors, spacing aliases, type-ramp steps, etc.) only when the component that needs them is actually being built — not speculatively ahead of time

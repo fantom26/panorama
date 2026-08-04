@@ -1,4 +1,4 @@
-import { withThemeByClassName } from '@storybook/addon-themes'
+import { withThemeByDataAttribute } from '@storybook/addon-themes'
 import type { Preview } from '@storybook/react-vite'
 import { initialize, mswLoader } from 'msw-storybook-addon'
 
@@ -24,13 +24,14 @@ const preview: Preview = {
   },
   loaders: [mswLoader],
   decorators: [
-    withThemeByClassName({
+    withThemeByDataAttribute({
       themes: {
         light: 'light',
         dark: 'dark',
         'high-contrast': 'high-contrast'
       },
-      defaultTheme: 'light'
+      defaultTheme: 'light',
+      attributeName: 'data-theme'
     })
   ]
 }

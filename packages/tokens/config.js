@@ -40,7 +40,10 @@ const transformShadowTokens = (dictionary, size, themeTokens) => {
   const color = shadowProps.find((p) => p.path[2] === 'color')?.value || 'transparent'
 
   /* 1 */
-  themeTokens.push({ name: `--ds-theme-box-shadow-${size}`, value: `${x} ${y} ${blur} ${spread} ${color}` })
+  themeTokens.push({
+    name: `--ds-theme-box-shadow-${size}`,
+    value: `${x} ${y} ${blur} ${spread} ${color}`
+  })
 }
 
 /**
@@ -162,7 +165,11 @@ const formatVariables = (dictionary, includeTier1 = false) => {
 const STORYBOOK_TOKEN_CATEGORIES = [
   { test: (name) => name.includes('-color-'), label: 'Colors', presenter: 'Color' },
   { test: (name) => name.includes('-spacing-'), label: 'Spacing', presenter: 'Spacing' },
-  { test: (name) => name.includes('-border-radius-'), label: 'Border Radius', presenter: 'BorderRadius' },
+  {
+    test: (name) => name.includes('-border-radius-'),
+    label: 'Border Radius',
+    presenter: 'BorderRadius'
+  },
   { test: (name) => name.includes('-border-width-'), label: 'Border Width' },
   { test: (name) => name.includes('-box-shadow-'), label: 'Box Shadow', presenter: 'Shadow' },
   { test: (name) => name.includes('-z-index-'), label: 'Z-Index' },
@@ -200,23 +207,31 @@ const formatStorybookTokens = (dictionary) => {
     if (!category) return
 
     if (!categories.has(category.label)) {
-      categories.set(category.label, { presenter: category.presenter, tokenPresenter: category.tokenPresenter, entries: [] })
+      categories.set(category.label, {
+        presenter: category.presenter,
+        tokenPresenter: category.tokenPresenter,
+        entries: []
+      })
     }
     categories.get(category.label).entries.push(entry)
   })
 
   /* 2 */
-  const blocks = [...categories.entries()].map(([label, { presenter, tokenPresenter, entries }]) => {
-    const header = presenter ? `/**\n * @tokens ${label}\n * @presenter ${presenter}\n */` : `/**\n * @tokens ${label}\n */`
-    const declarations = entries
-      .map(({ name, value }) => {
-        const tokenOverride = !presenter && tokenPresenter ? tokenPresenter(name) : undefined
-        const comment = tokenOverride ? ` /* @presenter ${tokenOverride} */` : ''
-        return `  ${name}: ${value};${comment}`
-      })
-      .join('\n')
-    return `${header}\n:root {\n${declarations}\n}\n/**\n * @tokens-end\n */`
-  })
+  const blocks = [...categories.entries()].map(
+    ([label, { presenter, tokenPresenter, entries }]) => {
+      const header = presenter
+        ? `/**\n * @tokens ${label}\n * @presenter ${presenter}\n */`
+        : `/**\n * @tokens ${label}\n */`
+      const declarations = entries
+        .map(({ name, value }) => {
+          const tokenOverride = !presenter && tokenPresenter ? tokenPresenter(name) : undefined
+          const comment = tokenOverride ? ` /* @presenter ${tokenOverride} */` : ''
+          return `  ${name}: ${value};${comment}`
+        })
+        .join('\n')
+      return `${header}\n:root {\n${declarations}\n}\n/**\n * @tokens-end\n */`
+    }
+  )
 
   return blocks.join('\n\n')
 }
@@ -287,12 +302,12 @@ const getStyleDictionaryConfig = (theme) => {
   })
 
   /**
-   * Register the CSS formatter for .[theme-name] ruleset for Storybook only or if you want to use class name to define tokens
+   * Register the CSS formatter for [data-theme="theme-name"] ruleset for Storybook only or if you want to use a data attribute to define tokens
    */
   StyleDictionary.registerFormat({
     name: 'css/variables-themed',
     format: function (dictionary) {
-      return `.${theme} {\n${formatVariables(dictionary, true)}\n}\n`
+      return `[data-theme="${theme}"] {\n${formatVariables(dictionary, true)}\n}\n`
     }
   })
 

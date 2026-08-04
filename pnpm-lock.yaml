@@ -187,6 +187,9 @@ importers:
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.6.0(@types/react@19.2.18)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@fontsource/geist-sans':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@reduxjs/toolkit':
         specifier: ^2.12.0
         version: 2.12.0(react-redux@9.3.0(@types/react@19.2.18)(react@19.2.0)(redux@5.0.1))(react@19.2.0)
@@ -877,6 +880,9 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
+  '@fontsource/geist-sans@5.3.0':
+    resolution: {integrity: sha512-AmG7cE1AvE4NHROPaOl1sN+a02cB5xy6pA/ZV76HXqWTCsJTV2SCBc9DTFHfJqnVOODm7HhXIYtUIb75NP5QXQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -6145,6 +6151,8 @@ snapshots:
       react-dom: 19.2.0(react@19.2.0)
 
   '@floating-ui/utils@0.2.12': {}
+
+  '@fontsource/geist-sans@5.3.0': {}
 
   '@humanfs/core@0.19.1': {}
 

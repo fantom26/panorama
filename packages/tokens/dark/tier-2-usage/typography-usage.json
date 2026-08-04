@@ -2,7 +2,7 @@
   "typography": {
     "display-default": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -42,7 +42,7 @@
     },
     "display-sm": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.400}"
@@ -82,7 +82,7 @@
     },
     "headline-lg": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -122,7 +122,7 @@
     },
     "headline-default": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -162,7 +162,7 @@
     },
     "headline-sm": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -202,7 +202,7 @@
     },
     "title-lg": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -242,7 +242,7 @@
     },
     "title-default": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -262,7 +262,7 @@
     },
     "title-sm": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -282,7 +282,7 @@
     },
     "label-lg": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -302,7 +302,7 @@
     },
     "label-default": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -322,7 +322,7 @@
     },
     "label-sm": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -342,7 +342,7 @@
     },
     "body-lg": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.400}"
@@ -362,7 +362,7 @@
     },
     "body-default": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.400}"
@@ -382,7 +382,7 @@
     },
     "body-sm": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.400}"
@@ -402,7 +402,7 @@
     },
     "meta-default": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"
@@ -422,7 +422,7 @@
     },
     "meta-sm": {
       "font-family": {
-        "value": "{typography.font-family.helvetica}"
+        "value": "{typography.font-family.geist}"
       },
       "font-weight": {
         "value": "{typography.font-weight.700}"

@@ -1,6 +1,8 @@
 @import '@repo/tokens/light/build/css/light.css';
 @import '@repo/tokens/dark/build/css/dark.css';
 @import '@repo/tokens/high-contrast/build/css/high-contrast.css';
+@import '@fontsource/geist-sans/400.css';
+@import '@fontsource/geist-sans/700.css';
 
 * {
   box-sizing: border-box;

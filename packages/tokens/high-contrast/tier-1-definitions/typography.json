@@ -1,8 +1,8 @@
 {
   "typography": {
     "font-family": {
-      "helvetica": {
-        "value": "Helvetica, sans-serif"
+      "geist": {
+        "value": "'Geist Sans', system-ui, -apple-system, sans-serif"
       }
     },
     "font-weight": {
