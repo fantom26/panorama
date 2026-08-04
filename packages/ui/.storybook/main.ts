@@ -1,13 +1,19 @@
 import type { StorybookConfig } from '@storybook/react-vite'
 
 const config: StorybookConfig = {
-  stories: ['../src/components/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/components/**/*.stories.@(ts|tsx)', '../src/tokens/**/*.mdx'],
   staticDirs: ['../public'],
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-vitest',
     '@storybook/addon-a11y',
-    '@storybook/addon-themes'
+    '@storybook/addon-themes',
+    {
+      name: 'storybook-design-token',
+      options: {
+        designTokenGlob: '../tokens/*/build/css/storybook-tokens.css'
+      }
+    }
   ],
   framework: {
     name: '@storybook/react-vite',

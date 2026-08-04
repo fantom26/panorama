@@ -15,6 +15,11 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/
       }
+    },
+    // https://github.com/UX-and-I/storybook-design-token
+    designToken: {
+      disable: true,
+      pageSize: Number.MAX_VALUE
     }
   },
   loaders: [mswLoader],

@@ -40,7 +40,7 @@ const transformShadowTokens = (dictionary, size, themeTokens) => {
   const color = shadowProps.find((p) => p.path[2] === 'color')?.value || 'transparent'
 
   /* 1 */
-  themeTokens.push(`  --ds-theme-box-shadow-${size}: ${x} ${y} ${blur} ${spread} ${color};`)
+  themeTokens.push({ name: `--ds-theme-box-shadow-${size}`, value: `${x} ${y} ${blur} ${spread} ${color}` })
 }
 
 /**
@@ -61,17 +61,18 @@ const transformLineHeight = (dictionary, prop, themeTokens) => {
     const lineHeightPx = parseFloat(prop.value.replace('rem', '')) * 16
     const fontSizePx = parseFloat(fontSizeProp.value.replace('rem', '')) * 16
     const unitlessValue = (lineHeightPx / fontSizePx).toFixed(2)
-    themeTokens.push(`  --ds-theme-${cleanPath}: ${unitlessValue};`)
+    themeTokens.push({ name: `--ds-theme-${cleanPath}`, value: unitlessValue })
   } else {
-    themeTokens.push(`  --ds-theme-${cleanPath}: ${prop.value};`)
+    themeTokens.push({ name: `--ds-theme-${cleanPath}`, value: prop.value })
   }
 }
 
 /**
- * Format the variables
- * 1) Used for the inner contents of the :root and .theme CSS custom property rulesets
+ * Collect the resolved custom-property entries (name + value) for the :root/.theme rulesets.
+ * Shared by formatVariables (flat CSS output) and formatStorybookTokens (annotated doc output)
+ * so both stay in sync with the exact same token names Style Dictionary generates.
  */
-const formatVariables = (dictionary, includeTier1 = false) => {
+const collectTokenEntries = (dictionary, includeTier1 = false) => {
   const processedShadows = new Set()
   const themeTokens = []
 
@@ -115,7 +116,7 @@ const formatVariables = (dictionary, includeTier1 = false) => {
           .map((segment) => (segment.startsWith('@') ? segment.substring(1) : segment))
           .filter((segment) => segment !== '')
           .join('-')
-        themeTokens.push(`  --ds-${cleanPath}: ${prop.value};`)
+        themeTokens.push({ name: `--ds-${cleanPath}`, value: prop.value })
       } else if (!prop.path.includes('box-shadow') || prop.path.length > 3) {
         /* 5 */
         const cleanPath = prop.path
@@ -124,12 +125,100 @@ const formatVariables = (dictionary, includeTier1 = false) => {
           .join('-')
         // Only add theme prefix for higher tier tokens
         const prefix = isHigherTierToken(prop.filePath) ? 'theme-' : ''
-        themeTokens.push(`  --ds-${prefix}${cleanPath}: ${prop.value};`)
+        themeTokens.push({ name: `--ds-${prefix}${cleanPath}`, value: prop.value })
       }
     }
   })
 
-  return [...new Set(themeTokens)].join('\n')
+  /**
+   * Dedupe by custom-property name, preserving first-seen order
+   */
+  const deduped = new Map()
+  themeTokens.forEach((entry) => {
+    if (!deduped.has(entry.name)) {
+      deduped.set(entry.name, entry)
+    }
+  })
+  return [...deduped.values()]
+}
+
+/**
+ * Format the variables
+ * 1) Used for the inner contents of the :root and .theme CSS custom property rulesets
+ */
+const formatVariables = (dictionary, includeTier1 = false) => {
+  return collectTokenEntries(dictionary, includeTier1)
+    .map(({ name, value }) => `  ${name}: ${value};`)
+    .join('\n')
+}
+
+/**
+ * Storybook design-token categories: maps a generated custom-property name to the
+ * `@tokens <label>` group the storybook-design-token addon should file it under, plus
+ * an optional block-level `@presenter` and/or a per-token presenter override.
+ * Raw tier-1 shadow sub-components (`--ds-shadow-*`) are intentionally left unmatched
+ * and excluded — only the combined `--ds-theme-box-shadow-*` tokens are consumable.
+ */
+const STORYBOOK_TOKEN_CATEGORIES = [
+  { test: (name) => name.includes('-color-'), label: 'Colors', presenter: 'Color' },
+  { test: (name) => name.includes('-spacing-'), label: 'Spacing', presenter: 'Spacing' },
+  { test: (name) => name.includes('-border-radius-'), label: 'Border Radius', presenter: 'BorderRadius' },
+  { test: (name) => name.includes('-border-width-'), label: 'Border Width' },
+  { test: (name) => name.includes('-box-shadow-'), label: 'Box Shadow', presenter: 'Shadow' },
+  { test: (name) => name.includes('-z-index-'), label: 'Z-Index' },
+  {
+    test: (name) => name.includes('-typography-'),
+    label: 'Typography',
+    tokenPresenter: (name) => {
+      if (name.includes('font-family')) return 'FontFamily'
+      if (name.includes('font-weight')) return 'FontWeight'
+      if (name.includes('font-size')) return 'FontSize'
+      if (name.includes('line-height')) return 'LineHeight'
+      if (name.includes('letter-spacing')) return 'LetterSpacing'
+      return undefined
+    }
+  },
+  {
+    test: (name) => name.includes('-animation-'),
+    label: 'Animation',
+    tokenPresenter: (name) => (name.includes('ease') ? 'Easing' : undefined)
+  }
+]
+
+/**
+ * Format an annotated CSS file for the storybook-design-token addon.
+ * 1) Group resolved token entries into their storybook-design-token category
+ * 2) Emit one `@tokens <label>` / `@tokens-end` block per category, with per-token
+ *    `@presenter` overrides where the category doesn't have a single fixed presenter
+ */
+const formatStorybookTokens = (dictionary) => {
+  const categories = new Map()
+
+  /* 1 */
+  collectTokenEntries(dictionary, true).forEach((entry) => {
+    const category = STORYBOOK_TOKEN_CATEGORIES.find((candidate) => candidate.test(entry.name))
+    if (!category) return
+
+    if (!categories.has(category.label)) {
+      categories.set(category.label, { presenter: category.presenter, tokenPresenter: category.tokenPresenter, entries: [] })
+    }
+    categories.get(category.label).entries.push(entry)
+  })
+
+  /* 2 */
+  const blocks = [...categories.entries()].map(([label, { presenter, tokenPresenter, entries }]) => {
+    const header = presenter ? `/**\n * @tokens ${label}\n * @presenter ${presenter}\n */` : `/**\n * @tokens ${label}\n */`
+    const declarations = entries
+      .map(({ name, value }) => {
+        const tokenOverride = !presenter && tokenPresenter ? tokenPresenter(name) : undefined
+        const comment = tokenOverride ? ` /* @presenter ${tokenOverride} */` : ''
+        return `  ${name}: ${value};${comment}`
+      })
+      .join('\n')
+    return `${header}\n:root {\n${declarations}\n}\n/**\n * @tokens-end\n */`
+  })
+
+  return blocks.join('\n\n')
 }
 
 /**
@@ -249,6 +338,17 @@ const getStyleDictionaryConfig = (theme) => {
   })
 
   /**
+   * Register the annotated CSS formatter consumed by the storybook-design-token addon
+   * (packages/ui/.storybook). Documentation only — never imported at runtime.
+   */
+  StyleDictionary.registerFormat({
+    name: 'css/storybook-design-token',
+    format: function (dictionary) {
+      return formatStorybookTokens(dictionary)
+    }
+  })
+
+  /**
    * Modify the JS transform group to include a custom name transform
    * 1) Transform the token name to include a theme prefix in addition to global prefix
    */
@@ -327,6 +427,10 @@ const getStyleDictionaryConfig = (theme) => {
           {
             destination: `./${theme}/build/css/${theme}.css`,
             format: 'css/variables-themed'
+          },
+          {
+            destination: `./${theme}/build/css/storybook-tokens.css`,
+            format: 'css/storybook-design-token'
           }
         ]
       },
