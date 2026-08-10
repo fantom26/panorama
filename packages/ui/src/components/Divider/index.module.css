@@ -1,0 +1,16 @@
+.Divider {
+  flex-shrink: 0;
+  border: none;
+  margin: 0;
+  background-color: var(--ds-theme-color-border-default);
+
+  &[data-orientation='horizontal'] {
+    width: 100%;
+    height: var(--ds-theme-border-width-sm);
+  }
+
+  &[data-orientation='vertical'] {
+    width: var(--ds-theme-border-width-sm);
+    height: 100%;
+  }
+}
