@@ -1,7 +1,7 @@
 import { Tabs as BaseTabs } from '@base-ui/react/tabs'
 import clsx from 'clsx'
 
-import styles from './index.module.css'
+import styles from '@/components/Tabs/index.module.css'
 
 function Root({ className, ...rest }: React.ComponentProps<typeof BaseTabs.Root>) {
   return <BaseTabs.Root className={clsx(styles.Root, className)} {...rest} />

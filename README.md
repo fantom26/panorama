@@ -23,6 +23,12 @@ This Turborepo includes the following packages/apps:
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
+### Conventions
+
+- **Imports**: no relative `./` or `../` imports across a folder boundary. Cross-package,
+  import by package name (`@repo/ui`). Intra-package, use the `@/` alias to the
+  package's `src` (`@/components/Field`). Same-folder siblings may stay relative.
+
 ### Utilities
 
 This Turborepo has some additional tools already setup for you:

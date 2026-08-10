@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import * as TaskStories from '@/components/Task/Task.stories'
 import type { TaskData } from '@/types/task.types'
 
-import TaskList from '.'
+import TaskList from '@/components/TaskList'
 
 export const MockedState = {
   tasks: [

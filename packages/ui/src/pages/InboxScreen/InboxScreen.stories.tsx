@@ -6,7 +6,7 @@ import { waitFor, waitForElementToBeRemoved } from 'storybook/test'
 import { MockedState } from '@/components/TaskList/TaskList.stories'
 import store from '@/store'
 
-import InboxScreen from '.'
+import InboxScreen from '@/pages/InboxScreen'
 
 const meta = {
   component: InboxScreen,

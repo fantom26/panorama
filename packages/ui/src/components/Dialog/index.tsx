@@ -1,7 +1,7 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import clsx from 'clsx'
 
-import styles from './index.module.css'
+import styles from '@/components/Dialog/index.module.css'
 
 function Backdrop({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Backdrop>) {
   return <BaseDialog.Backdrop className={clsx(styles.Backdrop, className)} {...rest} />
