@@ -1,13 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import Icon from '@/components/Icon'
-import { icons, type IconName } from '@/components/Icon/icons'
+import { icons } from '@/components/Icon/icons'
 
 const meta = {
   component: Icon,
   title: 'Icon',
   args: {
-    name: 'plus'
+    name: 'plus',
+  },
+  argTypes: {
+    name: {
+      control: { type: 'select' },
+      options: Object.keys(icons)
+    }
   },
   parameters: {
     docs: {
@@ -29,20 +35,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-
-export const AvaliableIcons: Story = {
-  tags: ['!dev'],
-  render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
-      {(Object.keys(icons) as IconName[]).map((name) => (
-        <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-          <Icon name={name} size={24} />
-          <span>{name}</span>
-        </div>
-      ))}
-    </div>
-  )
-}
 
 export const CustomSize: Story = {
   args: {
