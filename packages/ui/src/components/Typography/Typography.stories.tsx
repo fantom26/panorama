@@ -29,7 +29,7 @@ const meta = {
   args: {
     variant: 'body-default',
     color: 'default',
-    children: 'The quick brown fox jumps over the lazy dog'
+    children: 'Global GDP grew 3.2% in the fourth quarter'
   }
 } satisfies Meta<typeof Typography>
 
@@ -45,7 +45,7 @@ export const AllVariants: Story = {
         <Fragment key={variant}>
           {index > 0 && <Divider />}
           <Typography variant={variant}>
-            {variant} — The quick brown fox jumps over the lazy dog
+            {variant} — Global GDP grew 3.2% in the fourth quarter
           </Typography>
         </Fragment>
       ))}

@@ -1,0 +1,27 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-theme-spacing-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item a {
+  text-decoration: none;
+}
+
+.item a:hover {
+  text-decoration: underline;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+}
