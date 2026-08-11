@@ -33,19 +33,19 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
 
   if (state.status === 'loading') {
     body = Array.from({ length: LOADING_ROW_COUNT }).map((_, rowIndex) => (
-      <tr key={rowIndex} className={styles.Row}>
+      <tr key={rowIndex} className={styles.row}>
         {Array.from({ length: columnCount }).map((_, cellIndex) => (
-          <td key={cellIndex} className={styles.Cell}>
-            <span className={styles.Skeleton} />
+          <td key={cellIndex} className={styles.cell}>
+            <span className={styles.skeleton} />
           </td>
         ))}
       </tr>
     ))
   } else if (state.status === 'error') {
     body = (
-      <tr className={styles.Row}>
-        <td className={styles.StateCell} colSpan={columnCount} role='alert'>
-          <div className={styles.State}>
+      <tr className={styles.row}>
+        <td className={styles.stateCell} colSpan={columnCount} role='alert'>
+          <div className={styles.state}>
             <Icon name='circle-alert' size={20} className={styles.errorIcon} />
             <span>{state.message ?? (typeof state.error === 'string' ? state.error : state.error instanceof Error ? state.error.message : 'Something went wrong')}</span>
           </div>
@@ -54,9 +54,9 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
     )
   } else if (isEmpty) {
     body = (
-      <tr className={styles.Row}>
-        <td className={styles.StateCell} colSpan={columnCount}>
-          <div className={styles.State}>
+      <tr className={styles.row}>
+        <td className={styles.stateCell} colSpan={columnCount}>
+          <div className={styles.state}>
             <Icon name='inbox' size={20} className={styles.emptyIcon} />
             <span>{state.status === 'empty' ? state.message ?? 'No data' : 'No data'}</span>
           </div>
@@ -65,9 +65,9 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
     )
   } else {
     body = table.getRowModel().rows.map((row) => (
-      <tr key={row.id} className={styles.Row}>
+      <tr key={row.id} className={styles.row}>
         {row.getVisibleCells().map((cell) => (
-          <td key={cell.id} className={styles.Cell}>
+          <td key={cell.id} className={styles.cell}>
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
           </td>
         ))}
@@ -76,13 +76,13 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
   }
 
   return (
-    <div className={clsx(styles.Root, className)} aria-busy={state.status === 'loading' || undefined}>
-      <table className={styles.Table}>
-        <thead className={styles.Head}>
+    <div className={clsx(styles.root, className)} aria-busy={state.status === 'loading' || undefined}>
+      <table className={styles.table}>
+        <thead className={styles.head}>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className={styles.Row}>
+            <tr key={headerGroup.id} className={styles.row}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className={styles.HeaderCell}>
+                <th key={header.id} className={styles.headerCell}>
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}

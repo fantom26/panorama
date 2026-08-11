@@ -1,8 +1,8 @@
-.Root {
+.root {
   width: 100%;
 }
 
-.Track {
+.track {
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -11,7 +11,7 @@
   background-color: var(--ds-theme-color-background-subtle);
 }
 
-.Indicator {
+.indicator {
   position: absolute;
   inset-block: 0;
   height: inherit;

@@ -1,14 +1,14 @@
-.Root {
+.root {
   display: flex;
   flex-direction: column;
 }
 
-.List {
+.list {
   display: flex;
   gap: var(--ds-theme-spacing-2xs);
 }
 
-.Tab {
+.tab {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -52,7 +52,7 @@
   }
 }
 
-.Panel {
+.panel {
   margin-top: var(--ds-theme-spacing-sm);
   color: var(--ds-theme-color-content-default);
 }

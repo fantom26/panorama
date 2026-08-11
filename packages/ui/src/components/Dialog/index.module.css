@@ -1,4 +1,4 @@
-.Backdrop {
+.backdrop {
   position: fixed;
   inset: 0;
   z-index: var(--ds-z-index-top);
@@ -11,7 +11,7 @@
   }
 }
 
-.Popup {
+.popup {
   box-sizing: border-box;
   position: fixed;
   top: 50%;
@@ -41,7 +41,7 @@
   }
 }
 
-.Title {
+.title {
   margin: 0;
   padding-right: var(--ds-theme-spacing-xl);
   font-family: var(--ds-theme-typography-title-sm-font-family);
@@ -52,7 +52,7 @@
   color: var(--ds-theme-color-content-default);
 }
 
-.Description {
+.description {
   margin: 0;
   font-family: var(--ds-theme-typography-body-sm-font-family);
   font-size: var(--ds-theme-typography-body-sm-font-size);
@@ -61,7 +61,7 @@
   color: var(--ds-theme-color-content-default);
 }
 
-.Close {
+.close {
   box-sizing: border-box;
   position: absolute;
   top: var(--ds-theme-spacing-sm);

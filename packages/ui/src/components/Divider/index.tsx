@@ -6,5 +6,5 @@ import styles from '@/components/Divider/index.module.css'
 export type DividerProps = React.ComponentProps<typeof BaseSeparator>
 
 export default function Divider({ className, ...rest }: DividerProps) {
-  return <BaseSeparator className={clsx(styles.Divider, className)} {...rest} />
+  return <BaseSeparator className={clsx(styles.divider, className)} {...rest} />
 }

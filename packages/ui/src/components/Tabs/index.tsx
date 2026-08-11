@@ -4,19 +4,19 @@ import clsx from 'clsx'
 import styles from '@/components/Tabs/index.module.css'
 
 function Root({ className, ...rest }: React.ComponentProps<typeof BaseTabs.Root>) {
-  return <BaseTabs.Root className={clsx(styles.Root, className)} {...rest} />
+  return <BaseTabs.Root className={clsx(styles.root, className)} {...rest} />
 }
 
 function List({ className, ...rest }: React.ComponentProps<typeof BaseTabs.List>) {
-  return <BaseTabs.List className={clsx(styles.List, className)} {...rest} />
+  return <BaseTabs.List className={clsx(styles.list, className)} {...rest} />
 }
 
 function Tab({ className, ...rest }: React.ComponentProps<typeof BaseTabs.Tab>) {
-  return <BaseTabs.Tab className={clsx(styles.Tab, className)} {...rest} />
+  return <BaseTabs.Tab className={clsx(styles.tab, className)} {...rest} />
 }
 
 function Panel({ className, ...rest }: React.ComponentProps<typeof BaseTabs.Panel>) {
-  return <BaseTabs.Panel className={clsx(styles.Panel, className)} {...rest} />
+  return <BaseTabs.Panel className={clsx(styles.panel, className)} {...rest} />
 }
 
 const Tabs = { Root, List, Tab, Panel }

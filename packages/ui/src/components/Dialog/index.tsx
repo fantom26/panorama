@@ -4,23 +4,23 @@ import clsx from 'clsx'
 import styles from '@/components/Dialog/index.module.css'
 
 function Backdrop({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Backdrop>) {
-  return <BaseDialog.Backdrop className={clsx(styles.Backdrop, className)} {...rest} />
+  return <BaseDialog.Backdrop className={clsx(styles.backdrop, className)} {...rest} />
 }
 
 function Popup({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Popup>) {
-  return <BaseDialog.Popup className={clsx(styles.Popup, className)} {...rest} />
+  return <BaseDialog.Popup className={clsx(styles.popup, className)} {...rest} />
 }
 
 function Title({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Title>) {
-  return <BaseDialog.Title className={clsx(styles.Title, className)} {...rest} />
+  return <BaseDialog.Title className={clsx(styles.title, className)} {...rest} />
 }
 
 function Description({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Description>) {
-  return <BaseDialog.Description className={clsx(styles.Description, className)} {...rest} />
+  return <BaseDialog.Description className={clsx(styles.description, className)} {...rest} />
 }
 
 function Close({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Close>) {
-  return <BaseDialog.Close className={clsx(styles.Close, className)} {...rest} />
+  return <BaseDialog.Close className={clsx(styles.close, className)} {...rest} />
 }
 
 const Dialog = {

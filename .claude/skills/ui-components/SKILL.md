@@ -31,6 +31,10 @@ Claude Design files are a **visual reference only** — they communicate the int
 - Prefer `variant`, `size`, `color`, `disabled`, `startIcon` / `endIcon` over custom equivalents.
 - Prefer `Button`, `TextField`, `Menu` over invented names for the same concept.
 
+### CSS Module class names
+
+- Use `camelCase` for class names in `.module.css` files — the first letter of each word capitalized except the first, e.g. `myButton`, `mainContainer`, `headerTitle`.
+
 ## Storybook
 
 Every component in `@packages/ui/` **must** ship with Storybook stories, and those stories must render across all **3 themes**. Use the package's existing theming mechanism (decorator / global) rather than inventing one. Multi-theme coverage surfaces token, contrast, and dark/light issues that a single-theme story would hide.

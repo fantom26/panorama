@@ -19,7 +19,7 @@ export default function StatCard({
   ...rest
 }: StatCardProps) {
   return (
-    <div className={clsx(styles.StatCard, className)} {...rest}>
+    <div className={clsx(styles.statCard, className)} {...rest}>
       <div className={styles.label}>{label}</div>
       <div className={styles.value}>{value}</div>
       {trend && <div className={clsx(styles.trend, styles[trendColor])}>{trend}</div>}
