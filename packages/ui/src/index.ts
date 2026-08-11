@@ -1,6 +1,7 @@
 // Relative, not @/: this file is resolved directly by consumers' own tsconfig (no
 // build step), so @/ would need to resolve against their paths, not ours.
 export { default as Button } from './components/Button'
+export { default as DataTable } from './components/DataTable'
 export { default as Dialog } from './components/Dialog'
 export { default as Divider } from './components/Divider'
 export { default as Icon } from './components/Icon'

@@ -1,0 +1,74 @@
+.Root {
+  box-sizing: border-box;
+  overflow-x: auto;
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: var(--ds-theme-border-radius-md);
+  background-color: var(--ds-theme-color-background-default);
+}
+
+.Table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ds-theme-typography-body-sm-font-family);
+  font-size: var(--ds-theme-typography-body-sm-font-size);
+  font-weight: var(--ds-theme-typography-body-sm-font-weight);
+  line-height: var(--ds-theme-typography-body-sm-line-height);
+  color: var(--ds-theme-color-content-default);
+}
+
+.Row:not(:last-child),
+.Head {
+  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+}
+
+.HeaderCell {
+  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md);
+  text-align: left;
+  font-family: var(--ds-theme-typography-label-sm-font-family);
+  font-size: var(--ds-theme-typography-label-sm-font-size);
+  font-weight: var(--ds-theme-typography-label-sm-font-weight);
+  line-height: var(--ds-theme-typography-label-sm-line-height);
+  color: var(--ds-theme-color-content-subtle);
+  white-space: nowrap;
+}
+
+.Cell {
+  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md);
+}
+
+.StateCell {
+  padding: var(--ds-theme-spacing-xl);
+  text-align: center;
+}
+
+.State {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-theme-spacing-xs);
+  color: var(--ds-theme-color-content-subtle);
+}
+
+.errorIcon {
+  color: var(--ds-theme-color-content-utility-error);
+}
+
+.Skeleton {
+  display: block;
+  width: 100%;
+  height: 0.75rem;
+  border-radius: var(--ds-theme-border-radius-sm);
+  background-color: var(--ds-theme-color-background-disabled);
+  animation: pulse var(--ds-theme-animation-fade-long) var(--ds-theme-animation-ease) infinite
+    alternate;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.4;
+  }
+}
