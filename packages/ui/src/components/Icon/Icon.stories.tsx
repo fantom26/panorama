@@ -9,6 +9,20 @@ const meta = {
   args: {
     name: 'plus'
   },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+The shared \`Icon\` component uses an internal icon registry instead of exposing \`lucide-react\` directly.
+
+- Consumers only import \`Icon\` from \`@repo/ui\`
+- They pass \`name\` prop like \`search\`
+- The list of available icons lives in \`packages/ui/src/components/Icon/icons.ts\`
+- The shared package owns the icon API and can switch providers later without breaking consumers
+`
+      }
+    }
+  }
 } satisfies Meta<typeof Icon>
 
 export default meta
