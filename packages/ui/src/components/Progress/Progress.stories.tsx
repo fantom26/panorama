@@ -31,3 +31,18 @@ export const Complete: Story = {
   },
   render: Default.render
 }
+
+export const WithLabelAndValue: Story = {
+  args: {
+    value: 80
+  },
+  render: (args) => (
+    <Progress.Root {...args}>
+      <Progress.Label>Asia</Progress.Label>
+      <Progress.Track>
+        <Progress.Indicator />
+      </Progress.Track>
+      <Progress.Value>{() => '$38.4T'}</Progress.Value>
+    </Progress.Root>
+  )
+}

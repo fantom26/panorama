@@ -1,11 +1,19 @@
 .root {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-sm);
   width: 100%;
+}
+
+.label {
+  flex-shrink: 0;
 }
 
 .track {
   position: relative;
   overflow: hidden;
-  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   height: calc(var(--ds-theme-spacing-md) - var(--ds-theme-spacing-3xs));
   border-radius: var(--ds-theme-border-radius-none);
   background-color: var(--ds-theme-color-background-subtle);
@@ -18,4 +26,9 @@
   border-radius: var(--ds-theme-border-radius-none);
   background-color: var(--ds-theme-color-background-knockout);
   transition: width var(--ds-theme-animation-move-long) var(--ds-theme-animation-ease);
+}
+
+.value {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
