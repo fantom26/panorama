@@ -25,28 +25,6 @@ const isHigherTierToken = (filePath) => {
 }
 
 /**
- * Transform shadow tokens
- * 1) Add combined value to themeTokens
- */
-const transformShadowTokens = (dictionary, size, themeTokens) => {
-  const shadowProps = dictionary.allTokens.filter(
-    (p) => isHigherTierToken(p.filePath) && p.path[0] === 'box-shadow' && p.path[1] === size
-  )
-
-  const x = shadowProps.find((p) => p.path[2] === 'x')?.value || '0px'
-  const y = shadowProps.find((p) => p.path[2] === 'y')?.value || '0px'
-  const blur = shadowProps.find((p) => p.path[2] === 'blur')?.value || '0px'
-  const spread = shadowProps.find((p) => p.path[2] === 'spread')?.value || '0px'
-  const color = shadowProps.find((p) => p.path[2] === 'color')?.value || 'transparent'
-
-  /* 1 */
-  themeTokens.push({
-    name: `--ds-theme-box-shadow-${size}`,
-    value: `${x} ${y} ${blur} ${spread} ${color}`
-  })
-}
-
-/**
  * Transform line height
  * 1) Transform the line height to a unitless value by dividing the line height by the font size
  */
@@ -76,52 +54,30 @@ const transformLineHeight = (dictionary, prop, themeTokens) => {
  * so both stay in sync with the exact same token names Style Dictionary generates.
  */
 const collectTokenEntries = (dictionary, includeTier1 = false) => {
-  const processedShadows = new Set()
   const themeTokens = []
-
-  /**
-   * Get all unique shadow sizes from the dictionary
-   */
-  const shadowSizes = new Set(
-    dictionary.allTokens
-      .filter(
-        (p) =>
-          (includeTier1 || isHigherTierToken(p.filePath)) &&
-          p.path[0] === 'box-shadow' &&
-          p.path.length > 2
-      )
-      .map((p) => p.path[1])
-  )
 
   /**
    * Iterate over all tokens
    * 1) Include z-index from core, tier 1 (if flag enabled), or tier 2/3 tokens
-   * 2) Handle shadow combinations
-   * 3) Handle line heights in theme typography
-   * 4) Handle z-index without theme prefix
-   * 5) Handle all other properties
+   * 2) Handle line heights in theme typography
+   * 3) Handle z-index without theme prefix
+   * 4) Handle all other properties
    */
   dictionary.allTokens.forEach((prop) => {
     /* 1 */
     if (prop.path[0] === 'z-index' || includeTier1 || isHigherTierToken(prop.filePath)) {
       /* 2 */
-      if (prop.path[0] === 'box-shadow' && shadowSizes.has(prop.path[1])) {
-        const size = prop.path[1]
-        if (processedShadows.has(size)) return
-        processedShadows.add(size)
-        transformShadowTokens(dictionary, size, themeTokens)
-      } else if (prop.path[0] === 'typography' && prop.path.includes('line-height')) {
-        /* 3 */
+      if (prop.path[0] === 'typography' && prop.path.includes('line-height')) {
         transformLineHeight(dictionary, prop, themeTokens)
       } else if (prop.path[0] === 'z-index') {
-        /* 4 */
+        /* 3 */
         const cleanPath = prop.path
           .map((segment) => (segment.startsWith('@') ? segment.substring(1) : segment))
           .filter((segment) => segment !== '')
           .join('-')
         themeTokens.push({ name: `--ds-${cleanPath}`, value: prop.value })
-      } else if (!prop.path.includes('box-shadow') || prop.path.length > 3) {
-        /* 5 */
+      } else {
+        /* 4 */
         const cleanPath = prop.path
           .map((segment) => (segment.startsWith('@') ? segment.substring(1) : segment))
           .filter((segment) => segment !== '')
@@ -159,8 +115,6 @@ const formatVariables = (dictionary, includeTier1 = false) => {
  * Storybook design-token categories: maps a generated custom-property name to the
  * `@tokens <label>` group the storybook-design-token addon should file it under, plus
  * an optional block-level `@presenter` and/or a per-token presenter override.
- * Raw tier-1 shadow sub-components (`--ds-shadow-*`) are intentionally left unmatched
- * and excluded — only the combined `--ds-theme-box-shadow-*` tokens are consumable.
  */
 const STORYBOOK_TOKEN_CATEGORIES = [
   { test: (name) => name.includes('-color-'), label: 'Colors', presenter: 'Color' },
@@ -171,7 +125,6 @@ const STORYBOOK_TOKEN_CATEGORIES = [
     presenter: 'BorderRadius'
   },
   { test: (name) => name.includes('-border-width-'), label: 'Border Width' },
-  { test: (name) => name.includes('-box-shadow-'), label: 'Box Shadow', presenter: 'Shadow' },
   { test: (name) => name.includes('-z-index-'), label: 'Z-Index' },
   {
     test: (name) => name.includes('-typography-'),
@@ -237,24 +190,6 @@ const formatStorybookTokens = (dictionary) => {
 }
 
 /**
- * Transform shadow tokens for JSON format
- * Combines individual shadow properties into a single value
- */
-const transformShadowTokensJSON = (dictionary, size) => {
-  const shadowProps = dictionary.allTokens.filter(
-    (p) => isHigherTierToken(p.filePath) && p.path[0] === 'box-shadow' && p.path[1] === size
-  )
-
-  const x = shadowProps.find((p) => p.path[2] === 'x')?.value || '0px'
-  const y = shadowProps.find((p) => p.path[2] === 'y')?.value || '0px'
-  const blur = shadowProps.find((p) => p.path[2] === 'blur')?.value || '0px'
-  const spread = shadowProps.find((p) => p.path[2] === 'spread')?.value || '0px'
-  const color = shadowProps.find((p) => p.path[2] === 'color')?.value || 'transparent'
-
-  return `${x} ${y} ${blur} ${spread} ${color}`
-}
-
-/**
  * Generate a Theme-Specific Config
  * This accepts a theme parameter, which is used to control which set of
  * tokens to compile, and to define theme-specific compiled output.
@@ -269,32 +204,9 @@ const getStyleDictionaryConfig = (theme) => {
     format: function (dictionary) {
       const transformedTokens = {}
 
-      /**
-       * Get all box-shadow values from tier 2/3
-       * 1) Used to determine which box-shadow values to transform into a single box-shadow-sm, box-shadow-md, etc.
-       */
-      const shadowSizes = new Set(
-        dictionary.allTokens
-          .filter(
-            (p) => isHigherTierToken(p.filePath) && p.path[0] === 'box-shadow' && p.path.length > 2
-          )
-          .map((p) => p.path[1])
-      )
-
-      // Process regular tokens
       dictionary.allTokens.forEach((token) => {
-        // Skip individual shadow components but keep other tokens
-        if (token.path[0] === 'box-shadow' && token.path.length > 2) return
         const prefix = isHigherTierToken(token.filePath) ? 'ds-theme-' : 'ds-'
         transformedTokens[`${prefix}${token.path.join('-')}`] = token.value
-      })
-
-      // Process shadow tokens
-      shadowSizes.forEach((size) => {
-        const shadowValue = transformShadowTokensJSON(dictionary, size)
-        if (shadowValue !== '0px 0px 0px 0px transparent') {
-          transformedTokens[`ds-theme-box-shadow-${size}`] = shadowValue
-        }
       })
 
       return JSON.stringify(transformedTokens, null, 2)

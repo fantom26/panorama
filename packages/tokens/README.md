@@ -6,10 +6,12 @@ A production-ready design token system built with Style Dictionary, featuring a 
 
 This token system follows industry best practices and demonstrates a professional design system architecture:
 
-- **Tier 1 (Core)**: Theme-agnostic foundational tokens (colors, typography, spacing, shadows, borders, animation, z-index)
+- **Tier 1 (Core)**: Theme-agnostic foundational tokens (colors, typography, spacing, borders, animation, z-index)
 - **Tier 2 (Semantic)**: Theme-specific semantic tokens that reference Tier 1 tokens
 - **Multi-theme support**: Light, Dark, and High Contrast themes
 - **Multiple output formats**: CSS custom properties, JavaScript/TypeScript modules, and JSON
+
+> **Note:** Shadow tokens were removed from this system — the design mockup doesn't use shadows. If shadows are needed again, reintroduce `box-shadow` Tier 1/Tier 2 definitions per theme and restore the shadow-combining logic in `config.js` (see git history for the prior implementation).
 
 ## Usage
 
@@ -91,7 +93,6 @@ Core tokens are theme-agnostic foundational values:
 - **Z-index**: Layering scale (shared in `core/`)
 - **Typography**: Font families, sizes, weights, line heights, letter spacing. The font-family primitive is Geist Sans, self-hosted via `@fontsource/geist-sans` (imported once by `packages/ui/src/styles/index.css`) — not a CDN import, and not dependent on a consuming app's own font loader.
 - **Spacing**: Global dimension scale
-- **Shadows**: Shadow definitions with individual properties
 - **Borders**: Border radius and width scales
 - **Animation**: Duration and easing values
 
@@ -102,7 +103,6 @@ Semantic tokens reference Tier 1 tokens and are theme-specific:
 - **Colors**: Background, content, and border colors organized by semantic purpose
 - **Typography**: Text styles (display, headline, title, label, body, meta) with mobile variants
 - **Spacing**: Semantic spacing aliases (none, 3xs, 2xs, xs, sm, md, lg, xl, 2xl, 3xl)
-- **Shadows**: Semantic shadow tokens (box-shadow)
 - **Borders**: Semantic border tokens
 - **Animation**: Semantic animation tokens
 
