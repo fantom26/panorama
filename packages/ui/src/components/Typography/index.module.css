@@ -1,0 +1,195 @@
+.typography {
+  margin: 0;
+}
+
+.displayDefault {
+  font-family: var(--ds-theme-typography-display-default-font-family);
+  font-weight: var(--ds-theme-typography-display-default-font-weight);
+  font-size: var(--ds-theme-typography-display-default-font-size);
+  line-height: var(--ds-theme-typography-display-default-line-height);
+  letter-spacing: var(--ds-theme-typography-display-default-letter-spacing);
+  text-transform: var(--ds-theme-typography-display-default-text-transform);
+}
+
+.displaySm {
+  font-family: var(--ds-theme-typography-display-sm-font-family);
+  font-weight: var(--ds-theme-typography-display-sm-font-weight);
+  font-size: var(--ds-theme-typography-display-sm-font-size);
+  line-height: var(--ds-theme-typography-display-sm-line-height);
+  letter-spacing: var(--ds-theme-typography-display-sm-letter-spacing);
+  text-transform: var(--ds-theme-typography-display-sm-text-transform);
+}
+
+.headlineLg {
+  font-family: var(--ds-theme-typography-headline-lg-font-family);
+  font-weight: var(--ds-theme-typography-headline-lg-font-weight);
+  font-size: var(--ds-theme-typography-headline-lg-font-size);
+  line-height: var(--ds-theme-typography-headline-lg-line-height);
+  letter-spacing: var(--ds-theme-typography-headline-lg-letter-spacing);
+  text-transform: var(--ds-theme-typography-headline-lg-text-transform);
+}
+
+.headlineDefault {
+  font-family: var(--ds-theme-typography-headline-default-font-family);
+  font-weight: var(--ds-theme-typography-headline-default-font-weight);
+  font-size: var(--ds-theme-typography-headline-default-font-size);
+  line-height: var(--ds-theme-typography-headline-default-line-height);
+  letter-spacing: var(--ds-theme-typography-headline-default-letter-spacing);
+  text-transform: var(--ds-theme-typography-headline-default-text-transform);
+}
+
+.headlineSm {
+  font-family: var(--ds-theme-typography-headline-sm-font-family);
+  font-weight: var(--ds-theme-typography-headline-sm-font-weight);
+  font-size: var(--ds-theme-typography-headline-sm-font-size);
+  line-height: var(--ds-theme-typography-headline-sm-line-height);
+  letter-spacing: var(--ds-theme-typography-headline-sm-letter-spacing);
+  text-transform: var(--ds-theme-typography-headline-sm-text-transform);
+}
+
+.titleLg {
+  font-family: var(--ds-theme-typography-title-lg-font-family);
+  font-weight: var(--ds-theme-typography-title-lg-font-weight);
+  font-size: var(--ds-theme-typography-title-lg-font-size);
+  line-height: var(--ds-theme-typography-title-lg-line-height);
+  letter-spacing: var(--ds-theme-typography-title-lg-letter-spacing);
+  text-transform: var(--ds-theme-typography-title-lg-text-transform);
+}
+
+.titleDefault {
+  font-family: var(--ds-theme-typography-title-default-font-family);
+  font-weight: var(--ds-theme-typography-title-default-font-weight);
+  font-size: var(--ds-theme-typography-title-default-font-size);
+  line-height: var(--ds-theme-typography-title-default-line-height);
+  letter-spacing: var(--ds-theme-typography-title-default-letter-spacing);
+  text-transform: var(--ds-theme-typography-title-default-text-transform);
+}
+
+.titleSm {
+  font-family: var(--ds-theme-typography-title-sm-font-family);
+  font-weight: var(--ds-theme-typography-title-sm-font-weight);
+  font-size: var(--ds-theme-typography-title-sm-font-size);
+  line-height: var(--ds-theme-typography-title-sm-line-height);
+  letter-spacing: var(--ds-theme-typography-title-sm-letter-spacing);
+  text-transform: var(--ds-theme-typography-title-sm-text-transform);
+}
+
+.labelLg {
+  font-family: var(--ds-theme-typography-label-lg-font-family);
+  font-weight: var(--ds-theme-typography-label-lg-font-weight);
+  font-size: var(--ds-theme-typography-label-lg-font-size);
+  line-height: var(--ds-theme-typography-label-lg-line-height);
+  letter-spacing: var(--ds-theme-typography-label-lg-letter-spacing);
+  text-transform: var(--ds-theme-typography-label-lg-text-transform);
+}
+
+.labelDefault {
+  font-family: var(--ds-theme-typography-label-default-font-family);
+  font-weight: var(--ds-theme-typography-label-default-font-weight);
+  font-size: var(--ds-theme-typography-label-default-font-size);
+  line-height: var(--ds-theme-typography-label-default-line-height);
+  letter-spacing: var(--ds-theme-typography-label-default-letter-spacing);
+  text-transform: var(--ds-theme-typography-label-default-text-transform);
+}
+
+.labelSm {
+  font-family: var(--ds-theme-typography-label-sm-font-family);
+  font-weight: var(--ds-theme-typography-label-sm-font-weight);
+  font-size: var(--ds-theme-typography-label-sm-font-size);
+  line-height: var(--ds-theme-typography-label-sm-line-height);
+  letter-spacing: var(--ds-theme-typography-label-sm-letter-spacing);
+  text-transform: var(--ds-theme-typography-label-sm-text-transform);
+}
+
+.bodyLg {
+  font-family: var(--ds-theme-typography-body-lg-font-family);
+  font-weight: var(--ds-theme-typography-body-lg-font-weight);
+  font-size: var(--ds-theme-typography-body-lg-font-size);
+  line-height: var(--ds-theme-typography-body-lg-line-height);
+  letter-spacing: var(--ds-theme-typography-body-lg-letter-spacing);
+  text-transform: var(--ds-theme-typography-body-lg-text-transform);
+}
+
+.bodyDefault {
+  font-family: var(--ds-theme-typography-body-default-font-family);
+  font-weight: var(--ds-theme-typography-body-default-font-weight);
+  font-size: var(--ds-theme-typography-body-default-font-size);
+  line-height: var(--ds-theme-typography-body-default-line-height);
+  letter-spacing: var(--ds-theme-typography-body-default-letter-spacing);
+  text-transform: var(--ds-theme-typography-body-default-text-transform);
+}
+
+.bodySm {
+  font-family: var(--ds-theme-typography-body-sm-font-family);
+  font-weight: var(--ds-theme-typography-body-sm-font-weight);
+  font-size: var(--ds-theme-typography-body-sm-font-size);
+  line-height: var(--ds-theme-typography-body-sm-line-height);
+  letter-spacing: var(--ds-theme-typography-body-sm-letter-spacing);
+  text-transform: var(--ds-theme-typography-body-sm-text-transform);
+}
+
+.metaDefault {
+  font-family: var(--ds-theme-typography-meta-default-font-family);
+  font-weight: var(--ds-theme-typography-meta-default-font-weight);
+  font-size: var(--ds-theme-typography-meta-default-font-size);
+  line-height: var(--ds-theme-typography-meta-default-line-height);
+  letter-spacing: var(--ds-theme-typography-meta-default-letter-spacing);
+  text-transform: var(--ds-theme-typography-meta-default-text-transform);
+}
+
+.metaSm {
+  font-family: var(--ds-theme-typography-meta-sm-font-family);
+  font-weight: var(--ds-theme-typography-meta-sm-font-weight);
+  font-size: var(--ds-theme-typography-meta-sm-font-size);
+  line-height: var(--ds-theme-typography-meta-sm-line-height);
+  letter-spacing: var(--ds-theme-typography-meta-sm-letter-spacing);
+  text-transform: var(--ds-theme-typography-meta-sm-text-transform);
+}
+
+.colorDefault {
+  color: var(--ds-theme-color-content-default);
+}
+
+.colorDefaultHover {
+  color: var(--ds-theme-color-content-default-hover);
+}
+
+.colorSubtle {
+  color: var(--ds-theme-color-content-subtle);
+}
+
+.colorBrand {
+  color: var(--ds-theme-color-content-brand);
+}
+
+.colorBrandHover {
+  color: var(--ds-theme-color-content-brand-hover);
+}
+
+.colorBrandKnockout {
+  color: var(--ds-theme-color-content-brand-knockout);
+}
+
+.colorKnockout {
+  color: var(--ds-theme-color-content-knockout);
+}
+
+.colorDisabled {
+  color: var(--ds-theme-color-content-disabled);
+}
+
+.colorUtilityError {
+  color: var(--ds-theme-color-content-utility-error);
+}
+
+.colorUtilityWarning {
+  color: var(--ds-theme-color-content-utility-warning);
+}
+
+.colorUtilitySuccess {
+  color: var(--ds-theme-color-content-utility-success);
+}
+
+.colorUtilityInfo {
+  color: var(--ds-theme-color-content-utility-info);
+}
