@@ -1,4 +1,4 @@
-import { type PayloadAction, configureStore, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { configureStore, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import type { TaskData } from '@/types/task.types'
 
@@ -37,17 +37,7 @@ export const fetchTasks = createAsyncThunk('taskbox/fetchTasks', async () => {
 const TasksSlice = createSlice({
   name: 'taskbox',
   initialState: TaskBoxData,
-  reducers: {
-    updateTaskState: (
-      state,
-      action: PayloadAction<{ id: string; newTaskState: TaskData['state'] }>
-    ) => {
-      const task = state.tasks.find((task) => task.id === action.payload.id)
-      if (task) {
-        task.state = action.payload.newTaskState
-      }
-    }
-  },
+  reducers: {},
   /*
    * Extends the reducer for the async actions
    * You can read more about it at https://redux-toolkit.js.org/api/createAsyncThunk
@@ -71,9 +61,6 @@ const TasksSlice = createSlice({
       })
   }
 })
-
-// The actions contained in the slice are exported for usage in our components
-export const { updateTaskState } = TasksSlice.actions
 
 const store = configureStore({
   reducer: {

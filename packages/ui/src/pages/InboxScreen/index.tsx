@@ -1,36 +1,42 @@
 import { useEffect } from 'react'
 
+import type { ColumnDef } from '@tanstack/react-table'
 import { useDispatch, useSelector } from 'react-redux'
 
-import TaskList from '@/components/TaskList'
+import DataTable, { type TableState } from '@/components/DataTable'
 import type { AppDispatch, RootState } from '@/store'
 import { fetchTasks } from '@/store'
+import type { TaskData } from '@/types/task.types'
+
+const columns: ColumnDef<TaskData>[] = [
+  { accessorKey: 'id', header: 'ID' },
+  { accessorKey: 'title', header: 'Title' },
+  { accessorKey: 'state', header: 'State', cell: (info) => info.getValue<TaskData['state']>().replace('TASK_', '') }
+]
 
 export default function InboxScreen() {
   const dispatch = useDispatch<AppDispatch>()
-  const { error } = useSelector((state: RootState) => state.taskbox)
+  const { tasks, status, error } = useSelector((state: RootState) => state.taskbox)
 
   useEffect(() => {
     dispatch(fetchTasks())
   }, [dispatch])
 
-  if (error) {
-    return (
-      <div className='page lists-show'>
-        <div className='wrapper-message'>
-          <span className='icon-face-sad' />
-          <p className='title-message'>Oh no!</p>
-          <p className='subtitle-message'>Something went wrong</p>
-        </div>
-      </div>
-    )
-  }
+  const state: TableState<TaskData> =
+    status === 'loading'
+      ? { status: 'loading' }
+      : status === 'failed'
+        ? { status: 'error', error }
+        : tasks.length === 0
+          ? { status: 'empty' }
+          : { status: 'ready', data: tasks }
+
   return (
     <div className='page lists-show'>
       <nav>
         <h1 className='title-page'>Taskbox</h1>
       </nav>
-      <TaskList />
+      <DataTable state={state} columns={columns} />
     </div>
   )
 }

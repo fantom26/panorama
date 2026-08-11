@@ -1,12 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { HttpResponse, http } from 'msw'
 import { Provider } from 'react-redux'
-import { waitFor, waitForElementToBeRemoved } from 'storybook/test'
+import { waitFor } from 'storybook/test'
 
-import { MockedState } from '@/components/TaskList/TaskList.stories'
 import store from '@/store'
+import type { TaskData } from '@/types/task.types'
 
 import InboxScreen from '@/pages/InboxScreen'
+
+const tasks: TaskData[] = [
+  { id: '1', title: 'Buy groceries', state: 'TASK_INBOX' },
+  { id: '2', title: 'Write quarterly report', state: 'TASK_INBOX' },
+  { id: '3', title: 'Clean the house', state: 'TASK_INBOX' }
+]
 
 const meta = {
   component: InboxScreen,
@@ -22,19 +28,13 @@ export const Default: Story = {
     msw: {
       handlers: [
         http.get('https://jsonplaceholder.typicode.com/todos?userId=1', () => {
-          return HttpResponse.json(MockedState.tasks)
+          return HttpResponse.json(tasks)
         })
       ]
     }
   },
-  play: async ({ canvas, userEvent }) => {
-    // Waits for the component to transition from the loading state
-    await waitForElementToBeRemoved(await canvas.findByTestId('loading'))
-    // Waits for the component to be updated based on the store
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByLabelText('pinTask-1'))
-      await userEvent.click(canvas.getByLabelText('pinTask-3'))
-    })
+  play: async ({ canvas }) => {
+    await waitFor(() => canvas.getByText('Buy groceries'))
   }
 }
 
@@ -49,5 +49,8 @@ export const Error: Story = {
         })
       ]
     }
+  },
+  play: async ({ canvas }) => {
+    await waitFor(() => canvas.getByText('Something went wrong'))
   }
 }
