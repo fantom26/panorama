@@ -2,14 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import Tabs from '@/components/Tabs'
 
-const meta = {
-  component: Tabs.Root,
-  title: 'Tabs'
-} satisfies Meta<typeof Tabs.Root>
-
-export default meta
-type Story = StoryObj<typeof meta>
-
 const indicators = [
   { value: 'gdp', label: 'GDP' },
   { value: 'gdp-cap', label: 'GDP/cap' },
@@ -17,12 +9,26 @@ const indicators = [
   { value: 'unemployment', label: 'Unemployment' }
 ]
 
+const meta = {
+  component: Tabs.Root,
+  title: 'Tabs',
+  argTypes: {
+    defaultValue: {
+      control: { type: 'select' },
+      options: indicators.map(({ value }) => value)
+    }
+  }
+} satisfies Meta<typeof Tabs.Root>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
 export const Default: Story = {
-  args: {
+    args: {
     defaultValue: 'gdp'
   },
   render: (args) => (
-    <Tabs.Root {...args}>
+    <Tabs.Root key={args.defaultValue} defaultValue={args.defaultValue}>
       <Tabs.List>
         {indicators.map(({ value, label }) => (
           <Tabs.Tab key={value} value={value}>
@@ -40,11 +46,11 @@ export const Default: Story = {
 }
 
 export const Disabled: Story = {
-  args: {
+    args: {
     defaultValue: 'gdp'
   },
   render: (args) => (
-    <Tabs.Root {...args}>
+    <Tabs.Root key={args.defaultValue} defaultValue={args.defaultValue}>
       <Tabs.List>
         {indicators.map(({ value, label }, index) => (
           <Tabs.Tab key={value} value={value} disabled={index === 1}>
