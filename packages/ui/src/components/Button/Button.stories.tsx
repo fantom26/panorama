@@ -1,3 +1,5 @@
+import { ArrowLeft, Plus } from 'lucide-react'
+
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import Button from '@/components/Button'
@@ -19,14 +21,24 @@ export const Default: Story = {
 export const Outlined: Story = {
   args: {
     variant: 'outlined',
-    children: '← Back'
+    children: (
+      <>
+        <ArrowLeft size={16} />
+        Back
+      </>
+    )
   }
 }
 
 export const Contained: Story = {
   args: {
     variant: 'contained',
-    children: '+ Add to Compare'
+    children: (
+      <>
+        <Plus size={16} />
+        Add to Compare
+      </>
+    )
   }
 }
 
