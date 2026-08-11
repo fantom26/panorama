@@ -42,3 +42,12 @@ export const NoTrend: Story = {
     value: '$68,300'
   }
 }
+
+export const Loading: Story = {
+  args: {
+    label: 'Total population',
+    value: '7.95B',
+    trend: '+0.87% YoY',
+    loading: true
+  }
+}

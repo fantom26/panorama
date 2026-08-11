@@ -1,0 +1,39 @@
+.skeleton {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-color: var(--ds-theme-color-background-disabled);
+}
+
+.skeleton::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--ds-theme-color-background-default-hover),
+    transparent
+  );
+  animation: wave calc(var(--ds-theme-animation-move-long) * 3) linear 0.5s infinite;
+}
+
+.text {
+  width: 100%;
+  height: 0.75rem;
+  border-radius: var(--ds-theme-border-radius-sm);
+}
+
+.rectangular {
+  border-radius: var(--ds-theme-border-radius-md);
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

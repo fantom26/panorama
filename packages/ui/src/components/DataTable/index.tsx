@@ -2,6 +2,7 @@ import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tan
 import clsx from 'clsx'
 
 import Icon from '@/components/Icon'
+import Skeleton from '@/components/Skeleton'
 import styles from '@/components/DataTable/index.module.css'
 
 const LOADING_ROW_COUNT = 5
@@ -36,7 +37,7 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
       <tr key={rowIndex} className={styles.row}>
         {Array.from({ length: columnCount }).map((_, cellIndex) => (
           <td key={cellIndex} className={styles.cell}>
-            <span className={styles.skeleton} />
+            <Skeleton />
           </td>
         ))}
       </tr>
