@@ -1,0 +1,21 @@
+.Root {
+  width: 100%;
+}
+
+.Track {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: calc(var(--ds-theme-spacing-md) - var(--ds-theme-spacing-3xs));
+  border-radius: var(--ds-theme-border-radius-none);
+  background-color: var(--ds-theme-color-background-subtle);
+}
+
+.Indicator {
+  position: absolute;
+  inset-block: 0;
+  height: inherit;
+  border-radius: var(--ds-theme-border-radius-none);
+  background-color: var(--ds-theme-color-background-knockout);
+  transition: width var(--ds-theme-animation-move-long) var(--ds-theme-animation-ease);
+}
