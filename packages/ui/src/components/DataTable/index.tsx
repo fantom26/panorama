@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import Icon from '@/components/Icon'
 import Skeleton from '@/components/Skeleton'
 import styles from '@/components/DataTable/index.module.css'
+import Typography from '@/components/Typography'
 
 const LOADING_ROW_COUNT = 5
 
@@ -84,7 +85,11 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
             <tr key={headerGroup.id} className={styles.row}>
               {headerGroup.headers.map((header) => (
                 <th key={header.id} className={styles.headerCell}>
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  {header.isPlaceholder ? null : (
+                    <Typography variant='label-sm' color='subtle' component='span'>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    </Typography>
+                  )}
                 </th>
               ))}
             </tr>

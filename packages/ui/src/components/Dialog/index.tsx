@@ -2,6 +2,7 @@ import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import clsx from 'clsx'
 
 import styles from '@/components/Dialog/index.module.css'
+import Typography from '@/components/Typography'
 
 function Backdrop({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Backdrop>) {
   return <BaseDialog.Backdrop className={clsx(styles.backdrop, className)} {...rest} />
@@ -12,11 +13,23 @@ function Popup({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Po
 }
 
 function Title({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Title>) {
-  return <BaseDialog.Title className={clsx(styles.title, className)} {...rest} />
+  return (
+    <BaseDialog.Title
+      render={<Typography component='h2' variant='title-sm' />}
+      className={clsx(styles.title, className)}
+      {...rest}
+    />
+  )
 }
 
 function Description({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Description>) {
-  return <BaseDialog.Description className={clsx(styles.description, className)} {...rest} />
+  return (
+    <BaseDialog.Description
+      render={<Typography component='p' variant='body-sm' />}
+      className={className}
+      {...rest}
+    />
+  )
 }
 
 function Close({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Close>) {

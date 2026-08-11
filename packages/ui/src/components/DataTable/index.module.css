@@ -24,11 +24,6 @@
 .headerCell {
   padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md);
   text-align: left;
-  font-family: var(--ds-theme-typography-label-sm-font-family);
-  font-size: var(--ds-theme-typography-label-sm-font-size);
-  font-weight: var(--ds-theme-typography-label-sm-font-weight);
-  line-height: var(--ds-theme-typography-label-sm-line-height);
-  color: var(--ds-theme-color-content-subtle);
   white-space: nowrap;
 }
 
