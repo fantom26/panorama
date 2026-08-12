@@ -104,7 +104,12 @@ export default function Typography<C extends React.ElementType = 'p'>({
 
   return (
     <Component
-      className={clsx(styles.typography, variantClassNames[variant], colorClassNames[color], className)}
+      className={clsx(
+        styles.typography,
+        variantClassNames[variant],
+        colorClassNames[color],
+        className
+      )}
       {...rest}
     />
   )

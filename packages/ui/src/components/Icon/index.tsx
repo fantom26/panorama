@@ -1,6 +1,6 @@
 import type { LucideProps } from 'lucide-react'
 
-import { icons, type IconName } from '@/components/Icon/icons'
+import { type IconName, icons } from '@/components/Icon/icons'
 
 export type { IconName }
 

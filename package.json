@@ -31,6 +31,6 @@
     "apps/web/**/*.{ts,tsx}": "pnpm --dir apps/web exec eslint --fix",
     "packages/ui/**/*.{ts,tsx}": "pnpm --dir packages/ui exec eslint --fix",
     "packages/tokens/**/*.{js,ts}": "pnpm --dir packages/tokens exec eslint --fix",
-    "*.{html,css,json}": "prettier --write"
+    "*.{html,css,json,ts,tsx,.mdx}": "prettier --write"
   }
 }

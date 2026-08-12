@@ -1,9 +1,9 @@
-import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tanstack/react-table'
+import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import clsx from 'clsx'
 
+import styles from '@/components/DataTable/index.module.css'
 import Icon from '@/components/Icon'
 import Skeleton from '@/components/Skeleton'
-import styles from '@/components/DataTable/index.module.css'
 import Typography from '@/components/Typography'
 
 const LOADING_ROW_COUNT = 5
@@ -13,7 +13,8 @@ export type TableStateError = { status: 'error'; error: unknown; message?: strin
 export type TableStateEmpty = { status: 'empty'; message?: string }
 export type TableStateReady<TData> = { status: 'ready'; data: TData[] }
 
-export type TableState<TData> = TableStateLoading | TableStateError | TableStateEmpty | TableStateReady<TData>
+export type TableState<TData> =
+  TableStateLoading | TableStateError | TableStateEmpty | TableStateReady<TData>
 
 export type DataTableProps<TData> = {
   state: TableState<TData>
@@ -49,7 +50,14 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
         <td className={styles.stateCell} colSpan={columnCount} role='alert'>
           <div className={styles.state}>
             <Icon name='circle-alert' size={20} className={styles.errorIcon} />
-            <span>{state.message ?? (typeof state.error === 'string' ? state.error : state.error instanceof Error ? state.error.message : 'Something went wrong')}</span>
+            <span>
+              {state.message ??
+                (typeof state.error === 'string'
+                  ? state.error
+                  : state.error instanceof Error
+                    ? state.error.message
+                    : 'Something went wrong')}
+            </span>
           </div>
         </td>
       </tr>
@@ -60,7 +68,7 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
         <td className={styles.stateCell} colSpan={columnCount}>
           <div className={styles.state}>
             <Icon name='inbox' size={20} className={styles.emptyIcon} />
-            <span>{state.status === 'empty' ? state.message ?? 'No data' : 'No data'}</span>
+            <span>{state.status === 'empty' ? (state.message ?? 'No data') : 'No data'}</span>
           </div>
         </td>
       </tr>
@@ -78,7 +86,10 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
   }
 
   return (
-    <div className={clsx(styles.root, className)} aria-busy={state.status === 'loading' || undefined}>
+    <div
+      className={clsx(styles.root, className)}
+      aria-busy={state.status === 'loading' || undefined}
+    >
       <table className={styles.table}>
         <thead className={styles.head}>
           {table.getHeaderGroups().map((headerGroup) => (

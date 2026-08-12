@@ -15,7 +15,7 @@ export const TokenThemeSections = ({ categoryName }: TokenThemeSectionsProps) =>
     {THEMES.map(({ key, label }) => (
       <div key={key}>
         <h3>{label}</h3>
-        <DesignTokenDocBlock categoryName={categoryName} theme={key} viewType="table" />
+        <DesignTokenDocBlock categoryName={categoryName} theme={key} viewType='table' />
       </div>
     ))}
   </>

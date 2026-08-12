@@ -24,7 +24,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-    args: {
+  args: {
     defaultValue: 'gdp'
   },
   render: (args) => (
@@ -46,7 +46,7 @@ export const Default: Story = {
 }
 
 export const Disabled: Story = {
-    args: {
+  args: {
     defaultValue: 'gdp'
   },
   render: (args) => (

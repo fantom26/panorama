@@ -7,7 +7,7 @@ const meta = {
   component: Icon,
   title: 'Icon',
   args: {
-    name: 'plus',
+    name: 'plus'
   },
   argTypes: {
     name: {

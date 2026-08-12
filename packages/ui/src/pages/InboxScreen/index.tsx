@@ -11,7 +11,11 @@ import type { TaskData } from '@/types/task.types'
 const columns: ColumnDef<TaskData>[] = [
   { accessorKey: 'id', header: 'ID' },
   { accessorKey: 'title', header: 'Title' },
-  { accessorKey: 'state', header: 'State', cell: (info) => info.getValue<TaskData['state']>().replace('TASK_', '') }
+  {
+    accessorKey: 'state',
+    header: 'State',
+    cell: (info) => info.getValue<TaskData['state']>().replace('TASK_', '')
+  }
 ]
 
 export default function InboxScreen() {

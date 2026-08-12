@@ -1,5 +1,6 @@
+import { Children, type ComponentProps, Fragment } from 'react'
+
 import clsx from 'clsx'
-import { Children, Fragment, type ComponentProps } from 'react'
 
 import styles from '@/components/Breadcrumbs/index.module.css'
 import Typography from '@/components/Typography'

@@ -3,10 +3,9 @@ import { HttpResponse, http } from 'msw'
 import { Provider } from 'react-redux'
 import { waitFor } from 'storybook/test'
 
+import InboxScreen from '@/pages/InboxScreen'
 import store from '@/store'
 import type { TaskData } from '@/types/task.types'
-
-import InboxScreen from '@/pages/InboxScreen'
 
 const tasks: TaskData[] = [
   { id: '1', title: 'Buy groceries', state: 'TASK_INBOX' },

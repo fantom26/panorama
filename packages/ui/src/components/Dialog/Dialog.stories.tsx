@@ -23,7 +23,9 @@ export const Default: Story = {
         <Dialog.Backdrop />
         <Dialog.Popup>
           <Dialog.Title>Add country to compare</Dialog.Title>
-          <Dialog.Description>Search and select a country to add to the comparison. Up to 5 countries.</Dialog.Description>
+          <Dialog.Description>
+            Search and select a country to add to the comparison. Up to 5 countries.
+          </Dialog.Description>
           <Dialog.Close aria-label='Close dialog'>
             <Icon name='x' />
           </Dialog.Close>

@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-import type { ColumnDef } from '@tanstack/react-table'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { ColumnDef } from '@tanstack/react-table'
 import { Provider, useSelector } from 'react-redux'
 
 import DataTable from '@/components/DataTable'
@@ -44,11 +44,18 @@ export const Loading: Story = {
 }
 
 export const Empty: Story = {
-  render: () => <DataTable state={{ status: 'empty', message: 'No tasks found' }} columns={columns} />
+  render: () => (
+    <DataTable state={{ status: 'empty', message: 'No tasks found' }} columns={columns} />
+  )
 }
 
 export const ErrorState: Story = {
-  render: () => <DataTable state={{ status: 'error', error: new Error('Failed to load tasks') }} columns={columns} />
+  render: () => (
+    <DataTable
+      state={{ status: 'error', error: new Error('Failed to load tasks') }}
+      columns={columns}
+    />
+  )
 }
 
 type TaskBoxState = {
@@ -57,7 +64,13 @@ type TaskBoxState = {
   error: string | null
 }
 
-function Mockstore({ taskboxState, children }: { taskboxState: TaskBoxState; children: React.ReactNode }) {
+function Mockstore({
+  taskboxState,
+  children
+}: {
+  taskboxState: TaskBoxState
+  children: React.ReactNode
+}) {
   return (
     <Provider
       store={configureStore({
@@ -83,10 +96,10 @@ function ConnectedDataTable() {
     status === 'loading'
       ? { status: 'loading' as const }
       : status === 'failed'
-      ? { status: 'error' as const, error: error ?? 'Unknown error' }
-      : data.length === 0
-      ? { status: 'empty' as const, message: 'No tasks' }
-      : { status: 'ready' as const, data }
+        ? { status: 'error' as const, error: error ?? 'Unknown error' }
+        : data.length === 0
+          ? { status: 'empty' as const, message: 'No tasks' }
+          : { status: 'ready' as const, data }
 
   return <DataTable state={tableState} columns={columns} />
 }

@@ -1,9 +1,10 @@
+import type { ComponentProps, ReactNode } from 'react'
+
 import clsx from 'clsx'
 
 import Skeleton from '@/components/Skeleton'
 import styles from '@/components/StatCard/index.module.css'
 import Typography, { type TypographyColor } from '@/components/Typography'
-import type { ComponentProps, ReactNode } from 'react'
 
 export type StatCardProps = ComponentProps<'div'> & {
   label: string
@@ -43,7 +44,12 @@ export default function StatCard({
         {value}
       </Typography>
       {trend && (
-        <Typography variant='body-sm' color={trendColorMap[trendColor]} component='div' className={styles.trend}>
+        <Typography
+          variant='body-sm'
+          color={trendColorMap[trendColor]}
+          component='div'
+          className={styles.trend}
+        >
           {trend}
         </Typography>
       )}

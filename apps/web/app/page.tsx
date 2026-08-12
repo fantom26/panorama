@@ -1,7 +1,5 @@
 import { Button } from '@repo/ui'
 
 export default function Home() {
-  return (
-      <Button>Click me</Button>
-  )
+  return <Button>Click me</Button>
 }

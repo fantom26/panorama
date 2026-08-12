@@ -10,7 +10,11 @@ export type ButtonProps = React.ComponentProps<typeof BaseButton> & {
 export default function Button({ variant = 'outlined', className, ...rest }: ButtonProps) {
   return (
     <BaseButton
-      className={clsx(styles.button, variant === 'contained' ? styles.contained : styles.outlined, className)}
+      className={clsx(
+        styles.button,
+        variant === 'contained' ? styles.contained : styles.outlined,
+        className
+      )}
       {...rest}
     />
   )
