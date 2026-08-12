@@ -1,0 +1,11 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-theme-spacing-2xs);
+}
+
+.label[data-required]::after {
+  margin-left: var(--ds-theme-spacing-2xs);
+  color: var(--ds-theme-color-content-utility-error);
+  content: '*';
+}
