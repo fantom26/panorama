@@ -29,7 +29,6 @@
   min-width: 0;
   outline: none;
   background: transparent;
-  font-family: inherit;
   font-size: 0.875rem;
   line-height: 1;
   color: var(--ds-theme-color-content-default);

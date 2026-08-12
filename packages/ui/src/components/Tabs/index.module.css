@@ -17,7 +17,6 @@
   border-radius: var(--ds-theme-border-radius-md);
   background-color: transparent;
   color: var(--ds-theme-color-content-default);
-  font-family: inherit;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1;

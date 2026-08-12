@@ -9,7 +9,6 @@
   border-radius: var(--ds-theme-border-radius-md);
   background-color: var(--ds-theme-color-background-default);
   color: var(--ds-theme-color-content-default);
-  font-family: inherit;
   font-size: 0.875rem;
   line-height: 1;
   cursor: pointer;
