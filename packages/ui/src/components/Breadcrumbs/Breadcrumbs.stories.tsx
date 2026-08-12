@@ -5,7 +5,7 @@ import Typography from '@/components/Typography'
 
 const meta = {
   component: Breadcrumbs,
-  title: 'Breadcrumbs'
+  title: 'Disclosure/Breadcrumbs'
 } satisfies Meta<typeof Breadcrumbs>
 
 export default meta

@@ -5,7 +5,7 @@ import { icons } from '@/components/Icon/icons'
 
 const meta = {
   component: Icon,
-  title: 'Icon',
+  title: 'Data Display/Icon',
   args: {
     name: 'plus'
   },

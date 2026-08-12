@@ -4,7 +4,7 @@ import StatCard from '@/components/StatCard'
 
 const meta = {
   component: StatCard,
-  title: 'StatCard'
+  title: 'Data Display/StatCard'
 } satisfies Meta<typeof StatCard>
 
 export default meta

@@ -6,7 +6,7 @@ import Icon from '@/components/Icon'
 
 const meta = {
   component: Dialog.Root,
-  title: 'Dialog'
+  title: 'Overlays/Dialog'
 } satisfies Meta<typeof Dialog.Root>
 
 export default meta

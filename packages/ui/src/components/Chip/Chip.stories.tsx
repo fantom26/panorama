@@ -7,7 +7,7 @@ import Icon from '@/components/Icon'
 
 const meta = {
   component: Chip,
-  title: 'Chip'
+  title: 'Data Display/Chip'
 } satisfies Meta<typeof Chip>
 
 export default meta

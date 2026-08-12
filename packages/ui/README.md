@@ -59,3 +59,5 @@ A quick look at the top-level files and directories included with this template.
 19. **`README.md`**: A text file containing useful reference information about the project.
 
 The project follows Atomic Design methodology. Pioneered by Brad Frost, Atomic Design is a common hierarchical system for UIs. It classifies components into five levels: atoms, molecules, organisms, templates, and pages.
+
+Storybook's sidebar groups components (Forms, Overlays, Disclosure, Feedback, Data Display, etc.) using a categorization inspired by [Chakra UI's component overview](https://chakra-ui.com/docs/components/concepts/overview).

@@ -25,7 +25,7 @@ const tasks: TaskData[] = [
 
 const meta = {
   component: DataTable,
-  title: 'DataTable',
+  title: 'Data Display/DataTable',
   args: {
     state: { status: 'loading' },
     columns: []

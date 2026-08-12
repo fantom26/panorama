@@ -4,7 +4,7 @@ import Progress from '@/components/Progress'
 
 const meta = {
   component: Progress.Root,
-  title: 'Progress'
+  title: 'Feedback/Progress'
 } satisfies Meta<typeof Progress.Root>
 
 export default meta
