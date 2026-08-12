@@ -22,6 +22,13 @@ Claude Design files are a **visual reference only** — they communicate the int
 - **Do not introduce new tokens or variables.** Reuse an existing token. If there's no exact match, use the closest existing token with a near-identical value instead of adding one — new tokens fragment the system and cause visual drift, whereas a "close enough" existing token keeps the design coherent.
 - If nothing reasonable exists, stop and flag it rather than inventing a variable.
 
+## Normalize CSS
+
+- `@packages/ui/src/styles/normalize.css` is loaded globally and already resets base styles — e.g. `box-sizing: border-box`, `margin: 0` / `padding: 0` on all elements, `border: none` and `background-color: transparent` on `button`/`input`, `list-style: none` on `ul`/`ol`, `text-decoration: none` on `a`.
+- Don't redeclare in a component's `.module.css` any property normalize.css already sets to the value you want. Check `normalize.css` before adding a reset-style declaration (`margin: 0`, `padding: 0`, `border: none`, `box-sizing: border-box`, etc.) — it's very likely already covered.
+- Only declare a property locally when the component needs a value that *differs* from the normalize default.
+- If a needed reset is missing from `normalize.css` ask me what to do with that.
+
 ## Naming
 
 - Name components and props with widely recognized, standard terminology — use **Material UI**'s vocabulary as the reference point.
