@@ -1,5 +1,4 @@
 .statCard {
-  box-sizing: border-box;
   gap: var(--ds-theme-spacing-2xs);
   padding: var(--ds-theme-spacing-lg) calc(var(--ds-theme-spacing-lg) - var(--ds-theme-spacing-2xs));
   border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);

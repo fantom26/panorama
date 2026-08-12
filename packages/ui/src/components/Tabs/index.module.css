@@ -9,12 +9,10 @@
 }
 
 .tab {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--ds-theme-spacing-2xs) var(--ds-theme-spacing-xs);
-  margin: 0;
   border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   border-radius: var(--ds-theme-border-radius-md);
   background-color: transparent;

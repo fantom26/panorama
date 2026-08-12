@@ -1,7 +1,6 @@
 .divider {
   flex-shrink: 0;
   border: none;
-  margin: 0;
   background-color: var(--ds-theme-color-border-default);
 
   &[data-orientation='horizontal'] {

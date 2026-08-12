@@ -1,12 +1,10 @@
 .button {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--ds-theme-spacing-2xs);
   height: 2rem;
   padding: 0 0.75rem;
-  margin: 0;
   border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   border-radius: var(--ds-theme-border-radius-md);
   font-family: inherit;

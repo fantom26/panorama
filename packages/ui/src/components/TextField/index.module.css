@@ -1,5 +1,4 @@
 .root {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: var(--ds-theme-spacing-xs);
@@ -28,9 +27,6 @@
 .input {
   flex: 1;
   min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
   outline: none;
   background: transparent;
   font-family: inherit;

@@ -1,10 +1,8 @@
 .chip {
-  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: var(--ds-theme-spacing-2xs);
   padding: var(--ds-theme-spacing-3xs) var(--ds-theme-spacing-xs);
-  margin: 0;
   border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   border-radius: var(--ds-theme-border-radius-md);
   font-family: var(--ds-theme-typography-label-sm-font-family);

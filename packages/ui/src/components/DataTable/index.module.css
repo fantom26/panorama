@@ -1,5 +1,4 @@
 .root {
-  box-sizing: border-box;
   overflow-x: auto;
   border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   border-radius: var(--ds-theme-border-radius-md);

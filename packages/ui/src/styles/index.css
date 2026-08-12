@@ -3,12 +3,7 @@
 @import '@repo/tokens/high-contrast/build/css/high-contrast.css';
 @import '@fontsource/geist-sans/400.css';
 @import '@fontsource/geist-sans/700.css';
-
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
-}
+@import '@/styles/normalize.css';
 
 #root {
   /*
@@ -28,18 +23,4 @@ body {
     the following style must be added to your global styles
   */
   position: relative;
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-button,
-input[type='button'],
-input[type='reset'],
-input[type='submit'] {
-  cursor: pointer;
-  -webkit-appearance: button;
 }
