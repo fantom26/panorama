@@ -1,7 +1,7 @@
 @import '@repo/tokens/light/build/css/light.css';
 @import '@repo/tokens/dark/build/css/dark.css';
 @import '@fontsource/geist-sans/400.css';
-@import '@fontsource/geist-sans/700.css';
+@import '@fontsource/geist-sans/500.css';
 @import '@/styles/normalize.css';
 
 #root {

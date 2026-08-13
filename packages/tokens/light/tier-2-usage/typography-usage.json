@@ -45,7 +45,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.40}"
@@ -85,7 +85,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.32}"
@@ -125,7 +125,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.32}"
@@ -165,7 +165,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.28}"
@@ -185,7 +185,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.24}"
@@ -205,7 +205,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.20}"
@@ -225,7 +225,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.16}"
@@ -245,7 +245,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.14}"
@@ -325,7 +325,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.14}"
@@ -345,7 +345,7 @@
         "value": "{typography.font-family.geist}"
       },
       "font-weight": {
-        "value": "{typography.font-weight.700}"
+        "value": "{typography.font-weight.500}"
       },
       "font-size": {
         "value": "{typography.font-size.12}"
