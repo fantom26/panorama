@@ -1,0 +1,36 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
+
+import Icon from '@/components/Icon'
+import IconButton from '@/components/IconButton'
+
+const meta = {
+  component: IconButton,
+  title: 'Forms/IconButton',
+  args: {
+    'aria-label': 'Search',
+    children: <Icon name='search' />
+  }
+} satisfies Meta<typeof IconButton>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {}
+
+export const Contained: Story = {
+  args: {
+    variant: 'contained'
+  }
+}
+
+export const Small: Story = {
+  args: {
+    size: 'sm'
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    disabled: true
+  }
+}
