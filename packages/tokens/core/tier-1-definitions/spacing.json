@@ -1,0 +1,16 @@
+{
+  "spacing": {
+    "dimension": {
+      "0": { "value": "0px" },
+      "6xs": { "value": "2px" },
+      "4xs": { "value": "4px" },
+      "2xs": { "value": "8px" },
+      "xs": { "value": "12px" },
+      "sm": { "value": "16px" },
+      "md": { "value": "24px" },
+      "lg": { "value": "32px" },
+      "xl": { "value": "48px" },
+      "2xl": { "value": "64px" }
+    }
+  }
+}
