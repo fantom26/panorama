@@ -9,7 +9,6 @@
     "build:tokens": "node config.js --verbose",
     "build:tokens:light": "pnpm build:tokens -- --theme=light",
     "build:tokens:dark": "pnpm build:tokens -- --theme=dark",
-    "build:tokens:high-contrast": "pnpm build:tokens -- --theme=high-contrast",
     "lint": "eslint",
     "format": "prettier --write . --ignore-path ../../.prettierignore",
     "format:check": "prettier --check . --ignore-path ../../.prettierignore"

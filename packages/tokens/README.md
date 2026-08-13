@@ -8,7 +8,7 @@ This token system follows industry best practices and demonstrates a professiona
 
 - **Tier 1 (Core)**: Theme-agnostic foundational tokens (colors, typography, spacing, borders, animation, z-index)
 - **Tier 2 (Semantic)**: Theme-specific semantic tokens that reference Tier 1 tokens
-- **Multi-theme support**: Light, Dark, and High Contrast themes
+- **Multi-theme support**: Light and Dark themes
 - **Multiple output formats**: CSS custom properties, JavaScript/TypeScript modules, and JSON
 
 > **Note:** Shadow tokens were removed from this system — the design mockup doesn't use shadows. If shadows are needed again, reintroduce `box-shadow` Tier 1/Tier 2 definitions per theme and restore the shadow-combining logic in `config.js` (see git history for the prior implementation).
@@ -38,14 +38,13 @@ Or use the data-theme attribute variant — the same import, but scoped to a `[d
 ```css
 @import '@repo/tokens/light/build/css/light.css';
 @import '@repo/tokens/dark/build/css/dark.css';
-@import '@repo/tokens/high-contrast/build/css/high-contrast.css';
 ```
 
 ```html
 <html data-theme="dark"></html>
 ```
 
-Set `data-theme="light" | "dark" | "high-contrast"` on an ancestor element (commonly `<html>`) to activate that theme's tokens — not a class.
+Set `data-theme="light" | "dark"` on an ancestor element (commonly `<html>`) to activate that theme's tokens — not a class.
 
 Then use the tokens in your CSS:
 
@@ -124,14 +123,6 @@ Dark theme optimized for low-light environments.
 @import '@repo/tokens/dark/build/css/tokens.css';
 ```
 
-### High Contrast Theme
-
-High contrast theme for improved accessibility.
-
-```css
-@import '@repo/tokens/high-contrast/build/css/tokens.css';
-```
-
 ## Building Tokens
 
 To build all themes:
@@ -145,7 +136,6 @@ To build a specific theme:
 ```bash
 pnpm build:tokens:light
 pnpm build:tokens:dark
-pnpm build:tokens:high-contrast
 ```
 
 Build outputs are generated in `{theme}/build/` directories:
@@ -206,10 +196,7 @@ packages/tokens/
 ├── light/                       # Light theme
 │   ├── tier-1-definitions/
 │   └── tier-2-usage/
-├── dark/                        # Dark theme
-│   ├── tier-1-definitions/
-│   └── tier-2-usage/
-└── high-contrast/               # High contrast theme
+└── dark/                        # Dark theme
     ├── tier-1-definitions/
     └── tier-2-usage/
 ```

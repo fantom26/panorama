@@ -4,7 +4,7 @@ import StyleDictionary from 'style-dictionary'
 /**
  * Define available themes
  */
-const AVAILABLE_THEMES = ['light', 'dark', 'high-contrast']
+const AVAILABLE_THEMES = ['light', 'dark']
 
 /**
  * Look for args passed on the command line

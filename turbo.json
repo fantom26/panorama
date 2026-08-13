@@ -11,7 +11,7 @@
       "outputs": ["dist/**"]
     },
     "@repo/tokens#build": {
-      "outputs": ["light/build/**", "dark/build/**", "high-contrast/build/**"]
+      "outputs": ["light/build/**", "dark/build/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]

@@ -2,8 +2,7 @@ import { DesignTokenDocBlock } from 'storybook-design-token'
 
 const THEMES = [
   { key: 'light', label: 'Light' },
-  { key: 'dark', label: 'Dark' },
-  { key: 'high-contrast', label: 'High Contrast' }
+  { key: 'dark', label: 'Dark' }
 ] as const
 
 type TokenThemeSectionsProps = {
