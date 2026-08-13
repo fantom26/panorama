@@ -1,4 +1,14 @@
-import { ArrowLeft, Check, ChevronDown, CircleAlert, Inbox, Plus, Search, X } from 'lucide-react'
+import {
+  ArrowLeft,
+  Check,
+  ChevronDown,
+  CircleAlert,
+  Inbox,
+  Minus,
+  Plus,
+  Search,
+  X
+} from 'lucide-react'
 
 export const icons = {
   'arrow-left': ArrowLeft,
@@ -6,6 +16,7 @@ export const icons = {
   'chevron-down': ChevronDown,
   'circle-alert': CircleAlert,
   inbox: Inbox,
+  minus: Minus,
   plus: Plus,
   search: Search,
   x: X

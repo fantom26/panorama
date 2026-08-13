@@ -1,0 +1,55 @@
+.root {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ds-theme-spacing-xs);
+  cursor: pointer;
+
+  &[data-disabled] {
+    cursor: not-allowed;
+  }
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--ds-theme-spacing-md);
+  height: var(--ds-theme-spacing-md);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: var(--ds-theme-border-radius-sm);
+  background-color: var(--ds-theme-color-background-default);
+
+  &:focus-visible {
+    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+    outline-offset: 1px;
+  }
+
+  &[data-checked],
+  &[data-indeterminate] {
+    border-color: var(--ds-theme-color-background-knockout);
+    background-color: var(--ds-theme-color-background-knockout);
+  }
+
+  &[data-invalid] {
+    border-color: var(--ds-theme-color-border-utility-error);
+  }
+
+  &[data-disabled] {
+    opacity: 0.5;
+  }
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ds-theme-color-content-knockout);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-theme-spacing-3xs);
+  padding-top: var(--ds-theme-spacing-3xs);
+}
