@@ -1,0 +1,50 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-xs);
+  width: 100%;
+  max-width: 16rem;
+  height: 2rem;
+  padding: 0 var(--ds-theme-spacing-sm);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: var(--ds-theme-border-radius-md);
+  background-color: var(--ds-theme-color-background-default);
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--ds-theme-color-background-default-hover);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+    outline-offset: -1px;
+  }
+}
+
+.adornment {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--ds-theme-color-content-subtle);
+}
+
+.placeholder {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shortcut {
+  flex-shrink: 0;
+  padding: var(--ds-theme-spacing-3xs) var(--ds-theme-spacing-2xs);
+  border-radius: var(--ds-theme-border-radius-sm);
+  background-color: var(--ds-theme-color-background-subtle);
+  color: var(--ds-theme-color-content-subtle);
+  font-size: 0.75rem;
+  line-height: 1;
+}
