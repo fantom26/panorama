@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useDispatch, useSelector } from 'react-redux'
 
-import DataTable, { type TableState } from '@/components/DataTable'
+import DataTable, { type TableState } from '@/components/DataDisplay/DataTable'
 import type { AppDispatch, RootState } from '@/store'
 import { fetchTasks } from '@/store'
 import type { TaskData } from '@/types/task.types'
