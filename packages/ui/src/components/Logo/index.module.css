@@ -1,0 +1,24 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-xs);
+  flex-shrink: 0;
+}
+
+.mark {
+  display: block;
+  flex-shrink: 0;
+}
+
+.tile {
+  fill: var(--ds-theme-color-background-knockout);
+}
+
+.bars {
+  fill: var(--ds-theme-color-content-knockout);
+}
+
+.wordmark {
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
