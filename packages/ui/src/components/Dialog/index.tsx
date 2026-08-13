@@ -1,12 +1,16 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import clsx from 'clsx'
 
+import BackdropComponent from '@/components/Backdrop'
 import CloseButton from '@/components/CloseButton'
 import styles from '@/components/Dialog/index.module.css'
 import Typography from '@/components/Typography'
 
-function Backdrop({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Backdrop>) {
-  return <BaseDialog.Backdrop className={clsx(styles.backdrop, className)} {...rest} />
+function Backdrop({
+  className,
+  ...rest
+}: Omit<React.ComponentProps<typeof BaseDialog.Backdrop>, 'children'>) {
+  return <BaseDialog.Backdrop render={<BackdropComponent />} className={className} {...rest} />
 }
 
 function Popup({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Popup>) {

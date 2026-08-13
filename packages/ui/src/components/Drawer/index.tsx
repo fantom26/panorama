@@ -1,6 +1,7 @@
 import { Drawer as BaseDrawer } from '@base-ui/react/drawer'
 import clsx from 'clsx'
 
+import BackdropComponent from '@/components/Backdrop'
 import CloseButton from '@/components/CloseButton'
 import styles from '@/components/Drawer/index.module.css'
 import Typography from '@/components/Typography'
@@ -26,8 +27,11 @@ function Root({
   return <BaseDrawer.Root swipeDirection={anchorToSwipeDirection[anchor]} {...rest} />
 }
 
-function Backdrop({ className, ...rest }: React.ComponentProps<typeof BaseDrawer.Backdrop>) {
-  return <BaseDrawer.Backdrop className={clsx(styles.backdrop, className)} {...rest} />
+function Backdrop({
+  className,
+  ...rest
+}: Omit<React.ComponentProps<typeof BaseDrawer.Backdrop>, 'children'>) {
+  return <BaseDrawer.Backdrop render={<BackdropComponent />} className={className} {...rest} />
 }
 
 function Viewport({ className, ...rest }: React.ComponentProps<typeof BaseDrawer.Viewport>) {
