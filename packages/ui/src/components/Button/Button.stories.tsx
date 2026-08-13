@@ -5,7 +5,7 @@ import Icon from '@/components/Icon'
 
 const meta = {
   component: Button,
-  title: 'Forms/Button'
+  title: 'Buttons/Button'
 } satisfies Meta<typeof Button>
 
 export default meta

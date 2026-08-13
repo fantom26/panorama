@@ -4,7 +4,7 @@ import CloseButton from '@/components/CloseButton'
 
 const meta = {
   component: CloseButton,
-  title: 'Forms/CloseButton'
+  title: 'Buttons/CloseButton'
 } satisfies Meta<typeof CloseButton>
 
 export default meta

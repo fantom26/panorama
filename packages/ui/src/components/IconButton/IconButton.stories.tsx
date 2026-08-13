@@ -5,7 +5,7 @@ import IconButton from '@/components/IconButton'
 
 const meta = {
   component: IconButton,
-  title: 'Forms/IconButton',
+  title: 'Buttons/IconButton',
   args: {
     'aria-label': 'Search',
     children: <Icon name='search' />
