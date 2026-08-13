@@ -1,45 +1,5 @@
 {
   "typography": {
-    "display-default": {
-      "font-family": {
-        "value": "{typography.font-family.geist}"
-      },
-      "font-weight": {
-        "value": "{typography.font-weight.700}"
-      },
-      "font-size": {
-        "value": "{typography.font-size.100}"
-      },
-      "line-height": {
-        "value": "{typography.line-height.110}"
-      },
-      "letter-spacing": {
-        "value": "{typography.letter-spacing.minus-2}"
-      },
-      "text-transform": {
-        "value": "{typography.text-transform.none}"
-      }
-    },
-    "display-default-mobile": {
-      "font-family": {
-        "value": "{typography.display-default.font-family}"
-      },
-      "font-weight": {
-        "value": "{typography.display-default.font-weight}"
-      },
-      "font-size": {
-        "value": "{typography.font-size.48}"
-      },
-      "line-height": {
-        "value": "{typography.line-height.56}"
-      },
-      "letter-spacing": {
-        "value": "{typography.letter-spacing.minus-1-half}"
-      },
-      "text-transform": {
-        "value": "{typography.display-default.text-transform}"
-      }
-    },
     "display-sm": {
       "font-family": {
         "value": "{typography.font-family.geist}"
@@ -75,46 +35,6 @@
       },
       "letter-spacing": {
         "value": "{typography.letter-spacing.minus-1}"
-      },
-      "text-transform": {
-        "value": "{typography.text-transform.none}"
-      }
-    },
-    "headline-lg": {
-      "font-family": {
-        "value": "{typography.font-family.geist}"
-      },
-      "font-weight": {
-        "value": "{typography.font-weight.700}"
-      },
-      "font-size": {
-        "value": "{typography.font-size.48}"
-      },
-      "line-height": {
-        "value": "{typography.line-height.56}"
-      },
-      "letter-spacing": {
-        "value": "{typography.letter-spacing.half}"
-      },
-      "text-transform": {
-        "value": "{typography.text-transform.none}"
-      }
-    },
-    "headline-lg-mobile": {
-      "font-family": {
-        "value": "{typography.headline-lg.font-family}"
-      },
-      "font-weight": {
-        "value": "{typography.headline-lg.font-weight}"
-      },
-      "font-size": {
-        "value": "{typography.font-size.40}"
-      },
-      "line-height": {
-        "value": "{typography.line-height.48}"
-      },
-      "letter-spacing": {
-        "value": "{typography.letter-spacing.half}"
       },
       "text-transform": {
         "value": "{typography.text-transform.none}"

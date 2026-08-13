@@ -6,9 +6,7 @@ import Divider from '@/components/Divider'
 import Typography, { type TypographyVariant } from '@/components/Typography'
 
 const variants: TypographyVariant[] = [
-  'display-default',
   'display-sm',
-  'headline-lg',
   'headline-default',
   'headline-sm',
   'title-lg',

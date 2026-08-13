@@ -3,9 +3,7 @@ import clsx from 'clsx'
 import styles from '@/components/Typography/index.module.css'
 
 export type TypographyVariant =
-  | 'display-default'
   | 'display-sm'
-  | 'headline-lg'
   | 'headline-default'
   | 'headline-sm'
   | 'title-lg'
@@ -41,9 +39,7 @@ export type TypographyProps<C extends React.ElementType = 'p'> = {
 } & Omit<React.ComponentPropsWithoutRef<C>, 'color' | 'component' | 'variant'>
 
 const variantClassNames: Record<TypographyVariant, string | undefined> = {
-  'display-default': styles.displayDefault,
   'display-sm': styles.displaySm,
-  'headline-lg': styles.headlineLg,
   'headline-default': styles.headlineDefault,
   'headline-sm': styles.headlineSm,
   'title-lg': styles.titleLg,
@@ -75,10 +71,8 @@ const colorClassNames: Record<TypographyColor, string | undefined> = {
 }
 
 const defaultElementMap: Record<TypographyVariant, React.ElementType> = {
-  'display-default': 'h1',
   'display-sm': 'p',
-  'headline-lg': 'h1',
-  'headline-default': 'h2',
+  'headline-default': 'h1',
   'headline-sm': 'h3',
   'title-lg': 'h3',
   'title-default': 'h4',
