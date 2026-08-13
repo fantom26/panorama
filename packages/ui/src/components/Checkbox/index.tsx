@@ -2,14 +2,12 @@ import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox'
 import clsx from 'clsx'
 
 import styles from '@/components/Checkbox/index.module.css'
+import Hint from '@/components/Hint'
 import Icon from '@/components/Icon'
 import Typography from '@/components/Typography'
+import type { FormFieldProps } from '@/types/form.types'
 
-export type CheckboxProps = React.ComponentProps<typeof BaseCheckbox.Root> & {
-  label?: string
-  hint?: string
-  error?: boolean
-}
+export type CheckboxProps = React.ComponentProps<typeof BaseCheckbox.Root> & FormFieldProps
 
 export default function Checkbox({
   label,
@@ -20,6 +18,8 @@ export default function Checkbox({
   className,
   ...rest
 }: CheckboxProps) {
+  const message = error ?? hint
+
   return (
     <label className={styles.root} data-disabled={disabled || undefined}>
       <BaseCheckbox.Root
@@ -33,18 +33,14 @@ export default function Checkbox({
           <Icon name={indeterminate ? 'minus' : 'check'} size={13} />
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>
-      {(label || hint) && (
+      {(label || message) && (
         <span className={styles.text}>
           {label && (
             <Typography component='span' variant='label-sm'>
               {label}
             </Typography>
           )}
-          {hint && (
-            <Typography component='span' variant='meta-sm' color='subtle'>
-              {hint}
-            </Typography>
-          )}
+          {message && <Hint error={Boolean(error)} text={message} />}
         </span>
       )}
     </label>

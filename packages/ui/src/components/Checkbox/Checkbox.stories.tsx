@@ -39,7 +39,7 @@ export const Indeterminate: Story = {
 export const Error: Story = {
   args: {
     label: 'Accept the data usage terms',
-    error: true
+    error: 'You must accept the terms to continue'
   }
 }
 

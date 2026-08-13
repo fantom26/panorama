@@ -25,7 +25,7 @@ export const WithHint: Story = {
 
 export const Error: Story = {
   args: {
-    error: true
+    error: 'Choose a scale before continuing'
   }
 }
 
