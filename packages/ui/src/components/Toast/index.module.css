@@ -1,0 +1,77 @@
+.viewport {
+  position: fixed;
+  right: var(--ds-theme-spacing-lg);
+  bottom: var(--ds-theme-spacing-lg);
+  z-index: var(--ds-z-index-top);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ds-theme-spacing-sm);
+}
+
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-theme-spacing-2xs);
+  width: 21.25rem;
+  max-width: calc(100vw - var(--ds-theme-spacing-lg) * 2);
+  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-xl) var(--ds-theme-spacing-sm)
+    var(--ds-theme-spacing-md);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-left-width: var(--ds-theme-border-width-md);
+  border-radius: var(--ds-theme-border-radius-md);
+  background-color: var(--ds-theme-color-background-default);
+  color: var(--ds-theme-color-content-default);
+  transition:
+    opacity var(--ds-theme-animation-fade-quick) var(--ds-theme-animation-ease),
+    transform var(--ds-theme-animation-move-quick) var(--ds-theme-animation-ease);
+
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+
+  &[data-type='info'] {
+    border-left-color: var(--ds-theme-color-border-utility-info);
+  }
+
+  &[data-type='success'] {
+    border-left-color: var(--ds-theme-color-border-utility-success);
+  }
+
+  &[data-type='error'] {
+    border-left-color: var(--ds-theme-color-border-utility-error);
+  }
+
+  &[data-type='warning'] {
+    border-left-color: var(--ds-theme-color-border-utility-warning);
+  }
+}
+
+.title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.action {
+  align-self: flex-start;
+  padding: 0;
+  color: var(--ds-theme-color-content-default);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 0.1875rem;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+    outline-offset: 2px;
+  }
+}
+
+.close {
+  position: absolute;
+  top: var(--ds-theme-spacing-2xs);
+  right: var(--ds-theme-spacing-2xs);
+}
