@@ -10,6 +10,11 @@ initialize()
 const preview: Preview = {
   tags: ['autodocs'], // to automatically generate documentation for our components
   parameters: {
+    options: {
+      storySort: {
+        order: ['Design Tokens', '*']
+      }
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
