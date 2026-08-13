@@ -48,35 +48,4 @@
   position: absolute;
   top: var(--ds-theme-spacing-sm);
   right: var(--ds-theme-spacing-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
-  border-radius: var(--ds-theme-border-radius-md);
-  background-color: var(--ds-theme-color-background-default);
-  color: var(--ds-theme-color-content-default);
-  font-size: 0.875rem;
-  line-height: 1;
-  cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
-
-  &:focus-visible {
-    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
-    outline-offset: -1px;
-  }
-
-  @media (hover: hover) {
-    &:hover:not([data-disabled]) {
-      background-color: var(--ds-theme-color-background-default-hover);
-    }
-  }
-
-  &[data-disabled] {
-    color: var(--ds-theme-color-content-disabled);
-    border-color: var(--ds-theme-color-border-disabled);
-    cursor: not-allowed;
-  }
 }

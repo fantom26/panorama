@@ -1,6 +1,7 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import clsx from 'clsx'
 
+import CloseButton from '@/components/CloseButton'
 import styles from '@/components/Dialog/index.module.css'
 import Typography from '@/components/Typography'
 
@@ -32,8 +33,16 @@ function Description({ className, ...rest }: React.ComponentProps<typeof BaseDia
   )
 }
 
-function Close({ className, ...rest }: React.ComponentProps<typeof BaseDialog.Close>) {
-  return <BaseDialog.Close className={clsx(styles.close, className)} {...rest} />
+function Close({
+  className,
+  ...rest
+}: Omit<React.ComponentProps<typeof BaseDialog.Close>, 'children'>) {
+  return (
+    <BaseDialog.Close
+      render={<CloseButton className={clsx(styles.close, className)} />}
+      {...rest}
+    />
+  )
 }
 
 const Dialog = {
