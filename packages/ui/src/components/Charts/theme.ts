@@ -10,6 +10,7 @@ export type PanoramaChartPalette = {
   secondary: am5.Color
   tertiary: am5.Color
   surface: am5.Color
+  noData: am5.Color
   grid: am5.Color
   textSubtle: am5.Color
   textDefault: am5.Color
@@ -27,6 +28,9 @@ const COLOR_TOKENS: Record<
   secondary: '--ds-theme-color-background-dataviz-secondary',
   tertiary: '--ds-theme-color-background-dataviz-tertiary',
   surface: '--ds-theme-color-background-default',
+  // No dedicated "no data" token exists — background-default-hover is a near-exact match
+  // for a muted, low-contrast wash in both themes and isn't otherwise used inside charts.
+  noData: '--ds-theme-color-background-default-hover',
   grid: '--ds-theme-color-content-subtle',
   textSubtle: '--ds-theme-color-content-subtle',
   textDefault: '--ds-theme-color-content-default',
@@ -103,4 +107,36 @@ export function createPanoramaChartTheme(
   }
 
   return PanoramaChartTheme.new(root)
+}
+
+// Storybook's theme decorator sets `data-theme` on <html> from a passive effect, which
+// always fires after a descendant's useLayoutEffect — so a chart built immediately on
+// mount can briefly read no theme tokens at all (every token is scoped under
+// `[data-theme]`, never bare `:root`) and fall back to amCharts5's own default colors.
+// Deferring the first build until `data-theme` is actually present avoids that flash;
+// real app usage, where `data-theme` is set before React mounts, is unaffected since the
+// attribute is already there and the chart builds synchronously as before.
+export function mountReactiveChart(
+  container: HTMLDivElement,
+  build: (container: HTMLDivElement) => am5.Root
+): () => void {
+  let root: am5.Root | undefined
+
+  const observer = new MutationObserver(() => {
+    root?.dispose()
+    root = build(container)
+  })
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  })
+
+  if (document.documentElement.hasAttribute('data-theme')) {
+    root = build(container)
+  }
+
+  return () => {
+    observer.disconnect()
+    root?.dispose()
+  }
 }

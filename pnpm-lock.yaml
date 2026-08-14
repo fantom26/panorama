@@ -187,6 +187,9 @@ importers:
       '@amcharts/amcharts5':
         specifier: ^5.20.2
         version: 5.20.2
+      '@amcharts/amcharts5-geodata':
+        specifier: ^5.1.6
+        version: 5.1.6
       '@base-ui/react':
         specifier: ^1.6.0
         version: 1.6.0(@types/react@19.2.18)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -310,6 +313,9 @@ packages:
 
   '@adobe/css-tools@4.5.0':
     resolution: {integrity: sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q==}
+
+  '@amcharts/amcharts5-geodata@5.1.6':
+    resolution: {integrity: sha512-5tx+De61wj1SSzwJtdnDgAw1PA1+Fx007I1hNKMc07V2HPE57vYRdjRND3n0mnyXsbXJ5USlOmJMUPlqe8eAqw==}
 
   '@amcharts/amcharts5@5.20.2':
     resolution: {integrity: sha512-fdArp/m2F2k1/j0VgWyUiYGnHuGRmVUmLUQPoAxGYMpvZku5y8k+ejkT9SzaiEt+bMqbqiiiV0b0ffk3/w0ADA==}
@@ -5967,6 +5973,10 @@ packages:
 snapshots:
 
   '@adobe/css-tools@4.5.0': {}
+
+  '@amcharts/amcharts5-geodata@5.1.6':
+    dependencies:
+      '@types/geojson': 7946.0.16
 
   '@amcharts/amcharts5@5.20.2':
     dependencies:

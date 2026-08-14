@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ramp {
+  display: flex;
+  flex: 1;
+  height: 6px;
+}
+
+.step {
+  flex: 1;
+  background-color: var(--ds-theme-color-content-default);
+}
+
+.range {
+  margin-left: 24px;
+}
