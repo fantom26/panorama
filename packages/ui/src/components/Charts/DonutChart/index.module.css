@@ -1,0 +1,56 @@
+.root {
+  display: flex;
+  gap: 28px;
+}
+
+.row {
+  flex-direction: row;
+  align-items: center;
+}
+
+.column {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.chart {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.legend {
+  flex: 1;
+  min-width: 0;
+}
+
+.legendRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 0;
+  border-bottom: var(--ds-theme-border-width-sm) dashed var(--ds-theme-color-border-subtle);
+}
+
+.legendRow:last-child {
+  border-bottom: none;
+}
+
+.legendLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.swatch {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--ds-theme-color-content-default);
+}
+
+.legendValue {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}

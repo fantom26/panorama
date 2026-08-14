@@ -1,5 +1,10 @@
 import * as am5 from '@amcharts/amcharts5'
 
+// Rank-based series ramp: one ink color (textDefault) at five opacity steps, never a
+// distinct hue. Clamps rather than wraps — a 6th-ranked slice must reuse the last step,
+// never repeat from the top, so callers group anything past index 4 into a single item.
+export const CHART_RANK_OPACITIES = [1, 0.68, 0.46, 0.28, 0.13] as const
+
 export type PanoramaChartPalette = {
   primary: am5.Color
   secondary: am5.Color
