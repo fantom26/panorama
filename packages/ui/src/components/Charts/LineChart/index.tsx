@@ -6,7 +6,11 @@ import * as am5xy from '@amcharts/amcharts5/xy'
 import clsx from 'clsx'
 
 import styles from '@/components/Charts/LineChart/index.module.css'
-import { createPanoramaChartTheme, readPanoramaChartPalette } from '@/components/Charts/theme'
+import {
+  createPanoramaChartTheme,
+  mountReactiveChart,
+  readPanoramaChartPalette
+} from '@/components/Charts/theme'
 
 export type LineChartDatum = Record<string, string | number | null>
 
@@ -115,21 +119,7 @@ export default function LineChart({
       return root
     }
 
-    let root = build(container)
-
-    const observer = new MutationObserver(() => {
-      root.dispose()
-      root = build(container)
-    })
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    })
-
-    return () => {
-      observer.disconnect()
-      root.dispose()
-    }
+    return mountReactiveChart(container, build)
   }, [dataset, xAxis, series, series.dataKey, series.label, series.valueFormatter])
 
   return (

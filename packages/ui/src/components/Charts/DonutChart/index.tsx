@@ -8,6 +8,7 @@ import clsx from 'clsx'
 import {
   CHART_RANK_OPACITIES,
   createPanoramaChartTheme,
+  mountReactiveChart,
   readPanoramaChartPalette
 } from '@/components/Charts/theme'
 import Typography from '@/components/DataDisplay/Typography'
@@ -88,21 +89,7 @@ export default function DonutChart({
       return root
     }
 
-    let root = build(container)
-
-    const observer = new MutationObserver(() => {
-      root.dispose()
-      root = build(container)
-    })
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    })
-
-    return () => {
-      observer.disconnect()
-      root.dispose()
-    }
+    return mountReactiveChart(container, build)
   }, [chartData])
 
   return (

@@ -9,6 +9,7 @@ import clsx from 'clsx'
 import {
   CHART_RANK_OPACITIES,
   createPanoramaChartTheme,
+  mountReactiveChart,
   readPanoramaChartPalette
 } from '@/components/Charts/theme'
 
@@ -142,21 +143,7 @@ export default function WorldMap({
       return root
     }
 
-    let root = build(container)
-
-    const observer = new MutationObserver(() => {
-      root.dispose()
-      root = build(container)
-    })
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    })
-
-    return () => {
-      observer.disconnect()
-      root.dispose()
-    }
+    return mountReactiveChart(container, build)
   }, [data, mode, highlight, buckets, format, onSelect])
 
   return (
