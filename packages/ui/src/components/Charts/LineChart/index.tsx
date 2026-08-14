@@ -1,4 +1,4 @@
-import { type ComponentProps, useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 import * as am5 from '@amcharts/amcharts5'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
@@ -21,7 +21,7 @@ export type LineChartSeries = {
   valueFormatter?: (value: number) => string
 }
 
-export type LineChartProps = Omit<ComponentProps<'div'>, 'children'> & {
+export type LineChartProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   dataset: LineChartDatum[]
   xAxis: { dataKey: string }
   series: LineChartSeries[]

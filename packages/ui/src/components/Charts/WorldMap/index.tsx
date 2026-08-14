@@ -1,4 +1,4 @@
-import { type ComponentProps, useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 import * as am5 from '@amcharts/amcharts5'
 import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow'
@@ -17,7 +17,7 @@ import styles from './index.module.css'
 
 export type WorldMapDatum = { id: string; value?: number | null }
 
-export type WorldMapProps = Omit<ComponentProps<'div'>, 'children'> & {
+export type WorldMapProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   data?: WorldMapDatum[]
   /** heat = value-shaded choropleth; lit = flat dim base with only `highlight` inked. */
   mode?: 'heat' | 'lit'

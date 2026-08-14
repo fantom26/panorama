@@ -12,6 +12,8 @@ description: Use when writing imports, adding files/packages, or wiring tsconfig
   deep relative paths like `../../components/Field`.
 - Never use `.` / `../` imports to cross a folder or module boundary; same-folder
   siblings may be relative.
+- Prefer namespace-qualified React types over importing each one by name, e.g.
+  `React.ReactNode` instead of `import { ReactNode } from 'react'`.
 
 ## Wiring
 - Internal deps use `workspace:*`, never version ranges.

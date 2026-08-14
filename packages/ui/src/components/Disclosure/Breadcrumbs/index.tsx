@@ -1,11 +1,11 @@
-import { Children, type ComponentProps, Fragment } from 'react'
+import { Children, Fragment } from 'react'
 
 import clsx from 'clsx'
 
 import Typography from '@/components/DataDisplay/Typography'
 import styles from '@/components/Disclosure/Breadcrumbs/index.module.css'
 
-export default function Breadcrumbs({ children, className, ...rest }: ComponentProps<'nav'>) {
+export default function Breadcrumbs({ children, className, ...rest }: React.ComponentProps<'nav'>) {
   const items = Children.toArray(children)
 
   return (

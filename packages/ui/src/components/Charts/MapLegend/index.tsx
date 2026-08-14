@@ -1,5 +1,3 @@
-import { type ComponentProps } from 'react'
-
 import clsx from 'clsx'
 
 import { CHART_RANK_OPACITIES } from '@/components/Charts/theme'
@@ -7,7 +5,7 @@ import Typography from '@/components/DataDisplay/Typography'
 
 import styles from './index.module.css'
 
-export type MapLegendProps = Omit<ComponentProps<'div'>, 'children'> & {
+export type MapLegendProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   from?: string
   to?: string
   range?: string

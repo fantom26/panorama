@@ -1,18 +1,18 @@
-import type { ComponentPropsWithoutRef, KeyboardEvent, MouseEvent, ReactNode } from 'react'
-
 import { Button as BaseButton } from '@base-ui/react/button'
 import clsx from 'clsx'
 
 import styles from '@/components/DataDisplay/Chip/index.module.css'
 import Icon from '@/components/DataDisplay/Icon'
 
-export type ChipProps = Omit<ComponentPropsWithoutRef<'span'>, 'onClick' | 'children'> & {
+export type ChipProps = Omit<React.ComponentPropsWithoutRef<'span'>, 'onClick' | 'children'> & {
   variant?: 'outlined'
   label: string
-  startIcon?: ReactNode
+  startIcon?: React.ReactNode
   disabled?: boolean
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-  onDelete?: (event: MouseEvent<HTMLSpanElement> | KeyboardEvent<HTMLButtonElement>) => void
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onDelete?: (
+    event: React.MouseEvent<HTMLSpanElement> | React.KeyboardEvent<HTMLButtonElement>
+  ) => void
 }
 
 export default function Chip({
@@ -71,7 +71,7 @@ export default function Chip({
       className={classNames}
       disabled={disabled}
       onClick={onClick}
-      onKeyDown={(event: KeyboardEvent<HTMLButtonElement>) => {
+      onKeyDown={(event: React.KeyboardEvent<HTMLButtonElement>) => {
         if (onDelete && (event.key === 'Delete' || event.key === 'Backspace')) {
           event.preventDefault()
           onDelete(event)

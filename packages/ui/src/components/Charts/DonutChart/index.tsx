@@ -1,4 +1,4 @@
-import { type ComponentProps, useLayoutEffect, useMemo, useRef } from 'react'
+import { useLayoutEffect, useMemo, useRef } from 'react'
 
 import * as am5 from '@amcharts/amcharts5'
 import * as am5percent from '@amcharts/amcharts5/percent'
@@ -17,7 +17,7 @@ import styles from './index.module.css'
 
 export type DonutChartDatum = { label: string; value: number }
 
-export type DonutChartProps = Omit<ComponentProps<'div'>, 'children'> & {
+export type DonutChartProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   data: DonutChartDatum[]
   size?: number
   legend?: boolean

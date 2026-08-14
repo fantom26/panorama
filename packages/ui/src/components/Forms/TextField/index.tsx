@@ -1,13 +1,11 @@
-import type { ReactNode } from 'react'
-
 import { Input as BaseInput } from '@base-ui/react/input'
 import clsx from 'clsx'
 
 import styles from '@/components/Forms/TextField/index.module.css'
 
 export type TextFieldProps = React.ComponentProps<typeof BaseInput> & {
-  startAdornment?: ReactNode
-  endAdornment?: ReactNode
+  startAdornment?: React.ReactNode
+  endAdornment?: React.ReactNode
   error?: boolean
   /** Aligns digits with mono tabular values — use for numeric fields. */
   tabular?: boolean

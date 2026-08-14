@@ -1,4 +1,4 @@
-import { type ChangeEvent, type ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import clsx from 'clsx'
 
@@ -14,7 +14,7 @@ export type ExpandableSearchProps = {
   defaultValue?: string
   onValueChange?: (value: string) => void
   className?: string
-  children?: ReactNode
+  children?: React.ReactNode
 }
 
 export default function ExpandableSearch({
@@ -39,7 +39,7 @@ export default function ExpandableSearch({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     onValueChange?.(event.target.value)
   }
 

@@ -1,14 +1,12 @@
-import type { ComponentProps, ReactNode } from 'react'
-
 import clsx from 'clsx'
 
 import styles from '@/components/DataDisplay/StatCard/index.module.css'
 import Typography, { type TypographyColor } from '@/components/DataDisplay/Typography'
 import Skeleton from '@/components/Feedback/Skeleton'
 
-export type StatCardProps = ComponentProps<'div'> & {
+export type StatCardProps = React.ComponentProps<'div'> & {
   label: string
-  value: ReactNode
+  value: React.ReactNode
   trend?: string
   trendColor?: 'default' | 'success' | 'error'
   loading?: boolean
