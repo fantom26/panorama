@@ -5,40 +5,36 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import DataTable, { type TableState } from '@/components/DataDisplay/DataTable'
 import type { AppDispatch, RootState } from '@/store'
-import { fetchTasks } from '@/store'
-import type { TaskData } from '@/types/task.types'
+import { fetchCountries } from '@/store'
+import type { CountryData } from '@/types/country.types'
 
-const columns: ColumnDef<TaskData>[] = [
-  { accessorKey: 'id', header: 'ID' },
-  { accessorKey: 'title', header: 'Title' },
-  {
-    accessorKey: 'state',
-    header: 'State',
-    cell: (info) => info.getValue<TaskData['state']>().replace('TASK_', '')
-  }
+const columns: ColumnDef<CountryData>[] = [
+  { accessorKey: 'id', header: 'Code' },
+  { accessorKey: 'name', header: 'Name' },
+  { accessorKey: 'region', header: 'Region' }
 ]
 
-export default function InboxScreen() {
+export default function Screen() {
   const dispatch = useDispatch<AppDispatch>()
-  const { tasks, status, error } = useSelector((state: RootState) => state.taskbox)
+  const { countries, status, error } = useSelector((state: RootState) => state.countries)
 
   useEffect(() => {
-    dispatch(fetchTasks())
+    dispatch(fetchCountries())
   }, [dispatch])
 
-  const state: TableState<TaskData> =
+  const state: TableState<CountryData> =
     status === 'loading'
       ? { status: 'loading' }
       : status === 'failed'
         ? { status: 'error', error }
-        : tasks.length === 0
+        : countries.length === 0
           ? { status: 'empty' }
-          : { status: 'ready', data: tasks }
+          : { status: 'ready', data: countries }
 
   return (
     <div className='page lists-show'>
       <nav>
-        <h1 className='title-page'>Taskbox</h1>
+        <h1 className='title-page'>Countries</h1>
       </nav>
       <DataTable state={state} columns={columns} />
     </div>

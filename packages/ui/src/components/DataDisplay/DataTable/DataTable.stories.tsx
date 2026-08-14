@@ -5,22 +5,18 @@ import { Provider, useSelector } from 'react-redux'
 
 import DataTable from '@/components/DataDisplay/DataTable'
 import type { RootState } from '@/store'
-import type { TaskData } from '@/types/task.types'
+import type { CountryData } from '@/types/country.types'
 
-const columns: ColumnDef<TaskData>[] = [
-  { accessorKey: 'id', header: 'ID' },
-  { accessorKey: 'title', header: 'Title' },
-  {
-    accessorKey: 'state',
-    header: 'State',
-    cell: (info) => info.getValue<TaskData['state']>().replace('TASK_', '')
-  }
+const columns: ColumnDef<CountryData>[] = [
+  { accessorKey: 'id', header: 'Code' },
+  { accessorKey: 'name', header: 'Name' },
+  { accessorKey: 'region', header: 'Region' }
 ]
 
-const tasks: TaskData[] = [
-  { id: '1', title: 'Buy groceries', state: 'TASK_INBOX' },
-  { id: '2', title: 'Write quarterly report', state: 'TASK_PINNED' },
-  { id: '3', title: 'Clean the house', state: 'TASK_ARCHIVED' }
+const countries: CountryData[] = [
+  { id: 'UA', name: 'Ukraine', region: 'Europe' },
+  { id: 'FR', name: 'France', region: 'Europe' },
+  { id: 'JP', name: 'Japan', region: 'Asia' }
 ]
 
 const meta = {
@@ -36,7 +32,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => <DataTable state={{ status: 'ready', data: tasks }} columns={columns} />
+  render: () => <DataTable state={{ status: 'ready', data: countries }} columns={columns} />
 }
 
 export const Loading: Story = {
@@ -45,39 +41,39 @@ export const Loading: Story = {
 
 export const Empty: Story = {
   render: () => (
-    <DataTable state={{ status: 'empty', message: 'No tasks found' }} columns={columns} />
+    <DataTable state={{ status: 'empty', message: 'No countries found' }} columns={columns} />
   )
 }
 
 export const ErrorState: Story = {
   render: () => (
     <DataTable
-      state={{ status: 'error', error: new Error('Failed to load tasks') }}
+      state={{ status: 'error', error: new Error('Failed to load countries') }}
       columns={columns}
     />
   )
 }
 
-type TaskBoxState = {
-  tasks: TaskData[]
+type CountriesState = {
+  countries: CountryData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null
 }
 
 function Mockstore({
-  taskboxState,
+  countriesState,
   children
 }: {
-  taskboxState: TaskBoxState
+  countriesState: CountriesState
   children: React.ReactNode
 }) {
   return (
     <Provider
       store={configureStore({
         reducer: {
-          taskbox: createSlice({
-            name: 'taskbox',
-            initialState: taskboxState,
+          countries: createSlice({
+            name: 'countries',
+            initialState: countriesState,
             reducers: {}
           }).reducer
         }
@@ -89,8 +85,8 @@ function Mockstore({
 }
 
 function ConnectedDataTable() {
-  const data = useSelector((state: RootState) => state.taskbox.tasks)
-  const { status, error } = useSelector((state: RootState) => state.taskbox)
+  const data = useSelector((state: RootState) => state.countries.countries)
+  const { status, error } = useSelector((state: RootState) => state.countries)
 
   const tableState =
     status === 'loading'
@@ -98,7 +94,7 @@ function ConnectedDataTable() {
       : status === 'failed'
         ? { status: 'error' as const, error: error ?? 'Unknown error' }
         : data.length === 0
-          ? { status: 'empty' as const, message: 'No tasks' }
+          ? { status: 'empty' as const, message: 'No countries' }
           : { status: 'ready' as const, data }
 
   return <DataTable state={tableState} columns={columns} />
@@ -106,7 +102,7 @@ function ConnectedDataTable() {
 
 export const ConnectedToStore: Story = {
   render: () => (
-    <Mockstore taskboxState={{ tasks, status: 'succeeded', error: null }}>
+    <Mockstore countriesState={{ countries, status: 'succeeded', error: null }}>
       <ConnectedDataTable />
     </Mockstore>
   )

@@ -1,31 +1,37 @@
 import { configureStore, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import type { TaskData } from '@/types/task.types'
+import type { CountryData } from '@/types/country.types'
 
-interface TaskBoxState {
-  tasks: TaskData[]
+interface CountriesState {
+  countries: CountryData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null
 }
 
-const TaskBoxData: TaskBoxState = {
-  tasks: [],
+const initialState: CountriesState = {
+  countries: [],
   status: 'idle',
   error: null
 }
 /*
- * Creates an asyncThunk to fetch tasks from a remote endpoint.
+ * Creates an asyncThunk to fetch countries from the REST Countries API.
  * You can read more about Redux Toolkit's thunks in the docs:
  * https://redux-toolkit.js.org/api/createAsyncThunk
  */
-export const fetchTasks = createAsyncThunk('taskbox/fetchTasks', async () => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos?userId=1')
+export const fetchCountries = createAsyncThunk('countries/fetchCountries', async () => {
+  const response = await fetch(import.meta.env.VITE_REST_COUNTRIES_API_URL, {
+    headers: {
+      Authorization: `Bearer ${import.meta.env.VITE_REST_COUNTRIES_API_AUTH_TOKEN}`
+    }
+  })
   const data = await response.json()
-  const result = data.map((task: { id: number; title: string; completed: boolean }) => ({
-    id: `${task.id}`,
-    title: task.title,
-    state: task.completed ? 'TASK_ARCHIVED' : 'TASK_INBOX'
-  }))
+  const result = data.map(
+    (country: { cca2: string; name: { common: string }; region: string }) => ({
+      id: country.cca2,
+      name: country.name.common,
+      region: country.region
+    })
+  )
   return result
 })
 
@@ -34,9 +40,9 @@ export const fetchTasks = createAsyncThunk('taskbox/fetchTasks', async () => {
  * You can read more about Redux Toolkit's slices in the docs:
  * https://redux-toolkit.js.org/api/createSlice
  */
-const TasksSlice = createSlice({
-  name: 'taskbox',
-  initialState: TaskBoxData,
+const CountriesSlice = createSlice({
+  name: 'countries',
+  initialState,
   reducers: {},
   /*
    * Extends the reducer for the async actions
@@ -44,27 +50,27 @@ const TasksSlice = createSlice({
    */
   extraReducers(builder) {
     builder
-      .addCase(fetchTasks.pending, (state) => {
+      .addCase(fetchCountries.pending, (state) => {
         state.status = 'loading'
         state.error = null
-        state.tasks = []
+        state.countries = []
       })
-      .addCase(fetchTasks.fulfilled, (state, action) => {
+      .addCase(fetchCountries.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.error = null
-        state.tasks = action.payload
+        state.countries = action.payload
       })
-      .addCase(fetchTasks.rejected, (state) => {
+      .addCase(fetchCountries.rejected, (state) => {
         state.status = 'failed'
         state.error = 'Something went wrong'
-        state.tasks = []
+        state.countries = []
       })
   }
 })
 
 const store = configureStore({
   reducer: {
-    taskbox: TasksSlice.reducer
+    countries: CountriesSlice.reducer
   }
 })
 
