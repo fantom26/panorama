@@ -23,7 +23,7 @@ export const Default: Story = {
       <Typography component='a' href='#' variant='body-sm' color='subtle'>
         Western Europe
       </Typography>
-      <Typography variant='label-sm' color='default'>
+      <Typography variant='label-sm' color='brand'>
         Germany
       </Typography>
     </Breadcrumbs>

@@ -18,19 +18,7 @@ export type TypographyVariant =
   | 'meta-default'
   | 'meta-sm'
 
-export type TypographyColor =
-  | 'default'
-  | 'default-hover'
-  | 'subtle'
-  | 'brand'
-  | 'brand-hover'
-  | 'brand-knockout'
-  | 'knockout'
-  | 'disabled'
-  | 'utility-error'
-  | 'utility-warning'
-  | 'utility-success'
-  | 'utility-info'
+export type TypographyColor = 'brand' | 'subtle' | 'knockout' | 'utility-error' | 'utility-success'
 
 export type TypographyProps<C extends React.ElementType = 'p'> = {
   variant?: TypographyVariant
@@ -56,18 +44,11 @@ const variantClassNames: Record<TypographyVariant, string | undefined> = {
 }
 
 const colorClassNames: Record<TypographyColor, string | undefined> = {
-  default: styles.colorDefault,
-  'default-hover': styles.colorDefaultHover,
-  subtle: styles.colorSubtle,
   brand: styles.colorBrand,
-  'brand-hover': styles.colorBrandHover,
-  'brand-knockout': styles.colorBrandKnockout,
+  subtle: styles.colorSubtle,
   knockout: styles.colorKnockout,
-  disabled: styles.colorDisabled,
   'utility-error': styles.colorUtilityError,
-  'utility-warning': styles.colorUtilityWarning,
-  'utility-success': styles.colorUtilitySuccess,
-  'utility-info': styles.colorUtilityInfo
+  'utility-success': styles.colorUtilitySuccess
 }
 
 const defaultElementMap: Record<TypographyVariant, React.ElementType> = {
@@ -89,7 +70,7 @@ const defaultElementMap: Record<TypographyVariant, React.ElementType> = {
 
 export default function Typography<C extends React.ElementType = 'p'>({
   variant = 'body-default',
-  color = 'default',
+  color = 'brand',
   component,
   className,
   ...rest

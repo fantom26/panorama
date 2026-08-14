@@ -27,7 +27,7 @@ const meta = {
   title: 'Data Display/Typography',
   args: {
     variant: 'body-default',
-    color: 'default',
+    color: 'brand',
     children: 'Global GDP grew 3.2% in the fourth quarter'
   }
 } satisfies Meta<typeof Typography>
@@ -55,36 +55,24 @@ export const AllVariants: Story = {
 export const Colors: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <Typography variant='label-default' color='default'>
-        content-default
+      <Typography variant='label-default' color='brand'>
+        content-brand
       </Typography>
       <Divider />
       <Typography variant='label-default' color='subtle'>
         content-subtle
       </Typography>
       <Divider />
-      <Typography variant='label-default' color='brand'>
-        content-brand
-      </Typography>
-      <Divider />
-      <Typography variant='label-default' color='disabled'>
-        content-disabled
+      <Typography variant='label-default' color='knockout'>
+        content-knockout
       </Typography>
       <Divider />
       <Typography variant='label-default' color='utility-error'>
         content-utility-error
       </Typography>
       <Divider />
-      <Typography variant='label-default' color='utility-warning'>
-        content-utility-warning
-      </Typography>
-      <Divider />
       <Typography variant='label-default' color='utility-success'>
         content-utility-success
-      </Typography>
-      <Divider />
-      <Typography variant='label-default' color='utility-info'>
-        content-utility-info
       </Typography>
     </div>
   )

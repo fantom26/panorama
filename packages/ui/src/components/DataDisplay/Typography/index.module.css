@@ -124,50 +124,22 @@
   text-transform: var(--ds-theme-typography-meta-sm-text-transform);
 }
 
-.colorDefault {
-  color: var(--ds-theme-color-content-default);
-}
-
-.colorDefaultHover {
-  color: var(--ds-theme-color-content-default-hover);
+.colorBrand {
+  color: var(--ds-theme-color-content-brand);
 }
 
 .colorSubtle {
   color: var(--ds-theme-color-content-subtle);
 }
 
-.colorBrand {
-  color: var(--ds-theme-color-content-brand);
-}
-
-.colorBrandHover {
-  color: var(--ds-theme-color-content-brand-hover);
-}
-
-.colorBrandKnockout {
-  color: var(--ds-theme-color-content-brand-knockout);
-}
-
 .colorKnockout {
   color: var(--ds-theme-color-content-knockout);
-}
-
-.colorDisabled {
-  color: var(--ds-theme-color-content-disabled);
 }
 
 .colorUtilityError {
   color: var(--ds-theme-color-content-utility-error);
 }
 
-.colorUtilityWarning {
-  color: var(--ds-theme-color-content-utility-warning);
-}
-
 .colorUtilitySuccess {
   color: var(--ds-theme-color-content-utility-success);
-}
-
-.colorUtilityInfo {
-  color: var(--ds-theme-color-content-utility-info);
 }
