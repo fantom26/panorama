@@ -7,6 +7,7 @@ import clsx from 'clsx'
 
 import styles from '@/components/Charts/LineChart/index.module.css'
 import {
+  CHART_RANK_OPACITIES,
   createPanoramaChartTheme,
   mountReactiveChart,
   readPanoramaChartPalette
@@ -14,16 +15,22 @@ import {
 
 export type LineChartDatum = Record<string, string | number | null>
 
+export type LineChartSeries = {
+  dataKey: string
+  label?: string
+  valueFormatter?: (value: number) => string
+}
+
 export type LineChartProps = Omit<ComponentProps<'div'>, 'children'> & {
   dataset: LineChartDatum[]
   xAxis: { dataKey: string }
-  series: {
-    dataKey: string
-    label?: string
-    valueFormatter?: (value: number) => string
-  }
+  series: LineChartSeries[]
   height?: number
 }
+
+// Series separate by shade AND dash pattern together, so they stay legible in grayscale,
+// print, and for color-blind reading — shade rank alone isn't enough past 2-3 series.
+const DASH_PATTERNS: (number[] | undefined)[] = [undefined, undefined, [4, 3], [2, 3]]
 
 export default function LineChart({
   dataset,
@@ -79,48 +86,67 @@ export default function LineChart({
         })
       )
 
-      const lineSeries = chart.series.push(
-        am5xy.LineSeries.new(root, {
-          name: series.label ?? series.dataKey,
-          xAxis: categoryAxis,
-          yAxis: valueAxis,
-          categoryXField: xAxis.dataKey,
-          valueYField: series.dataKey,
-          connect: false,
-          stroke: palette.textDefault
-        })
-      )
-      lineSeries.strokes.template.set('strokeWidth', 2)
+      const showSeriesName = series.length > 1
 
-      const bulletTemplate = am5.Template.new<am5.Circle>({})
-      lineSeries.bullets.push(() =>
-        am5.Bullet.new(root, {
-          sprite: am5.Circle.new(root, { radius: 4, strokeWidth: 2 }, bulletTemplate)
-        })
-      )
-      bulletTemplate.setAll({ fill: palette.surface, stroke: palette.textDefault })
+      const lineSeriesList = series.map((s, index) => {
+        const rankOpacity = CHART_RANK_OPACITIES[Math.min(index, CHART_RANK_OPACITIES.length - 1)]
 
-      lineSeries.data.setAll(dataset)
+        const lineSeries = chart.series.push(
+          am5xy.LineSeries.new(root, {
+            name: s.label ?? s.dataKey,
+            xAxis: categoryAxis,
+            yAxis: valueAxis,
+            categoryXField: xAxis.dataKey,
+            valueYField: s.dataKey,
+            connect: false,
+            ...(palette.textDefault ? { stroke: palette.textDefault } : {})
+          })
+        )
+        lineSeries.strokes.template.setAll({
+          strokeWidth: 2,
+          strokeOpacity: rankOpacity,
+          strokeDasharray: DASH_PATTERNS[index % DASH_PATTERNS.length]
+        })
+
+        const bulletTemplate = am5.Template.new<am5.Circle>({})
+        lineSeries.bullets.push(() =>
+          am5.Bullet.new(root, {
+            sprite: am5.Circle.new(root, { radius: 4, strokeWidth: 2 }, bulletTemplate)
+          })
+        )
+        if (palette.surface && palette.textDefault) {
+          bulletTemplate.setAll({
+            fill: palette.surface,
+            stroke: palette.textDefault,
+            fillOpacity: rankOpacity,
+            strokeOpacity: rankOpacity
+          })
+        }
+
+        lineSeries.data.setAll(dataset)
+
+        const tooltip = am5.Tooltip.new(root, { pointerOrientation: 'vertical' })
+        tooltip.label.set('text', showSeriesName ? '{name}: {valueY}' : '{valueY}')
+        lineSeries.set('tooltip', tooltip)
+
+        return lineSeries
+      })
 
       const cursor = chart.set(
         'cursor',
         am5xy.XYCursor.new(root, {
           xAxis: categoryAxis,
           behavior: 'none',
-          snapToSeries: [lineSeries]
+          snapToSeries: lineSeriesList
         })
       )
       cursor.lineY.set('visible', false)
-
-      const tooltip = am5.Tooltip.new(root, { pointerOrientation: 'vertical' })
-      tooltip.label.set('text', '{valueY}')
-      lineSeries.set('tooltip', tooltip)
 
       return root
     }
 
     return mountReactiveChart(container, build)
-  }, [dataset, xAxis, series, series.dataKey, series.label, series.valueFormatter])
+  }, [dataset, xAxis, series])
 
   return (
     <div
