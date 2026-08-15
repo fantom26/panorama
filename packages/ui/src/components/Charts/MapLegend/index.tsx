@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 
 import { CHART_RANK_OPACITIES } from '@/components/Charts/theme'
 import Typography from '@/components/DataDisplay/Typography'
@@ -14,17 +15,13 @@ export type MapLegendProps = Omit<React.ComponentProps<'div'>, 'children'> & {
 // Low → high reads light → dark, i.e. the ramp in reverse rank order.
 const RAMP_LOW_TO_HIGH = [...CHART_RANK_OPACITIES].reverse()
 
-export default function MapLegend({
-  from = 'Low',
-  to = 'High',
-  range,
-  className,
-  ...rest
-}: MapLegendProps) {
+export default function MapLegend({ from, to, range, className, ...rest }: MapLegendProps) {
+  const { t } = useTranslation()
+
   return (
     <div className={clsx(styles.root, className)} {...rest}>
       <Typography variant='meta-sm' color='subtle' component='span'>
-        {from}
+        {from ?? t('charts.mapLegend.low')}
       </Typography>
       <div className={styles.ramp}>
         {RAMP_LOW_TO_HIGH.map((opacity) => (
@@ -32,7 +29,7 @@ export default function MapLegend({
         ))}
       </div>
       <Typography variant='meta-sm' color='subtle' component='span'>
-        {to}
+        {to ?? t('charts.mapLegend.high')}
       </Typography>
       {range && (
         <Typography variant='meta-sm' color='subtle' component='span' className={styles.range}>

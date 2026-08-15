@@ -1,5 +1,6 @@
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 
 import styles from '@/components/DataDisplay/DataTable/index.module.css'
 import Icon from '@/components/DataDisplay/Icon'
@@ -23,6 +24,7 @@ export type DataTableProps<TData> = {
 }
 
 export default function DataTable<TData>({ state, columns, className }: DataTableProps<TData>) {
+  const { t } = useTranslation()
   const data = state.status === 'ready' ? state.data : []
   const table = useReactTable({
     data,
@@ -56,7 +58,7 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
                   ? state.error
                   : state.error instanceof Error
                     ? state.error.message
-                    : 'Something went wrong')}
+                    : t('dataTable.error'))}
             </span>
           </div>
         </td>
@@ -68,7 +70,11 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
         <td className={styles.stateCell} colSpan={columnCount}>
           <div className={styles.state}>
             <Icon name='inbox' size={20} className={styles.emptyIcon} />
-            <span>{state.status === 'empty' ? (state.message ?? 'No data') : 'No data'}</span>
+            <span>
+              {state.status === 'empty'
+                ? (state.message ?? t('dataTable.noData'))
+                : t('dataTable.noData')}
+            </span>
           </div>
         </td>
       </tr>

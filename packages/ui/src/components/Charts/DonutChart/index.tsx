@@ -4,6 +4,7 @@ import * as am5 from '@amcharts/amcharts5'
 import * as am5percent from '@amcharts/amcharts5/percent'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 
 import {
   CHART_RANK_OPACITIES,
@@ -28,11 +29,11 @@ export type DonutChartProps = Omit<React.ComponentProps<'div'>, 'children'> & {
 // the last shade — group anything past the 4th-ranked item into a single "Other" slice.
 const MAX_SLICES = CHART_RANK_OPACITIES.length
 
-function groupTail(data: DonutChartDatum[]): DonutChartDatum[] {
+function groupTail(data: DonutChartDatum[], otherLabel: string): DonutChartDatum[] {
   if (data.length <= MAX_SLICES) return data
   const head = data.slice(0, MAX_SLICES - 1)
   const tailTotal = data.slice(MAX_SLICES - 1).reduce((sum, d) => sum + d.value, 0)
-  return [...head, { label: 'Other', value: tailTotal }]
+  return [...head, { label: otherLabel, value: tailTotal }]
 }
 
 export default function DonutChart({
@@ -44,8 +45,9 @@ export default function DonutChart({
   style,
   ...rest
 }: DonutChartProps) {
+  const { t } = useTranslation()
   const chartRef = useRef<HTMLDivElement>(null)
-  const chartData = useMemo(() => groupTail(data), [data])
+  const chartData = useMemo(() => groupTail(data, t('charts.donutChart.otherLabel')), [data, t])
   const total = chartData.reduce((sum, d) => sum + d.value, 0)
 
   useLayoutEffect(() => {

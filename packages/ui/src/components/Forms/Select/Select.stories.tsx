@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Field from '@/components/Forms/Field'
 import Select from '@/components/Forms/Select'
@@ -22,8 +23,11 @@ const meta = {
   component: Select,
   title: 'Forms/Select',
   args: {
-    options: regionOptions,
-    placeholder: 'All regions'
+    options: regionOptions
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Select {...args} placeholder={t('stories.select.allRegions')} />
   }
 } satisfies Meta<typeof Select>
 
@@ -40,11 +44,14 @@ export const WithValue: Story = {
 }
 
 export const Error: Story = {
-  render: () => (
-    <Field label='Locale' error='Unsupported locale'>
-      <Select error defaultValue='zz' options={[{ label: 'zz — unknown', value: 'zz' }]} />
-    </Field>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <Field label={t('stories.select.locale')} error={t('stories.select.unsupportedLocale')}>
+        <Select error defaultValue='zz' options={[{ label: 'zz — unknown', value: 'zz' }]} />
+      </Field>
+    )
+  }
 }
 
 export const Disabled: Story = {
@@ -56,9 +63,12 @@ export const Disabled: Story = {
 }
 
 export const InField: Story = {
-  render: () => (
-    <Field label='Region'>
-      <Select options={regionOptions} placeholder='All regions' />
-    </Field>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <Field label={t('stories.select.region')}>
+        <Select options={regionOptions} placeholder={t('stories.select.allRegions')} />
+      </Field>
+    )
+  }
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import IconButton from '@/components/Buttons/IconButton'
 import Icon from '@/components/DataDisplay/Icon'
@@ -6,9 +7,13 @@ import Icon from '@/components/DataDisplay/Icon'
 const meta = {
   component: IconButton,
   title: 'Buttons/IconButton',
-  args: {
-    'aria-label': 'Search',
-    children: <Icon name='search' />
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <IconButton {...args} aria-label={t('stories.iconButton.searchAriaLabel')}>
+        <Icon name='search' />
+      </IconButton>
+    )
   }
 } satisfies Meta<typeof IconButton>
 

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@/components/Buttons/Button'
 import Icon from '@/components/DataDisplay/Icon'
@@ -13,22 +14,23 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => (
-    <Dialog.Root>
-      <Dialog.Trigger render={<Button variant='contained' />}>
-        <Icon name='plus' />
-        Add to Compare
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Backdrop />
-        <Dialog.Popup>
-          <Dialog.Title>Add country to compare</Dialog.Title>
-          <Dialog.Description>
-            Search and select a country to add to the comparison. Up to 5 countries.
-          </Dialog.Description>
-          <Dialog.Close aria-label='Close dialog' />
-        </Dialog.Popup>
-      </Dialog.Portal>
-    </Dialog.Root>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <Dialog.Root>
+        <Dialog.Trigger render={<Button variant='contained' />}>
+          <Icon name='plus' />
+          {t('common.actions.addToCompare')}
+        </Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Backdrop />
+          <Dialog.Popup>
+            <Dialog.Title>{t('stories.dialog.title')}</Dialog.Title>
+            <Dialog.Description>{t('stories.dialog.description')}</Dialog.Description>
+            <Dialog.Close aria-label={t('stories.dialog.closeAriaLabel')} />
+          </Dialog.Popup>
+        </Dialog.Portal>
+      </Dialog.Root>
+    )
+  }
 }

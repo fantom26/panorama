@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Hint from '@/components/Forms/Hint'
 
@@ -6,7 +7,11 @@ const meta = {
   component: Hint,
   title: 'Forms/Hint',
   args: {
-    text: 'Filters the ranking chart'
+    text: ''
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Hint {...args} text={t('stories.field.gdpFloorHint')} />
   }
 } satisfies Meta<typeof Hint>
 
@@ -17,7 +22,10 @@ export const Default: Story = {}
 
 export const Error: Story = {
   args: {
-    error: true,
-    text: 'Must be between 1960 and 2024'
+    error: true
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Hint {...args} text={t('stories.field.yearError')} />
   }
 }

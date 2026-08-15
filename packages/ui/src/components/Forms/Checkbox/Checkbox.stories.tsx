@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Checkbox from '@/components/Forms/Checkbox'
 
@@ -6,7 +7,11 @@ const meta = {
   component: Checkbox,
   title: 'Forms/Checkbox',
   args: {
-    label: 'Include disputed territories'
+    label: ''
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Checkbox {...args} label={t('stories.checkbox.includeDisputedTerritories')} />
   }
 } satisfies Meta<typeof Checkbox>
 
@@ -23,30 +28,55 @@ export const Checked: Story = {
 
 export const WithHint: Story = {
   args: {
-    label: 'Show null indicators',
-    hint: 'Countries missing World Bank data',
     defaultChecked: true
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Checkbox
+        {...args}
+        label={t('stories.checkbox.showNullIndicators')}
+        hint={t('stories.checkbox.showNullIndicatorsHint')}
+      />
+    )
   }
 }
 
 export const Indeterminate: Story = {
   args: {
-    label: 'All rows',
     indeterminate: true
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Checkbox {...args} label={t('stories.checkbox.allRows')} />
   }
 }
 
 export const Error: Story = {
-  args: {
-    label: 'Accept the data usage terms',
-    error: 'You must accept the terms to continue'
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Checkbox
+        {...args}
+        label={t('stories.checkbox.acceptTerms')}
+        error={t('stories.checkbox.acceptTermsError')}
+      />
+    )
   }
 }
 
 export const Disabled: Story = {
   args: {
-    label: 'Aggregate regions',
-    hint: 'Requires the compare flag',
     disabled: true
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Checkbox
+        {...args}
+        label={t('stories.checkbox.aggregateRegions')}
+        hint={t('stories.checkbox.aggregateRegionsHint')}
+      />
+    )
   }
 }

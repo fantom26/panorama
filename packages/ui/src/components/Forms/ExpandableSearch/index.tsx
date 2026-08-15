@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 
 import Icon from '@/components/DataDisplay/Icon'
 import Typography from '@/components/DataDisplay/Typography'
@@ -18,13 +19,15 @@ export type ExpandableSearchProps = {
 }
 
 export default function ExpandableSearch({
-  placeholder = 'Search',
+  placeholder,
   value,
   defaultValue,
   onValueChange,
   className,
   children
 }: ExpandableSearchProps) {
+  const { t } = useTranslation()
+  const resolvedPlaceholder = placeholder ?? t('expandableSearch.placeholder')
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -45,7 +48,7 @@ export default function ExpandableSearch({
 
   return (
     <Dialog.Root open={open} onOpenChange={(next) => setOpen(next)}>
-      <Dialog.Trigger className={clsx(styles.trigger, className)} aria-label={placeholder}>
+      <Dialog.Trigger className={clsx(styles.trigger, className)} aria-label={resolvedPlaceholder}>
         <span className={styles.adornment} aria-hidden='true'>
           <Icon name='search' />
         </span>
@@ -55,19 +58,19 @@ export default function ExpandableSearch({
           color='subtle'
           className={styles.placeholder}
         >
-          {placeholder}
+          {resolvedPlaceholder}
         </Typography>
         <span className={styles.shortcut} aria-hidden='true'>
-          ⌘K
+          {t('expandableSearch.shortcutHint')}
         </span>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop />
-        <Dialog.Popup aria-label={placeholder}>
+        <Dialog.Popup aria-label={resolvedPlaceholder}>
           <TextField
             autoFocus
             startAdornment={<Icon name='search' />}
-            placeholder={placeholder}
+            placeholder={resolvedPlaceholder}
             value={value}
             defaultValue={defaultValue}
             onChange={handleChange}

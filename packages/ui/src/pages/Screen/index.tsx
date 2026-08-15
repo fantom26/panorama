@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import type { ColumnDef } from '@tanstack/react-table'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 import DataTable, { type TableState } from '@/components/DataDisplay/DataTable'
@@ -8,15 +9,19 @@ import type { AppDispatch, RootState } from '@/store'
 import { fetchCountries } from '@/store'
 import type { CountryData } from '@/types/country.types'
 
-const columns: ColumnDef<CountryData>[] = [
-  { accessorKey: 'id', header: 'Code' },
-  { accessorKey: 'name', header: 'Name' },
-  { accessorKey: 'region', header: 'Region' }
-]
-
 export default function Screen() {
+  const { t } = useTranslation()
   const dispatch = useDispatch<AppDispatch>()
   const { countries, status, error } = useSelector((state: RootState) => state.countries)
+
+  const columns: ColumnDef<CountryData>[] = useMemo(
+    () => [
+      { accessorKey: 'id', header: t('common.tableColumns.code') },
+      { accessorKey: 'name', header: t('common.tableColumns.name') },
+      { accessorKey: 'region', header: t('common.tableColumns.region') }
+    ],
+    [t]
+  )
 
   useEffect(() => {
     dispatch(fetchCountries())
@@ -34,7 +39,7 @@ export default function Screen() {
   return (
     <div className='page lists-show'>
       <nav>
-        <h1 className='title-page'>Countries</h1>
+        <h1 className='title-page'>{t('screen.title')}</h1>
       </nav>
       <DataTable state={state} columns={columns} />
     </div>

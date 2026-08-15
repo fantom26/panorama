@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Chip from '@/components/DataDisplay/Chip'
 import Icon from '@/components/DataDisplay/Icon'
@@ -53,6 +54,7 @@ export const FilterList: Story = {
     label: ''
   },
   render: () => {
+    const { t } = useTranslation()
     const [indicators, setIndicators] = useState(['GDP', 'GDP/cap', 'Inflation', 'Unemployment'])
 
     const handleDelete = (indicator: string) => {
@@ -64,7 +66,7 @@ export const FilterList: Story = {
         {indicators.map((indicator) => (
           <Chip key={indicator} label={indicator} onDelete={() => handleDelete(indicator)} />
         ))}
-        {indicators.length === 0 && 'No indicators selected'}
+        {indicators.length === 0 && t('stories.chip.noIndicatorsSelected')}
       </div>
     )
   }

@@ -1,0 +1,131 @@
+{
+  "common": {
+    "tableColumns": {
+      "code": "Code",
+      "name": "Name",
+      "region": "Region"
+    },
+    "actions": {
+      "submit": "Submit",
+      "back": "Back",
+      "addToCompare": "Add to Compare",
+      "retry": "Retry",
+      "showAll": "Show all",
+      "openDrawer": "Open drawer",
+      "apply": "Apply"
+    }
+  },
+  "buttons": {
+    "closeButton": {
+      "ariaLabel": "Close"
+    }
+  },
+  "charts": {
+    "donutChart": {
+      "otherLabel": "Other"
+    },
+    "mapLegend": {
+      "low": "Low",
+      "high": "High"
+    },
+    "worldMap": {
+      "noData": "No data"
+    }
+  },
+  "dataTable": {
+    "error": "Something went wrong",
+    "noData": "No data"
+  },
+  "expandableSearch": {
+    "placeholder": "Search",
+    "shortcutHint": "⌘K"
+  },
+  "screen": {
+    "title": "Countries"
+  },
+  "stories": {
+    "iconButton": {
+      "searchAriaLabel": "Search"
+    },
+    "chip": {
+      "noIndicatorsSelected": "No indicators selected"
+    },
+    "dataTable": {
+      "noCountriesFound": "No countries found",
+      "failedToLoadCountries": "Failed to load countries",
+      "noCountries": "No countries",
+      "unknownError": "Unknown error"
+    },
+    "statCard": {
+      "totalPopulation": "Total population",
+      "unemploymentRate": "Unemployment rate",
+      "medianAge": "Median age",
+      "gdpPerCapita": "GDP per capita"
+    },
+    "progress": {
+      "ariaLabel": "Amount of countries with a specific language"
+    },
+    "toast": {
+      "syncingTitle": "Syncing",
+      "syncingDescription": "Fetching World Bank indicators…",
+      "syncedTitle": "Synced",
+      "syncedDescription": "249 countries updated.",
+      "requestFailedTitle": "Request failed",
+      "requestFailedDescription": "Indicator data unavailable for 3 countries.",
+      "staleTitle": "Data may be stale",
+      "staleDescription": "Last refresh was over 24 hours ago."
+    },
+    "checkbox": {
+      "includeDisputedTerritories": "Include disputed territories",
+      "showNullIndicators": "Show null indicators",
+      "showNullIndicatorsHint": "Countries missing World Bank data",
+      "allRows": "All rows",
+      "acceptTerms": "Accept the data usage terms",
+      "acceptTermsError": "You must accept the terms to continue",
+      "aggregateRegions": "Aggregate regions",
+      "aggregateRegionsHint": "Requires the compare flag"
+    },
+    "expandableSearch": {
+      "placeholder": "Search countries"
+    },
+    "field": {
+      "searchLabel": "Search",
+      "searchPlaceholder": "Search countries",
+      "gdpFloorLabel": "GDP floor",
+      "gdpFloorHint": "Filters the ranking chart",
+      "gdpFloorAdornment": "USD B",
+      "yearLabel": "Year",
+      "yearError": "Must be between 1960 and 2024",
+      "isoCodeLabel": "ISO code"
+    },
+    "radio": {
+      "logarithmic": "Logarithmic",
+      "logarithmicHint": "Default — spreads small economies",
+      "chooseScaleError": "Choose a scale before continuing",
+      "mapScaleAriaLabel": "Map scale",
+      "linear": "Linear",
+      "quantile": "Quantile"
+    },
+    "select": {
+      "allRegions": "All regions",
+      "locale": "Locale",
+      "unsupportedLocale": "Unsupported locale",
+      "region": "Region"
+    },
+    "textField": {
+      "searchPlaceholder": "Search countries",
+      "usdBAdornment": "USD B",
+      "percentAdornment": "%"
+    },
+    "dialog": {
+      "title": "Add country to compare",
+      "description": "Search and select a country to add to the comparison. Up to 5 countries.",
+      "closeAriaLabel": "Close dialog"
+    },
+    "drawer": {
+      "compareLabel": "Compare",
+      "selectedTitle": "Selected",
+      "closeAriaLabel": "Close drawer"
+    }
+  }
+}

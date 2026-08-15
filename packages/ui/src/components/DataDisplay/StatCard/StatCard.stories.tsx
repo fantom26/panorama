@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import StatCard from '@/components/DataDisplay/StatCard'
 
@@ -12,42 +13,62 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: 'Total population',
+    label: '',
     value: '7.95B',
     trend: '+0.87% YoY',
     trendColor: 'success'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <StatCard {...args} label={t('stories.statCard.totalPopulation')} />
   }
 }
 
 export const NegativeTrend: Story = {
   args: {
-    label: 'Unemployment rate',
+    label: '',
     value: '4.2%',
     trend: '−0.3pp YoY',
     trendColor: 'error'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <StatCard {...args} label={t('stories.statCard.unemploymentRate')} />
   }
 }
 
 export const DefaultTrend: Story = {
   args: {
-    label: 'Median age',
+    label: '',
     value: '38.9',
     trend: 'nominal, USD'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <StatCard {...args} label={t('stories.statCard.medianAge')} />
   }
 }
 
 export const NoTrend: Story = {
   args: {
-    label: 'GDP per capita',
+    label: '',
     value: '$68,300'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <StatCard {...args} label={t('stories.statCard.gdpPerCapita')} />
   }
 }
 
 export const Loading: Story = {
   args: {
-    label: 'Total population',
+    label: '',
     value: '7.95B',
     trend: '+0.87% YoY',
     loading: true
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <StatCard {...args} label={t('stories.statCard.totalPopulation')} />
   }
 }

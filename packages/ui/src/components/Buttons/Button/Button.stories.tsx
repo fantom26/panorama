@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@/components/Buttons/Button'
 import Icon from '@/components/DataDisplay/Icon'
@@ -12,31 +13,38 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    children: 'Submit'
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Button {...args}>{t('common.actions.submit')}</Button>
   }
 }
 
 export const Outlined: Story = {
   args: {
-    variant: 'outlined',
-    children: (
-      <>
+    variant: 'outlined'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Button {...args}>
         <Icon name='arrow-left' />
-        Back
-      </>
+        {t('common.actions.back')}
+      </Button>
     )
   }
 }
 
 export const Contained: Story = {
   args: {
-    variant: 'contained',
-    children: (
-      <>
+    variant: 'contained'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Button {...args}>
         <Icon name='plus' />
-        Add to Compare
-      </>
+        {t('common.actions.addToCompare')}
+      </Button>
     )
   }
 }
@@ -44,7 +52,10 @@ export const Contained: Story = {
 export const Disabled: Story = {
   args: {
     variant: 'contained',
-    children: 'Submit',
     disabled: true
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Button {...args}>{t('common.actions.submit')}</Button>
   }
 }

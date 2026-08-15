@@ -5,6 +5,7 @@ import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow'
 import * as am5map from '@amcharts/amcharts5/map'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 
 import {
   CHART_RANK_OPACITIES,
@@ -45,6 +46,7 @@ export default function WorldMap({
   style,
   ...rest
 }: WorldMapProps) {
+  const { t } = useTranslation()
   const chartRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -120,7 +122,8 @@ export default function WorldMap({
       series.mapPolygons.template.adapters.add('tooltipText', (_text, target) => {
         const context = target.dataItem?.dataContext as WorldMapDataContext | undefined
         const value = context?.value
-        const label = value == null ? 'No data' : format ? format(value) : String(value)
+        const label =
+          value == null ? t('charts.worldMap.noData') : format ? format(value) : String(value)
         return `${context?.name ?? ''}: ${label}`
       })
 
@@ -144,7 +147,7 @@ export default function WorldMap({
     }
 
     return mountReactiveChart(container, build)
-  }, [data, mode, highlight, buckets, format, onSelect])
+  }, [data, mode, highlight, buckets, format, onSelect, t])
 
   return (
     <div

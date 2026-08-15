@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@/components/Buttons/Button'
 import Icon from '@/components/DataDisplay/Icon'
@@ -6,11 +7,13 @@ import Typography from '@/components/DataDisplay/Typography'
 import Drawer, { type DrawerAnchor } from '@/components/Overlays/Drawer'
 
 function DrawerDemo({ anchor = 'right' }: { anchor?: DrawerAnchor }) {
+  const { t } = useTranslation()
+
   return (
     <Drawer.Root anchor={anchor}>
       <Drawer.Trigger render={<Button variant='contained' />}>
         <Icon name='plus' />
-        Open drawer
+        {t('common.actions.openDrawer')}
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Backdrop />
@@ -19,11 +22,11 @@ function DrawerDemo({ anchor = 'right' }: { anchor?: DrawerAnchor }) {
             <Drawer.Header>
               <div>
                 <Typography variant='meta-sm' color='subtle'>
-                  Compare
+                  {t('stories.drawer.compareLabel')}
                 </Typography>
-                <Drawer.Title>Selected</Drawer.Title>
+                <Drawer.Title>{t('stories.drawer.selectedTitle')}</Drawer.Title>
               </div>
-              <Drawer.Close aria-label='Close drawer' />
+              <Drawer.Close aria-label={t('stories.drawer.closeAriaLabel')} />
             </Drawer.Header>
             <Drawer.Content style={{ padding: 16 }}>
               <Typography variant='body-sm'>Germany — GDP $4.5T</Typography>
@@ -31,7 +34,7 @@ function DrawerDemo({ anchor = 'right' }: { anchor?: DrawerAnchor }) {
             </Drawer.Content>
             <Drawer.Footer>
               <Button variant='contained' style={{ flex: 1 }}>
-                Apply
+                {t('common.actions.apply')}
               </Button>
             </Drawer.Footer>
           </Drawer.Popup>

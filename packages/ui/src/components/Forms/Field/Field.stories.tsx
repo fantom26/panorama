@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Icon from '@/components/DataDisplay/Icon'
 import Field from '@/components/Forms/Field'
@@ -13,33 +14,52 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => (
-    <Field label='Search'>
-      <TextField startAdornment={<Icon name='search' />} placeholder='Search countries' />
-    </Field>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <Field label={t('stories.field.searchLabel')}>
+        <TextField
+          startAdornment={<Icon name='search' />}
+          placeholder={t('stories.field.searchPlaceholder')}
+        />
+      </Field>
+    )
+  }
 }
 
 export const WithHint: Story = {
-  render: () => (
-    <Field label='GDP floor' hint='Filters the ranking chart'>
-      <TextField tabular endAdornment='USD B' defaultValue='1000' />
-    </Field>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <Field label={t('stories.field.gdpFloorLabel')} hint={t('stories.field.gdpFloorHint')}>
+        <TextField
+          tabular
+          endAdornment={t('stories.field.gdpFloorAdornment')}
+          defaultValue='1000'
+        />
+      </Field>
+    )
+  }
 }
 
 export const WithError: Story = {
-  render: () => (
-    <Field label='Year' error='Must be between 1960 and 2024'>
-      <TextField tabular defaultValue='20244' />
-    </Field>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <Field label={t('stories.field.yearLabel')} error={t('stories.field.yearError')}>
+        <TextField tabular defaultValue='20244' />
+      </Field>
+    )
+  }
 }
 
 export const Required: Story = {
-  render: () => (
-    <Field label='ISO code' required>
-      <TextField placeholder='DEU' />
-    </Field>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <Field label={t('stories.field.isoCodeLabel')} required>
+        <TextField placeholder='DEU' />
+      </Field>
+    )
+  }
 }

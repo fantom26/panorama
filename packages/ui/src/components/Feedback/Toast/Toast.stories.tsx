@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@/components/Buttons/Button'
 import Toast from '@/components/Feedback/Toast'
@@ -12,32 +13,36 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const sampleToasts = [
-  {
-    type: 'info',
-    title: 'Syncing',
-    description: 'Fetching World Bank indicators…'
-  },
-  {
-    type: 'success',
-    title: 'Synced',
-    description: '249 countries updated.'
-  },
-  {
-    type: 'error',
-    title: 'Request failed',
-    description: 'Indicator data unavailable for 3 countries.',
-    actionProps: { children: 'Retry', onClick: () => {} }
-  },
-  {
-    type: 'warning',
-    title: 'Data may be stale',
-    description: 'Last refresh was over 24 hours ago.'
-  }
-] as const
+function useSampleToasts() {
+  const { t } = useTranslation()
+  return [
+    {
+      type: 'info',
+      title: t('stories.toast.syncingTitle'),
+      description: t('stories.toast.syncingDescription')
+    },
+    {
+      type: 'success',
+      title: t('stories.toast.syncedTitle'),
+      description: t('stories.toast.syncedDescription')
+    },
+    {
+      type: 'error',
+      title: t('stories.toast.requestFailedTitle'),
+      description: t('stories.toast.requestFailedDescription'),
+      actionProps: { children: t('common.actions.retry'), onClick: () => {} }
+    },
+    {
+      type: 'warning',
+      title: t('stories.toast.staleTitle'),
+      description: t('stories.toast.staleDescription')
+    }
+  ] as const
+}
 
 function ToastDemo() {
   const { toasts, add } = useToastManager()
+  const sampleToasts = useSampleToasts()
 
   return (
     <div style={{ display: 'flex', gap: 8 }}>
@@ -58,11 +63,13 @@ function ToastDemo() {
 
 function StackedToastsDemo() {
   const { toasts, add } = useToastManager()
+  const { t } = useTranslation()
+  const sampleToasts = useSampleToasts()
 
   return (
     <div style={{ display: 'flex', gap: 8 }}>
       <Button onClick={() => sampleToasts.forEach((sample) => add({ ...sample, timeout: 0 }))}>
-        Show all
+        {t('common.actions.showAll')}
       </Button>
 
       <Toast.Viewport>

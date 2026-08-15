@@ -1,5 +1,6 @@
 import { RadioGroup } from '@base-ui/react/radio-group'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Radio from '@/components/Forms/Radio'
 
@@ -8,7 +9,11 @@ const meta = {
   title: 'Forms/Radio',
   args: {
     value: 'log',
-    label: 'Logarithmic'
+    label: ''
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Radio {...args} label={t('stories.radio.logarithmic')} />
   }
 } satisfies Meta<typeof Radio>
 
@@ -18,14 +23,28 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 
 export const WithHint: Story = {
-  args: {
-    hint: 'Default — spreads small economies'
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Radio
+        {...args}
+        label={t('stories.radio.logarithmic')}
+        hint={t('stories.radio.logarithmicHint')}
+      />
+    )
   }
 }
 
 export const Error: Story = {
-  args: {
-    error: 'Choose a scale before continuing'
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Radio
+        {...args}
+        label={t('stories.radio.logarithmic')}
+        error={t('stories.radio.chooseScaleError')}
+      />
+    )
   }
 }
 
@@ -36,16 +55,23 @@ export const Disabled: Story = {
 }
 
 export const Group: Story = {
-  render: () => (
-    <RadioGroup
-      name='scale'
-      defaultValue='log'
-      aria-label='Map scale'
-      style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
-    >
-      <Radio value='log' label='Logarithmic' hint='Default — spreads small economies' />
-      <Radio value='linear' label='Linear' />
-      <Radio value='quantile' label='Quantile' disabled />
-    </RadioGroup>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <RadioGroup
+        name='scale'
+        defaultValue='log'
+        aria-label={t('stories.radio.mapScaleAriaLabel')}
+        style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+      >
+        <Radio
+          value='log'
+          label={t('stories.radio.logarithmic')}
+          hint={t('stories.radio.logarithmicHint')}
+        />
+        <Radio value='linear' label={t('stories.radio.linear')} />
+        <Radio value='quantile' label={t('stories.radio.quantile')} disabled />
+      </RadioGroup>
+    )
+  }
 }

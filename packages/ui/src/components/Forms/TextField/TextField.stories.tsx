@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Icon from '@/components/DataDisplay/Icon'
 import TextField from '@/components/Forms/TextField'
@@ -12,30 +13,40 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    placeholder: 'Search countries'
+  render: (args) => {
+    const { t } = useTranslation()
+    return <TextField {...args} placeholder={t('stories.textField.searchPlaceholder')} />
   }
 }
 
 export const WithStartAdornment: Story = {
   args: {
-    startAdornment: <Icon name='search' />,
-    placeholder: 'Search countries'
+    startAdornment: <Icon name='search' />
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <TextField {...args} placeholder={t('stories.textField.searchPlaceholder')} />
   }
 }
 
 export const WithEndAdornment: Story = {
   args: {
-    endAdornment: 'USD B',
     defaultValue: '1000'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <TextField {...args} endAdornment={t('stories.textField.usdBAdornment')} />
   }
 }
 
 export const Tabular: Story = {
   args: {
     tabular: true,
-    endAdornment: '%',
     defaultValue: '2.1'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <TextField {...args} endAdornment={t('stories.textField.percentAdornment')} />
   }
 }
 
