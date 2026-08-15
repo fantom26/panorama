@@ -1,42 +1,36 @@
-html {
-  line-height: 1.15;
-  text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
+/*
+  Scoped to .panorama-normalize so it only normalizes elements inside our own component
+  tree — not Storybook's own docs/controls UI, which shares the same preview iframe.
+  :where() keeps specificity at zero so nothing here fights consumer overrides.
+*/
 
-html,
-body {
-  height: 100%;
-}
-
-body {
-  text-size-adjust: 100%;
-}
-
-*,
-*::before,
-*::after {
+:where(
+  .panorama-normalize,
+  .panorama-normalize *,
+  .panorama-normalize *::before,
+  .panorama-normalize *::after
+) {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-pre {
+:where(.panorama-normalize pre) {
   font-size: 1em;
   font-family: monospace;
 }
 
-a {
+:where(.panorama-normalize a) {
   text-decoration: none;
 }
 
-img {
+:where(.panorama-normalize img) {
   max-width: 100%;
   height: auto;
   object-fit: cover;
 }
 
-button {
+:where(.panorama-normalize button) {
   border: none;
   color: inherit;
   text-align: left;
@@ -45,12 +39,11 @@ button {
   cursor: pointer;
 }
 
-ul,
-ol {
+:where(.panorama-normalize ul, .panorama-normalize ol) {
   list-style: none;
 }
 
-input {
+:where(.panorama-normalize input) {
   border: none;
   border-radius: 0;
   background-color: transparent;
@@ -72,11 +65,13 @@ input {
  * 2. Remove the margin in Firefox and Safari.
  */
 
-button,
-input,
-optgroup,
-select,
-textarea {
+:where(
+  .panorama-normalize button,
+  .panorama-normalize input,
+  .panorama-normalize optgroup,
+  .panorama-normalize select,
+  .panorama-normalize textarea
+) {
   margin: 0;
   font-size: 100%;
   font-family: inherit;
@@ -88,8 +83,7 @@ textarea {
  * 1. Remove the inheritance of text transform in Firefox.
  */
 
-button,
-select {
+:where(.panorama-normalize button, .panorama-normalize select) {
   text-transform: none;
 }
 
@@ -97,10 +91,12 @@ select {
  * Correct the inability to style clickable types in iOS and Safari.
  */
 
-button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
+:where(
+  .panorama-normalize button,
+  .panorama-normalize [type='button'],
+  .panorama-normalize [type='reset'],
+  .panorama-normalize [type='submit']
+) {
   appearance: button;
 }
 
@@ -108,10 +104,12 @@ button,
  * Remove the inner border and padding in Firefox.
  */
 
-button::-moz-focus-inner,
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner {
+:where(
+  .panorama-normalize button::-moz-focus-inner,
+  .panorama-normalize [type='button']::-moz-focus-inner,
+  .panorama-normalize [type='reset']::-moz-focus-inner,
+  .panorama-normalize [type='submit']::-moz-focus-inner
+) {
   padding: 0;
   border-style: none;
 }
@@ -120,10 +118,12 @@ button::-moz-focus-inner,
  * Restore the focus styles unset by the previous rule.
  */
 
-button:-moz-focusring,
-[type='button']:-moz-focusring,
-[type='reset']:-moz-focusring,
-[type='submit']:-moz-focusring {
+:where(
+  .panorama-normalize button:-moz-focusring,
+  .panorama-normalize [type='button']:-moz-focusring,
+  .panorama-normalize [type='reset']:-moz-focusring,
+  .panorama-normalize [type='submit']:-moz-focusring
+) {
   outline: 0.1rem dotted ButtonText;
 }
 

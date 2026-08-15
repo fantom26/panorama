@@ -39,4 +39,12 @@ const themeDecorator = withThemeByDataAttribute({
   attributeName: 'data-theme'
 })
 
-export const decorators = [themeDecorator, WithI18next]
+// Scopes normalize.css to our own components instead of Storybook's docs/controls UI,
+// which shares the same preview iframe as the story canvas.
+const WithNormalize: Decorator = (Story) => (
+  <div className='panorama-normalize'>
+    <Story />
+  </div>
+)
+
+export const decorators = [themeDecorator, WithI18next, WithNormalize]

@@ -4,6 +4,17 @@
 @import '@fontsource/geist-sans/500.css';
 @import '@/styles/normalize.css';
 
+html {
+  line-height: 1.15;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 #root {
   /*
     The isolation property determines whether an element must create a new stacking context
@@ -14,6 +25,7 @@
 
 body {
   font-family: var(--ds-typography-font-family-geist);
+  text-size-adjust: 100%;
 
   /*
     Starting with iOS 26, Safari allows content beneath the UI chrome to be visible.
