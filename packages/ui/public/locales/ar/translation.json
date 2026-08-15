@@ -20,6 +20,9 @@
       "ariaLabel": "إغلاق"
     }
   },
+  "breadcrumbs": {
+    "ariaLabel": "مسار التنقل"
+  },
   "charts": {
     "donutChart": {
       "otherLabel": "أخرى"
@@ -126,6 +129,13 @@
       "compareLabel": "مقارنة",
       "selectedTitle": "المحدد",
       "closeAriaLabel": "إغلاق اللوحة"
+    },
+    "typography": {
+      "sample": "نما الناتج المحلي الإجمالي العالمي بنسبة 3.2% في الربع الرابع",
+      "componentOverride": "يُعرض كعنصر h2 رغم أن title-sm يستخدم h5 افتراضيًا"
+    },
+    "tabs": {
+      "panelContent": "محتوى لوحة {{label}}"
     }
   }
 }

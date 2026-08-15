@@ -20,6 +20,9 @@
       "ariaLabel": "Close"
     }
   },
+  "breadcrumbs": {
+    "ariaLabel": "breadcrumb"
+  },
   "charts": {
     "donutChart": {
       "otherLabel": "Other"
@@ -126,6 +129,13 @@
       "compareLabel": "Compare",
       "selectedTitle": "Selected",
       "closeAriaLabel": "Close drawer"
+    },
+    "typography": {
+      "sample": "Global GDP grew 3.2% in the fourth quarter",
+      "componentOverride": "Rendered as an h2 despite title-sm defaulting to h5"
+    },
+    "tabs": {
+      "panelContent": "{{label}} panel content"
     }
   }
 }

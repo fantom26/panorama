@@ -1,15 +1,26 @@
 import { Children, Fragment } from 'react'
 
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@/components/DataDisplay/Typography'
 import styles from '@/components/Disclosure/Breadcrumbs/index.module.css'
 
-export default function Breadcrumbs({ children, className, ...rest }: React.ComponentProps<'nav'>) {
+export default function Breadcrumbs({
+  children,
+  className,
+  'aria-label': ariaLabel,
+  ...rest
+}: React.ComponentProps<'nav'>) {
+  const { t } = useTranslation()
   const items = Children.toArray(children)
 
   return (
-    <nav aria-label='breadcrumb' className={clsx(styles.root, className)} {...rest}>
+    <nav
+      aria-label={ariaLabel ?? t('breadcrumbs.ariaLabel')}
+      className={clsx(styles.root, className)}
+      {...rest}
+    >
       <ol className={styles.list}>
         {items.map((item, index) => (
           <Fragment key={index}>

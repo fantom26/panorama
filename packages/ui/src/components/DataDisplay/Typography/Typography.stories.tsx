@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Typography, { type TypographyVariant } from '@/components/DataDisplay/Typography'
 import Divider from '@/components/Layout/Divider'
@@ -27,8 +28,11 @@ const meta = {
   title: 'Data Display/Typography',
   args: {
     variant: 'body-default',
-    color: 'brand',
-    children: 'Global GDP grew 3.2% in the fourth quarter'
+    color: 'brand'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Typography {...args}>{t('stories.typography.sample')}</Typography>
   }
 } satisfies Meta<typeof Typography>
 
@@ -38,18 +42,21 @@ type Story = StoryObj<typeof meta>
 export const Playground: Story = {}
 
 export const AllVariants: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      {variants.map((variant, index) => (
-        <Fragment key={variant}>
-          {index > 0 && <Divider />}
-          <Typography variant={variant}>
-            {variant} — Global GDP grew 3.2% in the fourth quarter
-          </Typography>
-        </Fragment>
-      ))}
-    </div>
-  )
+  render: () => {
+    const { t } = useTranslation()
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        {variants.map((variant, index) => (
+          <Fragment key={variant}>
+            {index > 0 && <Divider />}
+            <Typography variant={variant}>
+              {variant} — {t('stories.typography.sample')}
+            </Typography>
+          </Fragment>
+        ))}
+      </div>
+    )
+  }
 }
 
 export const Colors: Story = {
@@ -81,7 +88,10 @@ export const Colors: Story = {
 export const ComponentOverride: Story = {
   args: {
     variant: 'title-sm',
-    component: 'h2',
-    children: 'Rendered as an h2 despite title-sm defaulting to h5'
+    component: 'h2'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <Typography {...args}>{t('stories.typography.componentOverride')}</Typography>
   }
 }

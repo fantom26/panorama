@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useTranslation } from 'react-i18next'
 
 import Tabs from '@/components/Disclosure/Tabs'
 
@@ -27,42 +28,48 @@ export const Default: Story = {
   args: {
     defaultValue: 'gdp'
   },
-  render: (args) => (
-    <Tabs.Root key={args.defaultValue} defaultValue={args.defaultValue}>
-      <Tabs.List>
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Tabs.Root key={args.defaultValue} defaultValue={args.defaultValue}>
+        <Tabs.List>
+          {indicators.map(({ value, label }) => (
+            <Tabs.Tab key={value} value={value}>
+              {label}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
         {indicators.map(({ value, label }) => (
-          <Tabs.Tab key={value} value={value}>
-            {label}
-          </Tabs.Tab>
+          <Tabs.Panel key={value} value={value}>
+            {t('stories.tabs.panelContent', { label })}
+          </Tabs.Panel>
         ))}
-      </Tabs.List>
-      {indicators.map(({ value, label }) => (
-        <Tabs.Panel key={value} value={value}>
-          {label} panel content
-        </Tabs.Panel>
-      ))}
-    </Tabs.Root>
-  )
+      </Tabs.Root>
+    )
+  }
 }
 
 export const Disabled: Story = {
   args: {
     defaultValue: 'gdp'
   },
-  render: (args) => (
-    <Tabs.Root key={args.defaultValue} defaultValue={args.defaultValue}>
-      <Tabs.List>
-        {indicators.map(({ value, label }, index) => (
-          <Tabs.Tab key={value} value={value} disabled={index === 1}>
-            {label}
-          </Tabs.Tab>
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <Tabs.Root key={args.defaultValue} defaultValue={args.defaultValue}>
+        <Tabs.List>
+          {indicators.map(({ value, label }, index) => (
+            <Tabs.Tab key={value} value={value} disabled={index === 1}>
+              {label}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+        {indicators.map(({ value, label }) => (
+          <Tabs.Panel key={value} value={value}>
+            {t('stories.tabs.panelContent', { label })}
+          </Tabs.Panel>
         ))}
-      </Tabs.List>
-      {indicators.map(({ value, label }) => (
-        <Tabs.Panel key={value} value={value}>
-          {label} panel content
-        </Tabs.Panel>
-      ))}
-    </Tabs.Root>
-  )
+      </Tabs.Root>
+    )
+  }
 }
