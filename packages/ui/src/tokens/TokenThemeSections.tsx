@@ -7,15 +7,25 @@ const THEMES = [
 
 type TokenThemeSectionsProps = {
   categoryName: string
+  splitByTheme?: boolean
 }
 
-export const TokenThemeSections = ({ categoryName }: TokenThemeSectionsProps) => (
-  <>
-    {THEMES.map(({ key, label }) => (
-      <div key={key}>
-        <h3>{label}</h3>
-        <DesignTokenDocBlock categoryName={categoryName} theme={key} viewType='table' />
-      </div>
-    ))}
-  </>
-)
+export const TokenThemeSections = ({
+  categoryName,
+  splitByTheme = false
+}: TokenThemeSectionsProps) => {
+  if (!splitByTheme) {
+    return <DesignTokenDocBlock categoryName={categoryName} viewType='table' />
+  }
+
+  return (
+    <>
+      {THEMES.map(({ key, label }) => (
+        <div key={key}>
+          <h3>{label}</h3>
+          <DesignTokenDocBlock categoryName={categoryName} theme={key} viewType='table' />
+        </div>
+      ))}
+    </>
+  )
+}

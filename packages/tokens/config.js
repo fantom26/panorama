@@ -75,7 +75,11 @@ const collectTokenEntries = (dictionary, includeTier1 = false) => {
           .map((segment) => (segment.startsWith('@') ? segment.substring(1) : segment))
           .filter((segment) => segment !== '')
           .join('-')
-        themeTokens.push({ name: `--ds-${cleanPath}`, value: prop.value })
+        themeTokens.push({
+          name: `--ds-${cleanPath}`,
+          value: prop.value,
+          isCore: prop.filePath.startsWith('core/')
+        })
       } else {
         /* 4 */
         const cleanPath = prop.path
@@ -84,7 +88,11 @@ const collectTokenEntries = (dictionary, includeTier1 = false) => {
           .join('-')
         // Only add theme prefix for higher tier tokens
         const prefix = isHigherTierToken(prop.filePath) ? 'theme-' : ''
-        themeTokens.push({ name: `--ds-${prefix}${cleanPath}`, value: prop.value })
+        themeTokens.push({
+          name: `--ds-${prefix}${cleanPath}`,
+          value: prop.value,
+          isCore: prop.filePath.startsWith('core/')
+        })
       }
     }
   })
@@ -117,17 +125,26 @@ const formatVariables = (dictionary, includeTier1 = false) => {
  * an optional block-level `@presenter` and/or a per-token presenter override.
  */
 const STORYBOOK_TOKEN_CATEGORIES = [
-  { test: (name) => name.includes('-color-'), label: 'Colors', presenter: 'Color' },
-  { test: (name) => name.includes('-spacing-'), label: 'Spacing', presenter: 'Spacing' },
   {
-    test: (name) => name.includes('-border-radius-'),
+    test: (entry) => entry.name.includes('-color-') && entry.isCore,
+    label: 'Colors Core',
+    presenter: 'Color'
+  },
+  {
+    test: (entry) => entry.name.includes('-color-') && !entry.isCore,
+    label: 'Colors Brand',
+    presenter: 'Color'
+  },
+  { test: (entry) => entry.name.includes('-spacing-'), label: 'Spacing', presenter: 'Spacing' },
+  {
+    test: (entry) => entry.name.includes('-border-radius-'),
     label: 'Border Radius',
     presenter: 'BorderRadius'
   },
-  { test: (name) => name.includes('-border-width-'), label: 'Border Width' },
-  { test: (name) => name.includes('-z-index-'), label: 'Z-Index' },
+  { test: (entry) => entry.name.includes('-border-width-'), label: 'Border Width' },
+  { test: (entry) => entry.name.includes('-z-index-'), label: 'Z-Index' },
   {
-    test: (name) => name.includes('-typography-'),
+    test: (entry) => entry.name.includes('-typography-'),
     label: 'Typography',
     tokenPresenter: (name) => {
       if (name.includes('font-family')) return 'FontFamily'
@@ -139,7 +156,7 @@ const STORYBOOK_TOKEN_CATEGORIES = [
     }
   },
   {
-    test: (name) => name.includes('-animation-'),
+    test: (entry) => entry.name.includes('-animation-'),
     label: 'Animation',
     tokenPresenter: (name) => (name.includes('ease') ? 'Easing' : undefined)
   }
@@ -156,7 +173,7 @@ const formatStorybookTokens = (dictionary) => {
 
   /* 1 */
   collectTokenEntries(dictionary, true).forEach((entry) => {
-    const category = STORYBOOK_TOKEN_CATEGORIES.find((candidate) => candidate.test(entry.name))
+    const category = STORYBOOK_TOKEN_CATEGORIES.find((candidate) => candidate.test(entry))
     if (!category) return
 
     if (!categories.has(category.label)) {
