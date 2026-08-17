@@ -36,12 +36,8 @@
     },
     "letter-spacing": {
       "0": { "value": "0px" },
-      "2": { "value": "2px" },
-      "minus-2": { "value": "-2px" },
-      "minus-1-half": { "value": "-1.5px" },
       "minus-1": { "value": "-1px" },
-      "minus-half": { "value": "-0.5px" },
-      "half": { "value": "0.5px" }
+      "minus-half": { "value": "-0.5px" }
     },
     "text-transform": {
       "none": { "value": "none" },
