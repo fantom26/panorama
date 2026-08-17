@@ -28,11 +28,7 @@
       "32": { "value": "32px" },
       "36": { "value": "36px" },
       "40": { "value": "40px" },
-      "48": { "value": "48px" },
-      "56": { "value": "56px" },
-      "64": { "value": "64px" },
-      "72": { "value": "72px" },
-      "110": { "value": "110px" }
+      "48": { "value": "48px" }
     },
     "letter-spacing": {
       "0": { "value": "0px" },
