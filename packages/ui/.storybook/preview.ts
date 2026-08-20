@@ -23,6 +23,11 @@ const preview: Preview = {
   },
 
   parameters: {
+    // fail the Vitest run on any accessibility violation (@storybook/addon-a11y + @storybook/addon-vitest)
+    a11y: {
+      test: 'error'
+    },
+
     options: {
       storySort: {
         order: ['Design Tokens', '*']

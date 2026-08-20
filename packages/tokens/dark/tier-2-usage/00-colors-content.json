@@ -5,7 +5,7 @@
         "value": "{color.neutral.100}"
       },
       "subtle": {
-        "value": "{color.neutral.500}"
+        "value": "{color.neutral.400}"
       },
       "brand": {
         "value": "{color.brand.gray.900}"
