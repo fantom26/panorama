@@ -25,7 +25,6 @@ const countries: CountryData[] = [
 
 const meta = {
   component: DataTable,
-  title: 'Data Display/DataTable',
   args: {
     state: { status: 'loading' },
     columns: []

@@ -46,7 +46,6 @@ function DrawerDemo({ anchor = 'right' }: { anchor?: DrawerAnchor }) {
 
 const meta = {
   component: Drawer.Root,
-  title: 'Overlays/Drawer',
   argTypes: {
     anchor: {
       control: { type: 'select' },

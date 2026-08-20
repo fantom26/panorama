@@ -6,8 +6,7 @@ import Toast from '@/components/Feedback/Toast'
 import { useToastManager } from '@/components/Feedback/Toast/useToastManager'
 
 const meta = {
-  component: Toast.Provider,
-  title: 'Feedback/Toast'
+  component: Toast.Provider
 } satisfies Meta<typeof Toast.Provider>
 
 export default meta

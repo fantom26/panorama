@@ -21,7 +21,6 @@ const indicatorOptions = [
 
 const meta = {
   component: Select,
-  title: 'Forms/Select',
   args: {
     options: regionOptions
   },

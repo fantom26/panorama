@@ -6,7 +6,6 @@ import ExpandableSearch from '@/components/Forms/ExpandableSearch'
 
 const meta = {
   component: ExpandableSearch,
-  title: 'Forms/ExpandableSearch',
   render: (args) => {
     const { t } = useTranslation()
     return <ExpandableSearch {...args} placeholder={t('stories.expandableSearch.placeholder')} />

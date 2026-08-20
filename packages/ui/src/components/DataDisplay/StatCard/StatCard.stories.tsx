@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next'
 import StatCard from '@/components/DataDisplay/StatCard'
 
 const meta = {
-  component: StatCard,
-  title: 'Data Display/StatCard'
+  component: StatCard
 } satisfies Meta<typeof StatCard>
 
 export default meta

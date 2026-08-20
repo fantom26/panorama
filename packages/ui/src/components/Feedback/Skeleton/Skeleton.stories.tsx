@@ -4,7 +4,6 @@ import Skeleton from '@/components/Feedback/Skeleton'
 
 const meta = {
   component: Skeleton,
-  title: 'Feedback/Skeleton',
   args: {
     variant: 'text'
   }

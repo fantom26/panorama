@@ -5,7 +5,6 @@ import Hint from '@/components/Forms/Hint'
 
 const meta = {
   component: Hint,
-  title: 'Forms/Hint',
   args: {
     text: ''
   },

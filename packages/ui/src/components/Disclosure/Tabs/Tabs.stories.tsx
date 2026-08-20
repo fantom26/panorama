@@ -12,7 +12,6 @@ const indicators = [
 
 const meta = {
   component: Tabs.Root,
-  title: 'Disclosure/Tabs',
   argTypes: {
     defaultValue: {
       control: { type: 'select' },

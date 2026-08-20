@@ -36,7 +36,6 @@ const europe = [
 
 const meta = {
   component: WorldMap,
-  title: 'Charts/WorldMap',
   args: {
     height: 420
   }

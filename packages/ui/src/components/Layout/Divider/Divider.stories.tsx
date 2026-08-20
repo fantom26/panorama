@@ -3,8 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import Divider from '@/components/Layout/Divider'
 
 const meta = {
-  component: Divider,
-  title: 'Layout/Divider'
+  component: Divider
 } satisfies Meta<typeof Divider>
 
 export default meta

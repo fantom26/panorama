@@ -3,8 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import CloseButton from '@/components/Buttons/CloseButton'
 
 const meta = {
-  component: CloseButton,
-  title: 'Buttons/CloseButton'
+  component: CloseButton
 } satisfies Meta<typeof CloseButton>
 
 export default meta

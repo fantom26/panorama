@@ -3,8 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import Backdrop from '@/components/Overlays/Backdrop'
 
 const meta = {
-  component: Backdrop,
-  title: 'Overlays/Backdrop'
+  component: Backdrop
 } satisfies Meta<typeof Backdrop>
 
 export default meta

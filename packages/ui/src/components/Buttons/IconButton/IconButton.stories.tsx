@@ -6,7 +6,6 @@ import Icon from '@/components/DataDisplay/Icon'
 
 const meta = {
   component: IconButton,
-  title: 'Buttons/IconButton',
   render: (args) => {
     const { t } = useTranslation()
     return (

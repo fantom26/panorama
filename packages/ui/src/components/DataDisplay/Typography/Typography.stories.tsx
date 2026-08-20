@@ -25,7 +25,6 @@ const variants: TypographyVariant[] = [
 
 const meta = {
   component: Typography,
-  title: 'Data Display/Typography',
   args: {
     variant: 'body-default',
     color: 'brand'

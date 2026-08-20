@@ -4,7 +4,6 @@ import Logo from '@/components/Brand/Logo'
 
 const meta = {
   component: Logo,
-  title: 'Brand/Logo',
   argTypes: {
     variant: {
       control: { type: 'select' },

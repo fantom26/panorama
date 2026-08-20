@@ -6,7 +6,6 @@ import Radio from '@/components/Forms/Radio'
 
 const meta = {
   component: Radio,
-  title: 'Forms/Radio',
   args: {
     value: 'log',
     label: ''

@@ -30,7 +30,6 @@ const gdpByCountry = [
 
 const meta = {
   component: LineChart,
-  title: 'Charts/LineChart',
   args: {
     dataset: gdpHistory,
     xAxis: { dataKey: 'year' },

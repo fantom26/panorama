@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Progress from '@/components/Feedback/Progress'
 
 const meta = {
-  component: Progress.Root,
-  title: 'Feedback/Progress'
+  component: Progress.Root
 } satisfies Meta<typeof Progress.Root>
 
 export default meta

@@ -5,8 +5,7 @@ import Button from '@/components/Buttons/Button'
 import Icon from '@/components/DataDisplay/Icon'
 
 const meta = {
-  component: Button,
-  title: 'Buttons/Button'
+  component: Button
 } satisfies Meta<typeof Button>
 
 export default meta

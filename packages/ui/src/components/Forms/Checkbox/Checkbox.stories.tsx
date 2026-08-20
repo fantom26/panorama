@@ -5,7 +5,6 @@ import Checkbox from '@/components/Forms/Checkbox'
 
 const meta = {
   component: Checkbox,
-  title: 'Forms/Checkbox',
   args: {
     label: ''
   },

@@ -6,8 +6,7 @@ import Field from '@/components/Forms/Field'
 import TextField from '@/components/Forms/TextField'
 
 const meta = {
-  component: Field,
-  title: 'Forms/Field'
+  component: Field
 } satisfies Meta<typeof Field>
 
 export default meta

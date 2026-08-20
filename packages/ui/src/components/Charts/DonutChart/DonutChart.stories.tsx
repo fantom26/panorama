@@ -12,7 +12,6 @@ const popByRegion = [
 
 const meta = {
   component: DonutChart,
-  title: 'Charts/DonutChart',
   args: {
     data: popByRegion,
     size: 190

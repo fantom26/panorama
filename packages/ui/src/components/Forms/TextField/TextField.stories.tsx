@@ -5,8 +5,7 @@ import Icon from '@/components/DataDisplay/Icon'
 import TextField from '@/components/Forms/TextField'
 
 const meta = {
-  component: TextField,
-  title: 'Forms/TextField'
+  component: TextField
 } satisfies Meta<typeof TextField>
 
 export default meta
