@@ -1,14 +1,13 @@
 import type { Preview } from '@storybook/react-vite'
-import { initialize, mswLoader } from 'msw-storybook-addon'
+import { mswLoader } from 'msw-storybook-addon/csf3'
 
 import '../src/styles/index.css'
 import { decorators } from './decorators'
 
-// Registers the msw addon
-initialize()
-
 const preview: Preview = {
-  tags: ['autodocs'], // to automatically generate documentation for our components
+  // to automatically generate documentation for our components
+  tags: ['autodocs'],
+
   globalTypes: {
     locale: {
       name: 'Locale',
@@ -22,25 +21,29 @@ const preview: Preview = {
       }
     }
   },
+
   parameters: {
     options: {
       storySort: {
         order: ['Design Tokens', '*']
       }
     },
+
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/
       }
     },
+
     // https://github.com/UX-and-I/storybook-design-token
     designToken: {
       disable: true,
       pageSize: Number.MAX_VALUE
     }
   },
-  loaders: [mswLoader],
+
+  loaders: [mswLoader()],
   decorators
 }
 

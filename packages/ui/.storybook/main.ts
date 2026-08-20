@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     '@storybook/addon-vitest',
     '@storybook/addon-a11y',
     '@storybook/addon-themes',
+    'msw-storybook-addon',
     {
       name: 'storybook-design-token',
       options: {

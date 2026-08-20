@@ -22,32 +22,30 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        http.get(import.meta.env.VITE_REST_COUNTRIES_API_URL, () => {
-          return HttpResponse.json(countries)
-        })
-      ]
-    }
+  beforeEach({ msw }) {
+    msw.use(
+      http.get(import.meta.env.VITE_REST_COUNTRIES_API_URL, () => {
+        return HttpResponse.json(countries)
+      })
+    )
   },
+
   play: async ({ canvas }) => {
     await waitFor(() => canvas.getByText('Ukraine'))
   }
 }
 
 export const Error: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        http.get(import.meta.env.VITE_REST_COUNTRIES_API_URL, () => {
-          return new HttpResponse(null, {
-            status: 403
-          })
+  beforeEach({ msw }) {
+    msw.use(
+      http.get(import.meta.env.VITE_REST_COUNTRIES_API_URL, () => {
+        return new HttpResponse(null, {
+          status: 403
         })
-      ]
-    }
+      })
+    )
   },
+
   play: async ({ canvas }) => {
     await waitFor(() => canvas.getByText('Something went wrong'))
   }
