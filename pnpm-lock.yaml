@@ -133,6 +133,27 @@ importers:
         specifier: ^8.50.0
         version: 8.50.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.2)
 
+  packages/i18n:
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/prettier-config':
+        specifier: workspace:*
+        version: link:../prettier-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      eslint:
+        specifier: ^9.39.1
+        version: 9.39.1(jiti@2.6.1)
+      prettier:
+        specifier: ^3.8.3
+        version: 3.9.6
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+
   packages/prettier-config:
     dependencies:
       '@trivago/prettier-plugin-sort-imports':
@@ -199,6 +220,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^2.12.0
         version: 2.12.0(react-redux@9.3.0(@types/react@19.2.18)(react@19.2.0)(redux@5.0.1))(react@19.2.0)
+      '@repo/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@repo/tokens':
         specifier: workspace:*
         version: link:../tokens
@@ -211,12 +235,6 @@ importers:
       i18next:
         specifier: ^26.3.6
         version: 26.3.6(typescript@5.9.3)
-      i18next-browser-languagedetector:
-        specifier: ^8.2.1
-        version: 8.2.1
-      i18next-http-backend:
-        specifier: ^4.0.1
-        version: 4.0.1
       lucide-react:
         specifier: ^1.31.0
         version: 1.31.0(react@19.2.0)
@@ -3960,13 +3978,6 @@ packages:
   hyperdyperid@1.2.0:
     resolution: {integrity: sha512-Y93lCzHYgGWdrJ66yIktxiaGULYc6oGiABxhcO5AufBeOyoIdZF7bIfLaOrbM0iGIOXQQgxxRrFEnb+Y6w1n4A==}
     engines: {node: '>=10.18'}
-
-  i18next-browser-languagedetector@8.2.1:
-    resolution: {integrity: sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw==}
-
-  i18next-http-backend@4.0.1:
-    resolution: {integrity: sha512-O+7MwPCJIKCu68vho8JtD1HF8QHyMPzoChIDFfYCrpaDqX6oq3RqASujnpKEdnNCEOb+kLMOHTNTcGKpj7B1BA==}
-    engines: {node: '>=18'}
 
   i18next@26.3.6:
     resolution: {integrity: sha512-Bu5Z2nAXgfVyM8xvW3jk9EKRIuX37PudsrBViThNFx7CR7aaYTpP01cxNB/E4c4UUzTDiAZRstEhsRfPOL/8xA==}
@@ -9920,12 +9931,6 @@ snapshots:
   husky@9.1.7: {}
 
   hyperdyperid@1.2.0: {}
-
-  i18next-browser-languagedetector@8.2.1:
-    dependencies:
-      '@babel/runtime': 7.29.7
-
-  i18next-http-backend@4.0.1: {}
 
   i18next@26.3.6(typescript@5.9.3):
     optionalDependencies:

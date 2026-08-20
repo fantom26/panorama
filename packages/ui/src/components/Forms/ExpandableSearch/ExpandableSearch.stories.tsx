@@ -9,7 +9,7 @@ const meta = {
   component: ExpandableSearch,
   render: (args) => {
     const { t } = useTranslation()
-    return <ExpandableSearch {...args} placeholder={t('stories.expandableSearch.placeholder')} />
+    return <ExpandableSearch {...args} placeholder={t('expandableSearch.placeholder')} />
   }
 } satisfies Meta<typeof ExpandableSearch>
 
@@ -33,7 +33,7 @@ export const WithResults: Story = {
   render: (args) => {
     const { t } = useTranslation()
     return (
-      <ExpandableSearch {...args} placeholder={t('stories.expandableSearch.placeholder')}>
+      <ExpandableSearch {...args} placeholder={t('expandableSearch.placeholder')}>
         <Typography component='p' variant='body-sm' color='subtle'>
           Germany, France, Japan
         </Typography>

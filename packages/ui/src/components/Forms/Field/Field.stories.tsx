@@ -16,10 +16,10 @@ export const Default: Story = {
   render: () => {
     const { t } = useTranslation()
     return (
-      <Field label={t('stories.field.searchLabel')}>
+      <Field label={t('field.searchLabel')}>
         <TextField
           startAdornment={<Icon name='search' />}
-          placeholder={t('stories.field.searchPlaceholder')}
+          placeholder={t('field.searchPlaceholder')}
         />
       </Field>
     )
@@ -30,12 +30,8 @@ export const WithHint: Story = {
   render: () => {
     const { t } = useTranslation()
     return (
-      <Field label={t('stories.field.gdpFloorLabel')} hint={t('stories.field.gdpFloorHint')}>
-        <TextField
-          tabular
-          endAdornment={t('stories.field.gdpFloorAdornment')}
-          defaultValue='1000'
-        />
+      <Field label={t('field.gdpFloorLabel')} hint={t('field.gdpFloorHint')}>
+        <TextField tabular endAdornment={t('field.gdpFloorAdornment')} defaultValue='1000' />
       </Field>
     )
   }
@@ -45,7 +41,7 @@ export const WithError: Story = {
   render: () => {
     const { t } = useTranslation()
     return (
-      <Field label={t('stories.field.yearLabel')} error={t('stories.field.yearError')}>
+      <Field label={t('field.yearLabel')} error={t('field.yearError')}>
         <TextField tabular defaultValue='20244' />
       </Field>
     )
@@ -56,7 +52,7 @@ export const Required: Story = {
   render: () => {
     const { t } = useTranslation()
     return (
-      <Field label={t('stories.field.isoCodeLabel')} required>
+      <Field label={t('field.isoCodeLabel')} required>
         <TextField placeholder='DEU' />
       </Field>
     )

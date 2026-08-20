@@ -13,7 +13,7 @@ const meta = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Radio {...args} label={t('stories.radio.logarithmic')} />
+    return <Radio {...args} label={t('radio.logarithmic')} />
   }
 } satisfies Meta<typeof Radio>
 
@@ -25,26 +25,14 @@ export const Default: Story = {}
 export const WithHint: Story = {
   render: (args) => {
     const { t } = useTranslation()
-    return (
-      <Radio
-        {...args}
-        label={t('stories.radio.logarithmic')}
-        hint={t('stories.radio.logarithmicHint')}
-      />
-    )
+    return <Radio {...args} label={t('radio.logarithmic')} hint={t('radio.logarithmicHint')} />
   }
 }
 
 export const Error: Story = {
   render: (args) => {
     const { t } = useTranslation()
-    return (
-      <Radio
-        {...args}
-        label={t('stories.radio.logarithmic')}
-        error={t('stories.radio.chooseScaleError')}
-      />
-    )
+    return <Radio {...args} label={t('radio.logarithmic')} error={t('radio.chooseScaleError')} />
   }
 }
 
@@ -68,16 +56,12 @@ export const Group: Story = {
       <RadioGroup
         name='scale'
         defaultValue='log'
-        aria-label={t('stories.radio.mapScaleAriaLabel')}
+        aria-label={t('radio.mapScaleAriaLabel')}
         style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
       >
-        <Radio
-          value='log'
-          label={t('stories.radio.logarithmic')}
-          hint={t('stories.radio.logarithmicHint')}
-        />
-        <Radio value='linear' label={t('stories.radio.linear')} />
-        <Radio value='quantile' label={t('stories.radio.quantile')} disabled />
+        <Radio value='log' label={t('radio.logarithmic')} hint={t('radio.logarithmicHint')} />
+        <Radio value='linear' label={t('radio.linear')} />
+        <Radio value='quantile' label={t('radio.quantile')} disabled />
       </RadioGroup>
     )
   },

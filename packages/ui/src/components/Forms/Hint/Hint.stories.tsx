@@ -10,7 +10,7 @@ const meta = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Hint {...args} text={t('stories.field.gdpFloorHint')} />
+    return <Hint {...args} text={t('field.gdpFloorHint')} />
   }
 } satisfies Meta<typeof Hint>
 
@@ -25,6 +25,6 @@ export const Error: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Hint {...args} text={t('stories.field.yearError')} />
+    return <Hint {...args} text={t('field.yearError')} />
   }
 }

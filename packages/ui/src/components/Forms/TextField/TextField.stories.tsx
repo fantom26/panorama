@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (args) => {
     const { t } = useTranslation()
-    return <TextField {...args} placeholder={t('stories.textField.searchPlaceholder')} />
+    return <TextField {...args} placeholder={t('textField.searchPlaceholder')} />
   },
   play: async ({ canvas }) => {
     const input = canvas.getByRole('textbox')
@@ -40,7 +40,7 @@ export const WithStartAdornment: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <TextField {...args} placeholder={t('stories.textField.searchPlaceholder')} />
+    return <TextField {...args} placeholder={t('textField.searchPlaceholder')} />
   }
 }
 
@@ -53,8 +53,8 @@ export const WithEndAdornment: Story = {
     return (
       <TextField
         {...args}
-        aria-label={t('stories.field.gdpFloorLabel')}
-        endAdornment={t('stories.textField.usdBAdornment')}
+        aria-label={t('field.gdpFloorLabel')}
+        endAdornment={t('textField.usdBAdornment')}
       />
     )
   }
@@ -70,8 +70,8 @@ export const Tabular: Story = {
     return (
       <TextField
         {...args}
-        aria-label={t('stories.textField.percentAriaLabel')}
-        endAdornment={t('stories.textField.percentAdornment')}
+        aria-label={t('textField.percentAriaLabel')}
+        endAdornment={t('textField.percentAdornment')}
       />
     )
   }
@@ -84,7 +84,7 @@ export const Error: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <TextField {...args} aria-label={t('stories.field.yearLabel')} />
+    return <TextField {...args} aria-label={t('field.yearLabel')} />
   }
 }
 
@@ -95,7 +95,7 @@ export const Disabled: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <TextField {...args} aria-label={t('stories.field.isoCodeLabel')} />
+    return <TextField {...args} aria-label={t('field.isoCodeLabel')} />
   },
   play: async ({ canvas }) => {
     const input = canvas.getByRole('textbox')

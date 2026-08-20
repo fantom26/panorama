@@ -14,7 +14,7 @@ function DrawerDemo({ anchor = 'right' }: { anchor?: DrawerAnchor }) {
     <Drawer.Root anchor={anchor}>
       <Drawer.Trigger render={<Button variant='contained' />}>
         <Icon name='plus' />
-        {t('common.actions.openDrawer')}
+        {t('actions.openDrawer')}
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Backdrop />
@@ -23,11 +23,11 @@ function DrawerDemo({ anchor = 'right' }: { anchor?: DrawerAnchor }) {
             <Drawer.Header>
               <div>
                 <Typography variant='meta-sm' color='subtle'>
-                  {t('stories.drawer.compareLabel')}
+                  {t('drawer.compareLabel')}
                 </Typography>
-                <Drawer.Title>{t('stories.drawer.selectedTitle')}</Drawer.Title>
+                <Drawer.Title>{t('drawer.selectedTitle')}</Drawer.Title>
               </div>
-              <Drawer.Close aria-label={t('stories.drawer.closeAriaLabel')} />
+              <Drawer.Close aria-label={t('drawer.closeAriaLabel')} />
             </Drawer.Header>
             <Drawer.Content style={{ padding: 16 }}>
               <Typography variant='body-sm'>Germany — GDP $4.5T</Typography>
@@ -35,7 +35,7 @@ function DrawerDemo({ anchor = 'right' }: { anchor?: DrawerAnchor }) {
             </Drawer.Content>
             <Drawer.Footer>
               <Button variant='contained' style={{ flex: 1 }}>
-                {t('common.actions.apply')}
+                {t('actions.apply')}
               </Button>
             </Drawer.Footer>
           </Drawer.Popup>

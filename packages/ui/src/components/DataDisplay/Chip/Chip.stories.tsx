@@ -90,7 +90,7 @@ export const FilterList: Story = {
         {indicators.map((indicator) => (
           <Chip key={indicator} label={indicator} onDelete={() => handleDelete(indicator)} />
         ))}
-        {indicators.length === 0 && t('stories.chip.noIndicatorsSelected')}
+        {indicators.length === 0 && t('chip.noIndicatorsSelected')}
       </div>
     )
   },

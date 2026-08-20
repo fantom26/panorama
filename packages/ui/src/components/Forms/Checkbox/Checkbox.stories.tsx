@@ -11,7 +11,7 @@ const meta = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Checkbox {...args} label={t('stories.checkbox.includeDisputedTerritories')} />
+    return <Checkbox {...args} label={t('checkbox.includeDisputedTerritories')} />
   }
 } satisfies Meta<typeof Checkbox>
 
@@ -46,8 +46,8 @@ export const WithHint: Story = {
     return (
       <Checkbox
         {...args}
-        label={t('stories.checkbox.showNullIndicators')}
-        hint={t('stories.checkbox.showNullIndicatorsHint')}
+        label={t('checkbox.showNullIndicators')}
+        hint={t('checkbox.showNullIndicatorsHint')}
       />
     )
   }
@@ -59,7 +59,7 @@ export const Indeterminate: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Checkbox {...args} label={t('stories.checkbox.allRows')} />
+    return <Checkbox {...args} label={t('checkbox.allRows')} />
   }
 }
 
@@ -69,8 +69,8 @@ export const Error: Story = {
     return (
       <Checkbox
         {...args}
-        label={t('stories.checkbox.acceptTerms')}
-        error={t('stories.checkbox.acceptTermsError')}
+        label={t('checkbox.acceptTerms')}
+        error={t('checkbox.acceptTermsError')}
       />
     )
   }
@@ -85,8 +85,8 @@ export const Disabled: Story = {
     return (
       <Checkbox
         {...args}
-        label={t('stories.checkbox.aggregateRegions')}
-        hint={t('stories.checkbox.aggregateRegionsHint')}
+        label={t('checkbox.aggregateRegions')}
+        hint={t('checkbox.aggregateRegionsHint')}
       />
     )
   },

@@ -20,14 +20,14 @@ export const Default: Story = {
       <Dialog.Root>
         <Dialog.Trigger render={<Button variant='contained' />}>
           <Icon name='plus' />
-          {t('common.actions.addToCompare')}
+          {t('actions.addToCompare')}
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Backdrop />
           <Dialog.Popup>
-            <Dialog.Title>{t('stories.dialog.title')}</Dialog.Title>
-            <Dialog.Description>{t('stories.dialog.description')}</Dialog.Description>
-            <Dialog.Close aria-label={t('stories.dialog.closeAriaLabel')} />
+            <Dialog.Title>{t('dialog.title')}</Dialog.Title>
+            <Dialog.Description>{t('dialog.description')}</Dialog.Description>
+            <Dialog.Close aria-label={t('dialog.closeAriaLabel')} />
           </Dialog.Popup>
         </Dialog.Portal>
       </Dialog.Root>

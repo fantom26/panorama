@@ -41,7 +41,7 @@ export const Default: Story = {
         </Tabs.List>
         {indicators.map(({ value, label }) => (
           <Tabs.Panel key={value} value={value}>
-            {t('stories.tabs.panelContent', { label })}
+            {t('tabs.panelContent', { label })}
           </Tabs.Panel>
         ))}
       </Tabs.Root>
@@ -77,7 +77,7 @@ export const Disabled: Story = {
         </Tabs.List>
         {indicators.map(({ value, label }) => (
           <Tabs.Panel key={value} value={value}>
-            {t('stories.tabs.panelContent', { label })}
+            {t('tabs.panelContent', { label })}
           </Tabs.Panel>
         ))}
       </Tabs.Root>

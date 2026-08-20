@@ -18,7 +18,7 @@ export const Default: Story = {
   render: (args) => {
     const { t } = useTranslation()
     return (
-      <Progress.Root {...args} aria-label={t('stories.progress.ariaLabel')}>
+      <Progress.Root {...args} aria-label={t('progress.ariaLabel')}>
         <Progress.Track>
           <Progress.Indicator />
         </Progress.Track>

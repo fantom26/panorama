@@ -1,17 +1,17 @@
 import i18n from 'i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
-import Backend from 'i18next-http-backend'
 
-i18n
-  .use(Backend) // lazy loads translations from /public/locales
-  .use(LanguageDetector) // detect user language
-  .init({
-    fallbackLng: 'en',
-    lng: 'en',
-    debug: true,
-    interpolation: {
-      escapeValue: false
-    }
-  })
+import { resources } from '@repo/i18n'
+
+i18n.init({
+  resources,
+  fallbackLng: 'en',
+  lng: 'en',
+  ns: ['common', 'ui'],
+  defaultNS: 'common',
+  fallbackNS: 'ui',
+  interpolation: {
+    escapeValue: false
+  }
+})
 
 export default i18n

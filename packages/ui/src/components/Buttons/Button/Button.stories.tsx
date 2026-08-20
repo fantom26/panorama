@@ -18,7 +18,7 @@ export const Default: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Button {...args}>{t('common.actions.submit')}</Button>
+    return <Button {...args}>{t('actions.submit')}</Button>
   },
   play: async ({ args, canvas }) => {
     const button = canvas.getByRole('button')
@@ -36,7 +36,7 @@ export const Outlined: Story = {
     return (
       <Button {...args}>
         <Icon name='arrow-left' />
-        {t('common.actions.back')}
+        {t('actions.back')}
       </Button>
     )
   }
@@ -51,7 +51,7 @@ export const Contained: Story = {
     return (
       <Button {...args}>
         <Icon name='plus' />
-        {t('common.actions.addToCompare')}
+        {t('actions.addToCompare')}
       </Button>
     )
   }
@@ -65,7 +65,7 @@ export const Disabled: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Button {...args}>{t('common.actions.submit')}</Button>
+    return <Button {...args}>{t('actions.submit')}</Button>
   },
   play: async ({ args, canvas }) => {
     const button = canvas.getByRole('button')

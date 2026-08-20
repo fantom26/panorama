@@ -16,9 +16,9 @@ export default function Screen() {
 
   const columns: ColumnDef<CountryData>[] = useMemo(
     () => [
-      { accessorKey: 'id', header: t('common.tableColumns.code') },
-      { accessorKey: 'name', header: t('common.tableColumns.name') },
-      { accessorKey: 'region', header: t('common.tableColumns.region') }
+      { accessorKey: 'id', header: t('tableColumns.code') },
+      { accessorKey: 'name', header: t('tableColumns.name') },
+      { accessorKey: 'region', header: t('tableColumns.region') }
     ],
     [t]
   )

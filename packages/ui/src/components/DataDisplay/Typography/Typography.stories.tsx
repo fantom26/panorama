@@ -31,7 +31,7 @@ const meta = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Typography {...args}>{t('stories.typography.sample')}</Typography>
+    return <Typography {...args}>{t('typography.sample')}</Typography>
   }
 } satisfies Meta<typeof Typography>
 
@@ -58,7 +58,7 @@ export const AllVariants: Story = {
           <Fragment key={variant}>
             {index > 0 && <Divider />}
             <Typography variant={variant}>
-              {variant} — {t('stories.typography.sample')}
+              {variant} — {t('typography.sample')}
             </Typography>
           </Fragment>
         ))}
@@ -104,6 +104,6 @@ export const ComponentOverride: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Typography {...args}>{t('stories.typography.componentOverride')}</Typography>
+    return <Typography {...args}>{t('typography.componentOverride')}</Typography>
   }
 }

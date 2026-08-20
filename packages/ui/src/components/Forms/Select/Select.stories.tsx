@@ -27,13 +27,7 @@ const meta = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return (
-      <Select
-        {...args}
-        placeholder={t('stories.select.allRegions')}
-        aria-label={t('stories.select.region')}
-      />
-    )
+    return <Select {...args} placeholder={t('select.allRegions')} aria-label={t('select.region')} />
   }
 } satisfies Meta<typeof Select>
 
@@ -80,7 +74,7 @@ export const Error: Story = {
   render: () => {
     const { t } = useTranslation()
     return (
-      <Field label={t('stories.select.locale')} error={t('stories.select.unsupportedLocale')}>
+      <Field label={t('select.locale')} error={t('select.unsupportedLocale')}>
         <Select error defaultValue='zz' options={[{ label: 'zz — unknown', value: 'zz' }]} />
       </Field>
     )
@@ -106,8 +100,8 @@ export const InField: Story = {
   render: () => {
     const { t } = useTranslation()
     return (
-      <Field label={t('stories.select.region')}>
-        <Select options={regionOptions} placeholder={t('stories.select.allRegions')} />
+      <Field label={t('select.region')}>
+        <Select options={regionOptions} placeholder={t('select.allRegions')} />
       </Field>
     )
   }

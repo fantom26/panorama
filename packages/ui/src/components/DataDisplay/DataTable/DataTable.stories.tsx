@@ -12,9 +12,9 @@ import type { CountryData } from '@/types/country.types'
 function useColumns(): ColumnDef<CountryData>[] {
   const { t } = useTranslation()
   return [
-    { accessorKey: 'id', header: t('common.tableColumns.code') },
-    { accessorKey: 'name', header: t('common.tableColumns.name') },
-    { accessorKey: 'region', header: t('common.tableColumns.region') }
+    { accessorKey: 'id', header: t('tableColumns.code') },
+    { accessorKey: 'name', header: t('tableColumns.name') },
+    { accessorKey: 'region', header: t('tableColumns.region') }
   ]
 }
 
@@ -61,7 +61,7 @@ export const Empty: Story = {
     const { t } = useTranslation()
     return (
       <DataTable
-        state={{ status: 'empty', message: t('stories.dataTable.noCountriesFound') }}
+        state={{ status: 'empty', message: t('dataTable.noCountriesFound') }}
         columns={useColumns()}
       />
     )
@@ -76,7 +76,7 @@ export const ErrorState: Story = {
     const { t } = useTranslation()
     return (
       <DataTable
-        state={{ status: 'error', error: new Error(t('stories.dataTable.failedToLoadCountries')) }}
+        state={{ status: 'error', error: new Error(t('dataTable.failedToLoadCountries')) }}
         columns={useColumns()}
       />
     )
@@ -125,9 +125,9 @@ function ConnectedDataTable() {
     status === 'loading'
       ? { status: 'loading' as const }
       : status === 'failed'
-        ? { status: 'error' as const, error: error ?? t('stories.dataTable.unknownError') }
+        ? { status: 'error' as const, error: error ?? t('dataTable.unknownError') }
         : data.length === 0
-          ? { status: 'empty' as const, message: t('stories.dataTable.noCountries') }
+          ? { status: 'empty' as const, message: t('dataTable.noCountries') }
           : { status: 'ready' as const, data }
 
   return <DataTable state={tableState} columns={useColumns()} />

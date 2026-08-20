@@ -38,9 +38,11 @@ Only `light` and `dark` themes exist today (built by `@repo/tokens`); there's no
 
 ## i18n support
 
-Many components pull their own copy (aria-labels, empty states, etc.) through `react-i18next`'s `useTranslation()` — e.g. `CloseButton`'s default `aria-label`, `DataTable`'s empty/error text. Translation keys live in `public/locales/{en,ar}/translation.json`.
+Many components pull their own copy (aria-labels, empty states, etc.) through `react-i18next`'s `useTranslation()` — e.g. `CloseButton`'s default `aria-label`, `DataTable`'s empty/error text. Those production strings live in `@repo/i18n` (`common` and `ui` namespaces, en/ar), not in this package.
 
-`src/i18n.ts` initializes an `i18next` instance (`i18next-http-backend` + `i18next-browser-languagedetector`), but it's only wired up for Storybook (`.storybook/decorators.tsx`) — it is **not** exported from the package's public API (`src/index.ts`). See Known limitations.
+`src/i18n.ts` initializes an `i18next` instance directly from `@repo/i18n`'s bundled `resources` — no HTTP backend or browser language detector, so it's synchronous and has no runtime fetch. It's currently only wired up for Storybook (`.storybook/decorators.tsx`); it is **not** exported from the package's public API (`src/index.ts`). See Known limitations.
+
+Storybook has its own resources for demo-only copy (sample data, story-specific labels) that real consumers never see: `.storybook/locales/{en,ar}.ts`, merged with `@repo/i18n`'s resources by the Storybook-only adapter at `.storybook/i18n.ts` under a `stories` namespace. Don't add production strings there — they belong in `@repo/i18n`.
 
 ## Running Storybook
 

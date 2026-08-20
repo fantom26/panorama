@@ -1,0 +1,27 @@
+{
+  "name": "@repo/i18n",
+  "version": "0.0.0",
+  "description": "Shared i18next resources (en/ar) for Panorama.",
+  "type": "module",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc -b",
+    "lint": "eslint",
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "format:check": "prettier --check . --ignore-path ../../.prettierignore"
+  },
+  "prettier": "@repo/prettier-config",
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "eslint": "^9.39.1",
+    "prettier": "^3.8.3",
+    "typescript": "~5.9.3"
+  }
+}

@@ -18,24 +18,24 @@ function useSampleToasts() {
   return [
     {
       type: 'info',
-      title: t('stories.toast.syncingTitle'),
-      description: t('stories.toast.syncingDescription')
+      title: t('toast.syncingTitle'),
+      description: t('toast.syncingDescription')
     },
     {
       type: 'success',
-      title: t('stories.toast.syncedTitle'),
-      description: t('stories.toast.syncedDescription')
+      title: t('toast.syncedTitle'),
+      description: t('toast.syncedDescription')
     },
     {
       type: 'error',
-      title: t('stories.toast.requestFailedTitle'),
-      description: t('stories.toast.requestFailedDescription'),
-      actionProps: { children: t('common.actions.retry'), onClick: () => {} }
+      title: t('toast.requestFailedTitle'),
+      description: t('toast.requestFailedDescription'),
+      actionProps: { children: t('actions.retry'), onClick: () => {} }
     },
     {
       type: 'warning',
-      title: t('stories.toast.staleTitle'),
-      description: t('stories.toast.staleDescription')
+      title: t('toast.staleTitle'),
+      description: t('toast.staleDescription')
     }
   ] as const
 }
@@ -69,7 +69,7 @@ function StackedToastsDemo() {
   return (
     <div style={{ display: 'flex', gap: 8 }}>
       <Button onClick={() => sampleToasts.forEach((sample) => add({ ...sample, timeout: 0 }))}>
-        {t('common.actions.showAll')}
+        {t('actions.showAll')}
       </Button>
 
       <Toast.Viewport>

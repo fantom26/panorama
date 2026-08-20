@@ -10,7 +10,7 @@ const meta = {
   render: (args) => {
     const { t } = useTranslation()
     return (
-      <IconButton {...args} aria-label={t('stories.iconButton.searchAriaLabel')}>
+      <IconButton {...args} aria-label={t('iconButton.searchAriaLabel')}>
         <Icon name='search' />
       </IconButton>
     )

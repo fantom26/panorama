@@ -19,7 +19,7 @@ export const Default: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <StatCard {...args} label={t('stories.statCard.totalPopulation')} />
+    return <StatCard {...args} label={t('statCard.totalPopulation')} />
   }
 }
 
@@ -32,7 +32,7 @@ export const NegativeTrend: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <StatCard {...args} label={t('stories.statCard.unemploymentRate')} />
+    return <StatCard {...args} label={t('statCard.unemploymentRate')} />
   }
 }
 
@@ -44,7 +44,7 @@ export const DefaultTrend: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <StatCard {...args} label={t('stories.statCard.medianAge')} />
+    return <StatCard {...args} label={t('statCard.medianAge')} />
   }
 }
 
@@ -55,7 +55,7 @@ export const NoTrend: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <StatCard {...args} label={t('stories.statCard.gdpPerCapita')} />
+    return <StatCard {...args} label={t('statCard.gdpPerCapita')} />
   }
 }
 
@@ -68,6 +68,6 @@ export const Loading: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <StatCard {...args} label={t('stories.statCard.totalPopulation')} />
+    return <StatCard {...args} label={t('statCard.totalPopulation')} />
   }
 }
