@@ -1,6 +1,7 @@
 import { RadioGroup } from '@base-ui/react/radio-group'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, userEvent } from 'storybook/test'
 
 import Radio from '@/components/Forms/Radio'
 
@@ -50,6 +51,13 @@ export const Error: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true
+  },
+  play: async ({ canvas }) => {
+    const radio = canvas.getByRole('radio')
+    await expect(radio).toHaveAttribute('aria-disabled', 'true')
+
+    await userEvent.click(radio)
+    await expect(radio).not.toBeChecked()
   }
 }
 
@@ -72,5 +80,24 @@ export const Group: Story = {
         <Radio value='quantile' label={t('stories.radio.quantile')} disabled />
       </RadioGroup>
     )
+  },
+  play: async ({ canvas }) => {
+    const [logRadio, linearRadio, quantileRadio] = canvas.getAllByRole('radio') as [
+      HTMLElement,
+      HTMLElement,
+      HTMLElement
+    ]
+
+    await expect(logRadio).toBeChecked()
+    await expect(linearRadio).not.toBeChecked()
+
+    await userEvent.click(linearRadio)
+    await expect(linearRadio).toBeChecked()
+    await expect(logRadio).not.toBeChecked()
+
+    await expect(quantileRadio).toHaveAttribute('aria-disabled', 'true')
+    await userEvent.click(quantileRadio)
+    await expect(quantileRadio).not.toBeChecked()
+    await expect(linearRadio).toBeChecked()
   }
 }

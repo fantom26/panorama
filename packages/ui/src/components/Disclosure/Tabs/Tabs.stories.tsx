@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, userEvent } from 'storybook/test'
 
 import Tabs from '@/components/Disclosure/Tabs'
 
@@ -45,6 +46,17 @@ export const Default: Story = {
         ))}
       </Tabs.Root>
     )
+  },
+  play: async ({ canvas }) => {
+    const gdpTab = canvas.getByRole('tab', { name: 'GDP' })
+    await expect(gdpTab).toHaveAttribute('aria-selected', 'true')
+    await expect(canvas.getByText('GDP panel content')).toBeVisible()
+
+    const inflationTab = canvas.getByRole('tab', { name: 'Inflation' })
+    await userEvent.click(inflationTab)
+    await expect(inflationTab).toHaveAttribute('aria-selected', 'true')
+    await expect(gdpTab).toHaveAttribute('aria-selected', 'false')
+    await expect(canvas.getByText('Inflation panel content')).toBeVisible()
   }
 }
 
@@ -70,5 +82,14 @@ export const Disabled: Story = {
         ))}
       </Tabs.Root>
     )
+  },
+  play: async ({ canvas }) => {
+    const gdpTab = canvas.getByRole('tab', { name: 'GDP' })
+    const gdpCapTab = canvas.getByRole('tab', { name: 'GDP/cap' })
+    await expect(gdpCapTab).toHaveAttribute('aria-disabled', 'true')
+
+    await userEvent.click(gdpCapTab)
+    await expect(gdpTab).toHaveAttribute('aria-selected', 'true')
+    await expect(gdpCapTab).toHaveAttribute('aria-selected', 'false')
   }
 }

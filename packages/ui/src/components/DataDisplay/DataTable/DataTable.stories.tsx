@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 import { Provider, useSelector } from 'react-redux'
+import { expect } from 'storybook/test'
 
 import DataTable from '@/components/DataDisplay/DataTable'
 import type { RootState } from '@/store'
@@ -35,11 +36,24 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => <DataTable state={{ status: 'ready', data: countries }} columns={useColumns()} />
+  render: () => <DataTable state={{ status: 'ready', data: countries }} columns={useColumns()} />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('columnheader', { name: 'Code' })).toBeVisible()
+    await expect(canvas.getByRole('columnheader', { name: 'Name' })).toBeVisible()
+    await expect(canvas.getByRole('columnheader', { name: 'Region' })).toBeVisible()
+
+    await expect(canvas.getByRole('cell', { name: 'Ukraine' })).toBeVisible()
+    await expect(canvas.getByRole('cell', { name: 'France' })).toBeVisible()
+    await expect(canvas.getByRole('cell', { name: 'Japan' })).toBeVisible()
+  }
 }
 
 export const Loading: Story = {
-  render: () => <DataTable state={{ status: 'loading' }} columns={useColumns()} />
+  render: () => <DataTable state={{ status: 'loading' }} columns={useColumns()} />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('table').parentElement).toHaveAttribute('aria-busy', 'true')
+    await expect(canvas.getAllByRole('row')).toHaveLength(6)
+  }
 }
 
 export const Empty: Story = {
@@ -51,6 +65,9 @@ export const Empty: Story = {
         columns={useColumns()}
       />
     )
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('No countries found')).toBeVisible()
   }
 }
 
@@ -63,6 +80,9 @@ export const ErrorState: Story = {
         columns={useColumns()}
       />
     )
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('alert')).toHaveTextContent('Failed to load countries')
   }
 }
 

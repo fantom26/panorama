@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, userEvent } from 'storybook/test'
 
 import Checkbox from '@/components/Forms/Checkbox'
 
@@ -17,7 +18,18 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas }) => {
+    const checkbox = canvas.getByRole('checkbox')
+    await expect(checkbox).not.toBeChecked()
+
+    await userEvent.click(checkbox)
+    await expect(checkbox).toBeChecked()
+
+    await userEvent.click(checkbox)
+    await expect(checkbox).not.toBeChecked()
+  }
+}
 
 export const Checked: Story = {
   args: {
@@ -77,5 +89,12 @@ export const Disabled: Story = {
         hint={t('stories.checkbox.aggregateRegionsHint')}
       />
     )
+  },
+  play: async ({ canvas }) => {
+    const checkbox = canvas.getByRole('checkbox')
+    await expect(checkbox).toHaveAttribute('aria-disabled', 'true')
+
+    await userEvent.click(checkbox)
+    await expect(checkbox).not.toBeChecked()
   }
 }

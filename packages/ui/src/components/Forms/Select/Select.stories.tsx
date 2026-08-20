@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, screen, userEvent } from 'storybook/test'
 
 import Field from '@/components/Forms/Field'
 import Select from '@/components/Forms/Select'
@@ -15,7 +16,7 @@ const regionOptions = [
 const indicatorOptions = [
   { label: 'GDP, nominal USD', value: 'gdp' },
   { label: 'GDP per capita', value: 'gdppc' },
-  { label: 'Inflation, CPI', value: 'inflation' },
+  { label: 'Inflation, CPI', value: 'inflation', disabled: true },
   { label: 'Unemployment', value: 'unemp' }
 ]
 
@@ -33,12 +34,37 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('combobox')
+    await userEvent.click(trigger)
+
+    const option = await screen.findByRole('option', { name: 'Europe' })
+    await userEvent.click(option)
+
+    await expect(trigger).toHaveTextContent('Europe')
+  }
+}
 
 export const WithValue: Story = {
   args: {
     options: indicatorOptions,
     defaultValue: 'gdp'
+  },
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('combobox')
+    await expect(trigger).toHaveTextContent('GDP, nominal USD')
+
+    await userEvent.click(trigger)
+    const disabledOption = await screen.findByRole('option', { name: 'Inflation, CPI' })
+    await expect(disabledOption).toHaveAttribute('aria-disabled', 'true')
+
+    await userEvent.click(disabledOption)
+    await expect(trigger).toHaveTextContent('GDP, nominal USD')
+
+    const unemploymentOption = screen.getByRole('option', { name: 'Unemployment' })
+    await userEvent.click(unemploymentOption)
+    await expect(trigger).toHaveTextContent('Unemployment')
   }
 }
 
@@ -58,6 +84,13 @@ export const Disabled: Story = {
     options: [{ label: 'DEU', value: 'deu' }],
     defaultValue: 'deu',
     disabled: true
+  },
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('combobox')
+    await expect(trigger).toHaveAttribute('data-disabled')
+
+    await userEvent.click(trigger)
+    await expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
   }
 }
 

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, screen, userEvent, waitFor } from 'storybook/test'
 
 import Button from '@/components/Buttons/Button'
 import Icon from '@/components/DataDisplay/Icon'
@@ -61,4 +62,65 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: 'Open drawer' })
+    await userEvent.click(trigger)
+
+    const dialog = await screen.findByRole('dialog')
+    await waitFor(() => expect(dialog).toBeVisible())
+    await expect(screen.getByRole('heading', { name: 'Selected' })).toBeVisible()
+    await expect(screen.getByRole('button', { name: 'Apply' })).toBeVisible()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Close drawer' }))
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+
+    await userEvent.click(trigger)
+    await screen.findByRole('dialog')
+
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  }
+}
+
+export const Top: Story = {
+  args: {
+    anchor: 'top'
+  },
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: 'Open drawer' })
+    await userEvent.click(trigger)
+
+    const dialog = await screen.findByRole('dialog')
+    await waitFor(() => expect(dialog).toBeVisible())
+    await expect(dialog).toHaveAttribute('data-swipe-direction', 'up')
+  }
+}
+
+export const Bottom: Story = {
+  args: {
+    anchor: 'bottom'
+  },
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: 'Open drawer' })
+    await userEvent.click(trigger)
+
+    const dialog = await screen.findByRole('dialog')
+    await waitFor(() => expect(dialog).toBeVisible())
+    await expect(dialog).toHaveAttribute('data-swipe-direction', 'down')
+  }
+}
+
+export const Left: Story = {
+  args: {
+    anchor: 'left'
+  },
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: 'Open drawer' })
+    await userEvent.click(trigger)
+
+    const dialog = await screen.findByRole('dialog')
+    await waitFor(() => expect(dialog).toBeVisible())
+    await expect(dialog).toHaveAttribute('data-swipe-direction', 'left')
+  }
+}

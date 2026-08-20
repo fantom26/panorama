@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, screen, userEvent, waitFor } from 'storybook/test'
 
 import Button from '@/components/Buttons/Button'
 import Toast from '@/components/Feedback/Toast'
@@ -85,7 +86,20 @@ export const Default: Story = {
     <Toast.Provider>
       <ToastDemo />
     </Toast.Provider>
-  )
+  ),
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: 'Syncing' })
+    await userEvent.click(trigger)
+
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Syncing' })).toBeVisible())
+    await expect(screen.getByText('Fetching World Bank indicators…')).toBeVisible()
+
+    const closeButton = document.querySelector('[aria-label="Close"]') as HTMLElement
+    await userEvent.click(closeButton)
+    await waitFor(() =>
+      expect(screen.queryByRole('heading', { name: 'Syncing' })).not.toBeInTheDocument()
+    )
+  }
 }
 
 export const Stacked: Story = {
@@ -93,5 +107,16 @@ export const Stacked: Story = {
     <Toast.Provider limit={4}>
       <StackedToastsDemo />
     </Toast.Provider>
-  )
+  ),
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: 'Show all' })
+    await userEvent.click(trigger)
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Syncing' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Synced' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Request failed' })).toBeVisible()
+      expect(screen.getByRole('heading', { name: 'Data may be stale' })).toBeVisible()
+    })
+  }
 }

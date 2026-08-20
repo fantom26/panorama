@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, fn, userEvent } from 'storybook/test'
 
 import Chip from '@/components/DataDisplay/Chip'
 import Icon from '@/components/DataDisplay/Icon'
@@ -29,22 +30,46 @@ export const WithIcon: Story = {
 export const Deletable: Story = {
   args: {
     label: 'GDP',
-    onDelete: () => {}
+    onDelete: fn()
+  },
+  play: async ({ args, canvas }) => {
+    const chip = canvas.getByRole('button', { name: 'GDP' })
+    const deleteControl = chip.querySelector('[aria-hidden="true"]') as HTMLElement
+
+    await userEvent.click(deleteControl)
+    await expect(args.onDelete).toHaveBeenCalledOnce()
+
+    chip.focus()
+    await userEvent.keyboard('{Backspace}')
+    await expect(args.onDelete).toHaveBeenCalledTimes(2)
   }
 }
 
 export const Clickable: Story = {
   args: {
     label: 'GDP',
-    onClick: () => {}
+    onClick: fn()
+  },
+  play: async ({ args, canvas }) => {
+    const chip = canvas.getByRole('button', { name: 'GDP' })
+    await userEvent.click(chip)
+    await expect(args.onClick).toHaveBeenCalledOnce()
   }
 }
 
 export const Disabled: Story = {
   args: {
     label: 'GDP',
-    onDelete: () => {},
+    onDelete: fn(),
     disabled: true
+  },
+  play: async ({ args, canvas }) => {
+    const chip = canvas.getByRole('button', { name: 'GDP' })
+    await expect(chip).toBeDisabled()
+
+    const deleteControl = chip.querySelector('[aria-hidden="true"]') as HTMLElement
+    await userEvent.click(deleteControl, { pointerEventsCheck: 0 })
+    await expect(args.onDelete).not.toHaveBeenCalled()
   }
 }
 
@@ -68,5 +93,16 @@ export const FilterList: Story = {
         {indicators.length === 0 && t('stories.chip.noIndicatorsSelected')}
       </div>
     )
+  },
+  play: async ({ canvas }) => {
+    const gdpChip = canvas.getByRole('button', { name: 'GDP' })
+    const deleteControl = gdpChip.querySelector('[aria-hidden="true"]') as HTMLElement
+    await userEvent.click(deleteControl)
+    await expect(canvas.queryByRole('button', { name: 'GDP' })).not.toBeInTheDocument()
+
+    const inflationChip = canvas.getByRole('button', { name: 'Inflation' })
+    inflationChip.focus()
+    await userEvent.keyboard('{Delete}')
+    await expect(canvas.queryByRole('button', { name: 'Inflation' })).not.toBeInTheDocument()
   }
 }

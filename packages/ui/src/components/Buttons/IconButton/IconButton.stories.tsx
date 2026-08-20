@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect, fn, userEvent } from 'storybook/test'
 
 import IconButton from '@/components/Buttons/IconButton'
 import Icon from '@/components/DataDisplay/Icon'
@@ -19,7 +20,16 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    onClick: fn()
+  },
+  play: async ({ args, canvas }) => {
+    const button = canvas.getByRole('button', { name: 'Search' })
+    await userEvent.click(button)
+    await expect(args.onClick).toHaveBeenCalledOnce()
+  }
+}
 
 export const Contained: Story = {
   args: {
@@ -35,6 +45,14 @@ export const Small: Story = {
 
 export const Disabled: Story = {
   args: {
-    disabled: true
+    disabled: true,
+    onClick: fn()
+  },
+  play: async ({ args, canvas }) => {
+    const button = canvas.getByRole('button', { name: 'Search' })
+    await expect(button).toBeDisabled()
+
+    await userEvent.click(button)
+    await expect(args.onClick).not.toHaveBeenCalled()
   }
 }
