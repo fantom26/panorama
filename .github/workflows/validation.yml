@@ -1,0 +1,44 @@
+name: 'Validation'
+
+on:
+  push:
+    paths:
+      - 'packages/ui/**'
+
+jobs:
+  validate:
+    name: 'Lint, typecheck, test, and build'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # @repo/ui's styles import @repo/tokens' built CSS output directly, so it must
+      # be built before linting resolves anything, testing, or building the UI package.
+      - name: Build design tokens
+        run: pnpm turbo run build --filter=@repo/tokens
+
+      - name: Run lint
+        run: pnpm --filter @repo/ui lint
+
+      - name: Run typecheck
+        run: pnpm --filter @repo/ui check-types
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @repo/ui exec playwright install --with-deps chromium
+
+      - name: Run UI interaction tests
+        run: pnpm --filter @repo/ui test
+
+      - name: Build the UI package
+        run: pnpm --filter @repo/ui build
+
+      - name: Build Storybook
+        run: pnpm --filter @repo/ui build-storybook

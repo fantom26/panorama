@@ -1,0 +1,40 @@
+name: 'Accessibility'
+
+on:
+  push:
+    paths:
+      - 'packages/ui/**'
+
+jobs:
+  accessibility:
+    name: 'Axe accessibility checks'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build design tokens
+        run: pnpm turbo run build --filter=@repo/tokens
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @repo/ui exec playwright install --with-deps chromium
+
+      - name: Build Storybook
+        run: pnpm --filter @repo/ui build-storybook
+
+      - name: Start the built Storybook
+        run: |
+          npx http-server packages/ui/storybook-static --port 6006 --silent &
+          npx wait-on http://127.0.0.1:6006
+
+      # @storybook/test-runner + axe-playwright, configured in packages/ui/.storybook/test-runner.ts
+      # to only fail on 'serious' or 'critical' impact violations (see includedImpacts there).
+      - name: Run Axe accessibility checks
+        run: pnpm --filter @repo/ui exec test-storybook --url http://127.0.0.1:6006 --ci

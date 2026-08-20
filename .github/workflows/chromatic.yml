@@ -7,7 +7,7 @@ on:
 
 jobs:
   chromatic:
-    name: 'Run Chromatic'
+    name: 'Build and publish Storybook to Chromatic'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -25,3 +25,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
           workingDir: packages/ui
+          # Default behavior: the check fails until any detected visual changes are
+          # reviewed and approved in Chromatic. Set true only to make this check
+          # informational instead of a required gate.
+          exitZeroOnChanges: false

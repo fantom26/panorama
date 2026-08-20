@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint'
 import { config as reactInternalConfig } from '@repo/eslint-config/react-internal'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'storybook-static'] },
   ...reactInternalConfig,
   {
     plugins: {
