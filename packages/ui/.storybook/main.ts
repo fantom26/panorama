@@ -14,7 +14,8 @@ const config: StorybookConfig = {
       options: {
         designTokenGlob: '../tokens/*/build/css/storybook-tokens.css'
       }
-    }
+    },
+    '@storybook/addon-mcp'
   ],
   framework: {
     name: '@storybook/react-vite',

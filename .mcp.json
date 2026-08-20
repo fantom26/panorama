@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "storybook-mcp-demo": {
+      "url": "http://localhost:6006/mcp",
+      "type": "http"
+    }
+  }
+}
