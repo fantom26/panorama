@@ -1,65 +1,101 @@
-## 🔎 What's inside?
+# @repo/ui
 
-A quick look at the top-level files and directories included with this template.
+Shared React UI component library for Panorama — built with Vite, styled with CSS Modules against `@repo/tokens`, and documented in Storybook.
 
-    .
-    ├── .storybook
-    ├── .yarn
-    ├── node_modules
-    ├── public
-    ├── src
-    ├── .eslintrc.cjs
-    ├── .gitignore
-    ├── index.html
-    ├── LICENSE
-    ├── package.json
-    ├── tsconfig.app.json
-    ├── tsconfig.json
-    ├── tsconfig.node.json
-    ├── vite.config.ts
-    ├── vitest.shims.d.ts
-    └── README.md
+## Installation
 
-1.  **`.storybook`**: This directory contains Storybook's [configuration](https://storybook.js.org/docs/configure) files.
+This is a private, workspace-only package (pnpm workspaces / Turborepo) — it isn't published to npm. Reference it from another package in this monorepo:
 
-2.  **`.yarn`**: This directory contains the configuration files for Yarn including the cache and the global packages.
+```json
+{
+  "dependencies": {
+    "@repo/ui": "workspace:*"
+  }
+}
+```
 
-3.  **`node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages).
+```tsx
+import { Button, TextField } from '@repo/ui'
+```
 
-4.  **`public`**: This directory will contain the development and production build of the site.
+## Importing styles
 
-5.  **`src`**: This directory will contain all of the code related to what you will see on your application.
+```tsx
+import '@repo/ui/styles.css'
+```
 
-6.  **`eslintrc.cjs`**: This file is the configuration file for [ESLint](https://eslint.org/).
+Import this once, near the app root (e.g. `apps/web/app/layout.tsx`). It bundles the `@repo/tokens` light and dark CSS custom properties, the `@fontsource/geist-sans` font faces, and the package's own `normalize.css`.
 
-7.  **`.gitignore`**: This file tells git which files it should not track or maintain during the development process of your project.
+## Theme support
 
-8.  **`.yarnrc.yml`**: This file contains the configuration for Yarn. It's used to define the project's settings, such as caching and other settings.
+Set `data-theme="light"` or `data-theme="dark"` on a root element — every token resolves off that attribute:
 
-9.  **`index.html`**: This is the HTML page that is served when generating a development or production build.
+```tsx
+<html data-theme='dark'>
+```
 
-10. **`LICENSE`**: The template is licensed under the MIT licence.
+Only `light` and `dark` themes exist today (built by `@repo/tokens`); there's no `system`/auto-detect theme built in, so the consuming app is responsible for setting the attribute. Storybook exposes both via a toolbar toggle, so individual stories don't need dedicated per-theme variants — every story already renders in both.
 
-11. **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
+## i18n support
 
-12. **`tsconfig.app.json`**: This file contains the TypeScript compiler options for the project.
+Many components pull their own copy (aria-labels, empty states, etc.) through `react-i18next`'s `useTranslation()` — e.g. `CloseButton`'s default `aria-label`, `DataTable`'s empty/error text. Translation keys live in `public/locales/{en,ar}/translation.json`.
 
-13. **`tsconfig.json`**: This file is the root TypeScript configuration file that specifies the root files and the compiler options required to compile the project.
+`src/i18n.ts` initializes an `i18next` instance (`i18next-http-backend` + `i18next-browser-languagedetector`), but it's only wired up for Storybook (`.storybook/decorators.tsx`) — it is **not** exported from the package's public API (`src/index.ts`). See Known limitations.
 
-14. **`tsconfig.json`**: This file is the root TypeScript configuration file that specifies the root files and the compiler options that could be extended by other configuration files in the project.
+## Running Storybook
 
-15. **`tsconfig.node.json`**: This file contains the TypeScript compiler options required to manage the Node.js environment in the project configuration files. Used to help distinguish between configurations for different parts of the project.
+```
+pnpm --filter @repo/ui storybook       # dev server on :6006
+pnpm --filter @repo/ui build-storybook # static build
+```
 
-16. **`vite.config.ts`**: This is the configuration file for [Vite](https://vitejs.dev/), a build tool that aims to provide a faster and leaner development experience for modern web projects.
+Stories don't set a `title` in their meta — Storybook derives it from the file's folder hierarchy. See [Configure story loading](https://storybook.js.org/docs/configure/#configure-story-loading).
 
-17. **`vitest.shims.d.ts`**: This file contains TypeScript type definitions and shims that ensure proper type support for Vitest when integrated with Storybook's test addon. It provides necessary global types and resolves compatibility issues between the testing frameworks.
+The sidebar groups components (Forms, Overlays, Disclosure, Feedback, Data Display, etc.) using a categorization inspired by [Chakra UI's component overview](https://chakra-ui.com/docs/components/concepts/overview). The components themselves follow Atomic Design (atoms, molecules, organisms, templates, pages).
 
-18. **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
+## Running interaction tests
 
-19. **`README.md`**: A text file containing useful reference information about the project.
+```
+pnpm --filter @repo/ui test        # vitest --run --project storybook
+pnpm --filter @repo/ui test:watch  # watch mode
+```
 
-The project follows Atomic Design methodology. Pioneered by Brad Frost, Atomic Design is a common hierarchical system for UIs. It classifies components into five levels: atoms, molecules, organisms, templates, and pages.
+This runs every story's `play` function — written with `storybook/test` (`within`, `userEvent`, `expect`, `fn`, ...) — in a real Chromium browser via `@storybook/addon-vitest` and Playwright. If Chromium isn't installed yet, run `pnpm exec playwright install chromium` first.
 
-Storybook's sidebar groups components (Forms, Overlays, Disclosure, Feedback, Data Display, etc.) using a categorization inspired by [Chakra UI's component overview](https://chakra-ui.com/docs/components/concepts/overview).
+## Running the production build
 
-Stories don't set a `title` in their meta — Storybook derives it automatically from the file's folder hierarchy. See [Configure story loading](https://storybook.js.org/docs/configure/#configure-story-loading).
+```
+pnpm --filter @repo/ui build
+```
+
+This runs `vite build` against the package's own `index.html` / `src/main.tsx` — a standalone demo app left over from the original Vite template, output to `dist/`. It is **not** how `@repo/ui` is consumed elsewhere in the monorepo: consumers resolve `./src/index.ts` and `./src/styles/index.css` directly (see `exports` in `package.json`), unbundled, through their own toolchain (e.g. Next.js in `apps/web`). See Known limitations.
+
+## Running Chromatic
+
+```
+CHROMATIC_PROJECT_TOKEN=xxx pnpm --filter @repo/ui chromatic
+```
+
+Also runs automatically in CI on every push via `.github/workflows/chromatic.yml`, using the `CHROMATIC_PROJECT_TOKEN` repository secret.
+
+## Supported components
+
+- **Brand**: Logo
+- **Buttons**: Button, CloseButton, IconButton
+- **Charts**: DonutChart, LineChart, MapLegend, WorldMap
+- **Data Display**: Chip, DataTable, Icon, StatCard, Typography
+- **Disclosure**: Breadcrumbs, Tabs
+- **Feedback**: Progress, Skeleton, Toast (+ `useToastManager`)
+- **Forms**: Checkbox, ExpandableSearch, Field, Hint, Radio, Select, TextField
+- **Layout**: Divider
+- **Overlays**: Dialog, Drawer
+
+`Backdrop` also exists under `Overlays` but isn't exported publicly — it's an internal building block used by `Dialog` and `Drawer`.
+
+## Known limitations
+
+- **i18n isn't wired up for consumers.** Components that call `useTranslation()` need an `I18nextProvider` backed by an initialized `i18next` instance somewhere above them in the tree. The package doesn't export one, and `apps/web` doesn't currently set one up — so translated component copy only works inside Storybook today.
+- **Only light and dark themes exist.** There's no `system`/auto theme; the consumer must set `data-theme` itself and has no built-in way to follow the OS preference.
+- **`pnpm build` doesn't produce a library bundle.** It builds the leftover Vite demo app (`index.html` → `dist/`), which nothing in the monorepo consumes. The real "build" of this package, for consumers, is just its raw TypeScript/CSS source.
+- **Chart components render to canvas, not DOM.** `DonutChart`, `LineChart`, and `WorldMap` draw through amCharts5 onto `<canvas>` elements with no per-datum DOM or ARIA nodes — screen readers and automated tests can only reach surrounding elements (legends, labels), not individual data points or regions.
+- **Not published.** This package is `private` and workspace-only; it can't be installed outside this monorepo.
