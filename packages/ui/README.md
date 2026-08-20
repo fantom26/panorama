@@ -61,3 +61,5 @@ A quick look at the top-level files and directories included with this template.
 The project follows Atomic Design methodology. Pioneered by Brad Frost, Atomic Design is a common hierarchical system for UIs. It classifies components into five levels: atoms, molecules, organisms, templates, and pages.
 
 Storybook's sidebar groups components (Forms, Overlays, Disclosure, Feedback, Data Display, etc.) using a categorization inspired by [Chakra UI's component overview](https://chakra-ui.com/docs/components/concepts/overview).
+
+Stories don't set a `title` in their meta — Storybook derives it automatically from the file's folder hierarchy. See [Configure story loading](https://storybook.js.org/docs/configure/#configure-story-loading).
