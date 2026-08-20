@@ -39,8 +39,7 @@ export default defineConfig({
                 browser: 'chromium'
               }
             ]
-          },
-          setupFiles: ['.storybook/vitest.setup.ts']
+          }
         }
       }
     ]
