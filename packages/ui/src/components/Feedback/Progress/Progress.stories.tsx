@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
+import { expect } from 'storybook/test'
 
 import Progress from '@/components/Feedback/Progress'
 
@@ -23,6 +24,12 @@ export const Default: Story = {
         </Progress.Track>
       </Progress.Root>
     )
+  },
+  play: async ({ canvas }) => {
+    const progressbar = canvas.getByRole('progressbar')
+    await expect(progressbar).toHaveAttribute('aria-valuenow', '40')
+    await expect(progressbar).toHaveAttribute('aria-valuemin', '0')
+    await expect(progressbar).toHaveAttribute('aria-valuemax', '100')
   }
 }
 
@@ -30,7 +37,24 @@ export const Complete: Story = {
   args: {
     value: 100
   },
-  render: Default.render
+  render: Default.render,
+  play: async ({ canvas }) => {
+    const progressbar = canvas.getByRole('progressbar')
+    await expect(progressbar).toHaveAttribute('aria-valuenow', '100')
+    await expect(progressbar).toHaveAttribute('data-complete', '')
+  }
+}
+
+export const Indeterminate: Story = {
+  args: {
+    value: null
+  },
+  render: Default.render,
+  play: async ({ canvas }) => {
+    const progressbar = canvas.getByRole('progressbar')
+    await expect(progressbar).not.toHaveAttribute('aria-valuenow')
+    await expect(progressbar).toHaveAttribute('data-indeterminate', '')
+  }
 }
 
 export const WithLabelAndValue: Story = {

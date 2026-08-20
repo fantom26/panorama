@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, waitFor } from 'storybook/test'
 
 import MapLegend from '@/components/Charts/MapLegend'
 import WorldMap from '@/components/Charts/WorldMap'
@@ -56,12 +57,19 @@ export const Heat: Story = {
         <MapLegend range='$1.7T ── $27.4T' />
       </div>
     </div>
-  )
+  ),
+  play: async ({ canvas, canvasElement }) => {
+    await waitFor(() => expect(canvasElement.querySelector('canvas')).toBeInTheDocument())
+    await expect(canvas.getByText('$1.7T ── $27.4T')).toBeVisible()
+  }
 }
 
 export const Region: Story = {
   args: {
     mode: 'lit',
     highlight: europe
+  },
+  play: async ({ canvasElement }) => {
+    await waitFor(() => expect(canvasElement.querySelector('canvas')).toBeInTheDocument())
   }
 }
