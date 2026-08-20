@@ -50,7 +50,13 @@ export const WithEndAdornment: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <TextField {...args} endAdornment={t('stories.textField.usdBAdornment')} />
+    return (
+      <TextField
+        {...args}
+        aria-label={t('stories.field.gdpFloorLabel')}
+        endAdornment={t('stories.textField.usdBAdornment')}
+      />
+    )
   }
 }
 
@@ -61,7 +67,13 @@ export const Tabular: Story = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <TextField {...args} endAdornment={t('stories.textField.percentAdornment')} />
+    return (
+      <TextField
+        {...args}
+        aria-label={t('stories.textField.percentAriaLabel')}
+        endAdornment={t('stories.textField.percentAdornment')}
+      />
+    )
   }
 }
 
@@ -69,6 +81,10 @@ export const Error: Story = {
   args: {
     error: true,
     defaultValue: '20244'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <TextField {...args} aria-label={t('stories.field.yearLabel')} />
   }
 }
 
@@ -76,6 +92,10 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     defaultValue: 'DEU'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return <TextField {...args} aria-label={t('stories.field.isoCodeLabel')} />
   },
   play: async ({ canvas }) => {
     const input = canvas.getByRole('textbox')

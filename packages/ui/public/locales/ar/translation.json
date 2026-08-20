@@ -118,7 +118,8 @@
     "textField": {
       "searchPlaceholder": "البحث عن الدول",
       "usdBAdornment": "USD B",
-      "percentAdornment": "%"
+      "percentAdornment": "%",
+      "percentAriaLabel": "القيمة المئوية"
     },
     "dialog": {
       "title": "إضافة دولة للمقارنة",

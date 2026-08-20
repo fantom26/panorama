@@ -41,6 +41,15 @@ type Story = StoryObj<typeof meta>
 export const Playground: Story = {}
 
 export const AllVariants: Story = {
+  parameters: {
+    // Heading levels are intentionally stacked out of document order here to
+    // compare every variant side by side — not a real page structure.
+    a11y: {
+      config: {
+        rules: [{ id: 'heading-order', enabled: false }]
+      }
+    }
+  },
   render: () => {
     const { t } = useTranslation()
     return (
@@ -69,9 +78,13 @@ export const Colors: Story = {
         content-subtle
       </Typography>
       <Divider />
-      <Typography variant='label-default' color='knockout'>
-        content-knockout
-      </Typography>
+      <div
+        style={{ backgroundColor: 'var(--ds-theme-color-background-knockout)', padding: '0.5rem' }}
+      >
+        <Typography variant='label-default' color='knockout'>
+          content-knockout
+        </Typography>
+      </div>
       <Divider />
       <Typography variant='label-default' color='utility-error'>
         content-utility-error

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useTranslation } from 'react-i18next'
-import { expect, screen, userEvent } from 'storybook/test'
+import { expect, screen, userEvent, waitFor } from 'storybook/test'
 
 import Field from '@/components/Forms/Field'
 import Select from '@/components/Forms/Select'
@@ -27,7 +27,13 @@ const meta = {
   },
   render: (args) => {
     const { t } = useTranslation()
-    return <Select {...args} placeholder={t('stories.select.allRegions')} />
+    return (
+      <Select
+        {...args}
+        placeholder={t('stories.select.allRegions')}
+        aria-label={t('stories.select.region')}
+      />
+    )
   }
 } satisfies Meta<typeof Select>
 
@@ -65,6 +71,8 @@ export const WithValue: Story = {
     const unemploymentOption = screen.getByRole('option', { name: 'Unemployment' })
     await userEvent.click(unemploymentOption)
     await expect(trigger).toHaveTextContent('Unemployment')
+
+    await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument())
   }
 }
 

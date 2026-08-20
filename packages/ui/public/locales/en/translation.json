@@ -118,7 +118,8 @@
     "textField": {
       "searchPlaceholder": "Search countries",
       "usdBAdornment": "USD B",
-      "percentAdornment": "%"
+      "percentAdornment": "%",
+      "percentAriaLabel": "Percentage value"
     },
     "dialog": {
       "title": "Add country to compare",

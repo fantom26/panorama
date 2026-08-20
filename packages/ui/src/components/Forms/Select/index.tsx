@@ -18,6 +18,7 @@ export type SelectProps = Omit<
   placeholder?: string
   error?: boolean
   className?: string
+  'aria-label'?: string
 }
 
 export default function Select({
@@ -26,6 +27,7 @@ export default function Select({
   error,
   disabled,
   className,
+  'aria-label': ariaLabel,
   ...rest
 }: SelectProps) {
   return (
@@ -33,6 +35,7 @@ export default function Select({
       <BaseSelect.Trigger
         className={clsx(styles.trigger, className)}
         data-invalid={error || undefined}
+        aria-label={ariaLabel}
       >
         <BaseSelect.Value placeholder={placeholder} className={styles.value} />
         <BaseSelect.Icon className={styles.icon}>
