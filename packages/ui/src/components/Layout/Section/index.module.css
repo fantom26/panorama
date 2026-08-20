@@ -1,0 +1,19 @@
+.section {
+  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-subtle);
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--ds-theme-spacing-sm);
+  padding: var(--ds-theme-spacing-lg) 0 var(--ds-theme-spacing-md);
+}
+
+.number {
+  margin-bottom: var(--ds-theme-spacing-3xs);
+}
+
+.body {
+  padding-bottom: var(--ds-theme-spacing-lg);
+}
