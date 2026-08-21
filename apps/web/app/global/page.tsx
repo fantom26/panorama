@@ -1,29 +1,46 @@
 'use client'
 
 import {
+  Divider,
   DonutChart,
   ExpandableSearch,
+  LanguageSwitcher,
   Logo,
+  MapLegend,
   RankingList,
   Section,
   StatCard,
+  ThemeToggle,
   Typography,
   WorldMap
 } from '@repo/ui'
+import '@repo/ui/i18n'
 
 import styles from './page.module.css'
 
+const languages = [
+  { code: 'en', label: 'EN' },
+  { code: 'uk', label: 'УК' },
+  { code: 'ar', label: 'ع' }
+]
+
 const stats = [
-  { label: 'Countries', value: '249' },
-  { label: 'Population', value: '7.95B', trend: '+0.87%', trendColor: 'success' as const },
-  { label: 'Avg GDP', value: '$418B' },
-  { label: 'Inflation', value: '5.4%', trend: '+0.9pp', trendColor: 'error' as const }
+  { label: 'Countries', value: '249', trend: 'World Bank · REST Countries' },
+  {
+    label: 'Total population',
+    value: '7.95B',
+    trend: '+0.87% YoY',
+    trendColor: 'success' as const
+  },
+  { label: 'Average GDP', value: '$418B', trend: 'nominal, USD' },
+  { label: 'Avg inflation', value: '5.4%', trend: '+0.9pp YoY', trendColor: 'error' as const },
+  { label: 'Avg unemployment', value: '6.2%', trend: '−0.3pp YoY', trendColor: 'success' as const }
 ]
 
 const gdpByRegion = [
   { label: 'Asia', value: 38400 },
-  { label: 'Americas', value: 31200 },
   { label: 'Europe', value: 24100 },
+  { label: 'Americas', value: 31200 },
   { label: 'Africa', value: 3100 },
   { label: 'Oceania', value: 1800 }
 ]
@@ -41,7 +58,10 @@ const topLanguages = [
   { label: 'French', value: 29 },
   { label: 'Arabic', value: 23 },
   { label: 'Spanish', value: 21 },
-  { label: 'Portuguese', value: 10 }
+  { label: 'Portuguese', value: 10 },
+  { label: 'German', value: 6 },
+  { label: 'Russian', value: 6 },
+  { label: 'Chinese', value: 5 }
 ]
 
 const gdpHeatmap = [
@@ -61,46 +81,92 @@ export default function GlobalPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Logo />
+        <div className={styles.brand}>
+          <Logo />
+          <Typography variant='body-sm' component='span'>
+            Global
+          </Typography>
+        </div>
+        <div className={styles.headerControls}>
+          <ExpandableSearch placeholder='Search countries' />
+          <LanguageSwitcher languages={languages} />
+          <span className={styles.dividerWrap}>
+            <Divider orientation='vertical' />
+          </span>
+          <ThemeToggle />
+        </div>
       </header>
 
       <div className={styles.titleBlock}>
-        <Typography variant='meta-sm' color='subtle' component='div'>
-          Dashboard
-        </Typography>
-        <Typography variant='headline-default' component='h1'>
-          Global overview
-        </Typography>
-        <Typography variant='meta-sm' color='subtle' component='div' className={styles.meta}>
-          Last sync · 14:02 UTC
-        </Typography>
-      </div>
-
-      <div className={styles.search}>
-        <ExpandableSearch placeholder='Search countries' />
+        <div>
+          <Typography variant='meta-sm' color='subtle' component='div'>
+            Dashboard
+          </Typography>
+          <Typography variant='headline-sm' component='h1'>
+            Global overview
+          </Typography>
+        </div>
+        <div className={styles.titleMeta}>
+          <Typography variant='body-sm' color='muted' component='div'>
+            Last sync · 14:02 UTC
+          </Typography>
+          <Typography variant='body-sm' color='knockout' component='div'>
+            Data: REST Countries v3.1 / World Bank WDI
+          </Typography>
+        </div>
       </div>
 
       <div className={styles.stats}>
         {stats.map((stat) => (
-          <StatCard key={stat.label} {...stat} />
+          <StatCard key={stat.label} variant='row' {...stat} />
         ))}
       </div>
 
-      <Section number='01' title='GDP heatmap'>
-        <WorldMap data={gdpHeatmap} height={320} format={(value) => `$${value}B`} />
-      </Section>
+      <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
+        <Section
+          number='01'
+          title='GDP heatmap — click a country to drill down'
+          action='USD, log scale →'
+          className={`${styles.column} ${styles.columnDivided}`}
+        >
+          <div className={styles.heatmapBody}>
+            <WorldMap data={gdpHeatmap} height={340} format={(value) => `$${value}B`} />
+            <MapLegend range='$10M ─────── $26T' />
+          </div>
+        </Section>
 
-      <Section number='02' title='GDP by region' action='USD, billions'>
-        <RankingList data={gdpByRegion} formatValue={(value) => `$${(value / 1000).toFixed(1)}T`} />
-      </Section>
+        <Section
+          number='02'
+          title='GDP by region'
+          action='Avg, USD billions'
+          className={styles.column}
+        >
+          <RankingList
+            data={gdpByRegion}
+            formatValue={(value) => `$${(value / 1000).toFixed(1)}T`}
+          />
+        </Section>
+      </div>
 
-      <Section number='03' title='Population by region'>
-        <DonutChart data={populationByRegion} layout='row' />
-      </Section>
+      <div className={`${styles.twoColRow} ${styles.evenRow}`}>
+        <Section
+          number='03'
+          title='Population by region'
+          action='Click slice to drill'
+          className={`${styles.column} ${styles.columnDivided}`}
+        >
+          <DonutChart data={populationByRegion} layout='row' />
+        </Section>
 
-      <Section number='04' title='Top languages'>
-        <RankingList data={topLanguages} formatValue={(value) => `${value} cty`} />
-      </Section>
+        <Section
+          number='04'
+          title='Top languages'
+          action='Countries where spoken'
+          className={styles.column}
+        >
+          <RankingList data={topLanguages} formatValue={(value) => `${value} countries`} />
+        </Section>
+      </div>
     </div>
   )
 }
