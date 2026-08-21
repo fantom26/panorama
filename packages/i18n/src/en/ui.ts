@@ -26,5 +26,13 @@ export default {
   expandableSearch: {
     placeholder: 'Search',
     shortcutHint: '⌘K'
+  },
+  themeToggle: {
+    ariaLabel: 'Toggle color theme',
+    light: 'Light',
+    dark: 'Dark'
+  },
+  languageSwitcher: {
+    ariaLabel: 'Change language'
   }
 } as const

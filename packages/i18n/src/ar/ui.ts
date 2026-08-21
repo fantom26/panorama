@@ -26,5 +26,13 @@ export default {
   expandableSearch: {
     placeholder: 'بحث',
     shortcutHint: '⌘K'
+  },
+  themeToggle: {
+    ariaLabel: 'تبديل السمة اللونية',
+    light: 'فاتح',
+    dark: 'داكن'
+  },
+  languageSwitcher: {
+    ariaLabel: 'تغيير اللغة'
   }
 } as const
