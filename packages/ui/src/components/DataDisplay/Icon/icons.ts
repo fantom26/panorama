@@ -5,8 +5,10 @@ import {
   CircleAlert,
   Inbox,
   Minus,
+  Moon,
   Plus,
   Search,
+  Sun,
   X
 } from 'lucide-react'
 
@@ -17,8 +19,10 @@ export const icons = {
   'circle-alert': CircleAlert,
   inbox: Inbox,
   minus: Minus,
+  moon: Moon,
   plus: Plus,
   search: Search,
+  sun: Sun,
   x: X
 }
 

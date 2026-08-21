@@ -10,10 +10,12 @@ export type StatCardProps = React.ComponentProps<'div'> & {
   trend?: string
   trendColor?: 'default' | 'success' | 'error'
   loading?: boolean
+  /** 'card': bordered, standalone tile. 'row': flush cell in a divided strip. */
+  variant?: 'card' | 'row'
 }
 
 const trendColorMap: Record<NonNullable<StatCardProps['trendColor']>, TypographyColor> = {
-  default: 'subtle',
+  default: 'muted',
   success: 'utility-success',
   error: 'utility-error'
 }
@@ -24,6 +26,7 @@ export default function StatCard({
   trend,
   trendColor = 'default',
   loading = false,
+  variant = 'card',
   className,
   ...rest
 }: StatCardProps) {
@@ -35,10 +38,10 @@ export default function StatCard({
     </>
   ) : (
     <>
-      <Typography variant='meta-sm' color='subtle' component='div'>
+      <Typography variant='meta-sm' color='muted' component='div'>
         {label}
       </Typography>
-      <Typography variant='headline-sm' component='div' className={styles.value}>
+      <Typography variant='title-default' component='div' className={styles.value}>
         {value}
       </Typography>
       {trend && (
@@ -55,7 +58,11 @@ export default function StatCard({
   )
 
   return (
-    <div className={clsx(styles.statCard, className)} aria-busy={loading || undefined} {...rest}>
+    <div
+      className={clsx(styles.statCard, variant === 'row' && styles.row, className)}
+      aria-busy={loading || undefined}
+      {...rest}
+    >
       {content}
     </div>
   )

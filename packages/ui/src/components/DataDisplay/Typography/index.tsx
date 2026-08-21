@@ -18,7 +18,8 @@ export type TypographyVariant =
   | 'meta-default'
   | 'meta-sm'
 
-export type TypographyColor = 'brand' | 'subtle' | 'knockout' | 'utility-error' | 'utility-success'
+export type TypographyColor =
+  'brand' | 'subtle' | 'muted' | 'knockout' | 'utility-error' | 'utility-success'
 
 export type TypographyProps<C extends React.ElementType = 'p'> = {
   variant?: TypographyVariant
@@ -46,6 +47,7 @@ const variantClassNames: Record<TypographyVariant, string | undefined> = {
 const colorClassNames: Record<TypographyColor, string | undefined> = {
   brand: styles.colorBrand,
   subtle: styles.colorSubtle,
+  muted: styles.colorMuted,
   knockout: styles.colorKnockout,
   'utility-error': styles.colorUtilityError,
   'utility-success': styles.colorUtilitySuccess

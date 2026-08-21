@@ -22,15 +22,15 @@ export default function Section({
     <section className={clsx(styles.section, className)} {...rest}>
       <div className={styles.header}>
         <div>
-          <Typography variant='meta-sm' color='subtle' component='div' className={styles.number}>
+          <Typography variant='meta-sm' color='muted' component='div' className={styles.number}>
             {number}
           </Typography>
-          <Typography variant='title-sm' component='h2'>
+          <Typography variant='label-sm' component='h2'>
             {title}
           </Typography>
         </div>
         {action && (
-          <Typography variant='meta-sm' color='subtle' component='span'>
+          <Typography variant='body-sm' color='muted' component='span'>
             {action}
           </Typography>
         )}

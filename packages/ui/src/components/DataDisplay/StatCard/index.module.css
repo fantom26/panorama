@@ -6,8 +6,22 @@
   background-color: var(--ds-theme-color-background-default);
 }
 
+.row {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--ds-theme-spacing-lg);
+  border: none;
+  border-right: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: 0;
+  background-color: transparent;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
 .value {
-  margin-top: var(--ds-theme-spacing-xs);
+  margin-top: var(--ds-theme-spacing-2xs);
 }
 
 .trend {

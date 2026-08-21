@@ -78,6 +78,10 @@ export const Colors: Story = {
         content-subtle
       </Typography>
       <Divider />
+      <Typography variant='label-default' color='muted'>
+        content-muted
+      </Typography>
+      <Divider />
       <div
         style={{ backgroundColor: 'var(--ds-theme-color-background-knockout)', padding: '0.5rem' }}
       >

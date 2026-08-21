@@ -1,7 +1,20 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-theme-spacing-2xs);
+}
+
+.root > * {
+  padding-block: var(--ds-theme-spacing-xs);
+  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-soft);
+}
+
+.root > *:first-child {
+  padding-top: 0;
+}
+
+.root > *:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .value {

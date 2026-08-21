@@ -132,6 +132,10 @@
   color: var(--ds-theme-color-content-subtle);
 }
 
+.colorMuted {
+  color: var(--ds-theme-color-content-muted);
+}
+
 .colorKnockout {
   color: var(--ds-theme-color-content-knockout);
 }

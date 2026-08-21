@@ -59,6 +59,25 @@ export const NoTrend: Story = {
   }
 }
 
+export const RowVariant: Story = {
+  args: {
+    label: '',
+    value: '7.95B',
+    trend: '+0.87% YoY',
+    trendColor: 'success',
+    variant: 'row'
+  },
+  render: (args) => {
+    const { t } = useTranslation()
+    return (
+      <div style={{ display: 'flex' }}>
+        <StatCard {...args} label={t('statCard.totalPopulation')} />
+        <StatCard {...args} label={t('statCard.gdpPerCapita')} value='$68,300' trend={undefined} />
+      </div>
+    )
+  }
+}
+
 export const Loading: Story = {
   args: {
     label: '',
