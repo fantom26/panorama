@@ -1,5 +1,4 @@
 import type { Preview } from '@storybook/react-vite'
-import { mswLoader } from 'msw-storybook-addon/csf3'
 
 import '../src/styles/index.css'
 import { decorators } from './decorators'
@@ -48,7 +47,6 @@ const preview: Preview = {
     }
   },
 
-  loaders: [mswLoader()],
   decorators
 }
 

@@ -47,4 +47,4 @@ const WithNormalize: Decorator = (Story) => (
   </div>
 )
 
-export const decorators = [themeDecorator, WithI18next, WithNormalize]
+export const decorators: Decorator[] = [themeDecorator, WithI18next, WithNormalize]

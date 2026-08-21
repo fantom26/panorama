@@ -35,7 +35,6 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "init-msw": "msw init public/",
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
     "test": "vitest --run --project storybook",
     "test:watch": "vitest --project storybook"
@@ -62,8 +61,6 @@
     "eslint": "^9.39.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-storybook": "^10.1.11",
-    "msw": "^2.12.7",
-    "msw-storybook-addon": "^3.0.0",
     "playwright": "^1.57.0",
     "prettier": "^3.8.3",
     "storybook": "^10.1.11",
@@ -72,10 +69,5 @@
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
     "vitest": "^4.0.16"
-  },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
   }
 }
