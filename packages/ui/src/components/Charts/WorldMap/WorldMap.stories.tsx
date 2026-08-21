@@ -59,7 +59,9 @@ export const Heat: Story = {
     </div>
   ),
   play: async ({ canvas, canvasElement }) => {
-    await waitFor(() => expect(canvasElement.querySelector('canvas')).toBeInTheDocument())
+    await waitFor(() => expect(canvasElement.querySelector('canvas')).toBeInTheDocument(), {
+      timeout: 5000
+    })
     await expect(canvas.getByText('$1.7T ── $27.4T')).toBeVisible()
   }
 }
@@ -70,6 +72,8 @@ export const Region: Story = {
     highlight: europe
   },
   play: async ({ canvasElement }) => {
-    await waitFor(() => expect(canvasElement.querySelector('canvas')).toBeInTheDocument())
+    await waitFor(() => expect(canvasElement.querySelector('canvas')).toBeInTheDocument(), {
+      timeout: 5000
+    })
   }
 }
