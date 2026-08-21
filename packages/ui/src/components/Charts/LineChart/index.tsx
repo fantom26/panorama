@@ -5,13 +5,14 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import clsx from 'clsx'
 
-import styles from '@/components/Charts/LineChart/index.module.css'
 import {
   CHART_RANK_OPACITIES,
   createPanoramaChartTheme,
   mountReactiveChart,
   readPanoramaChartPalette
 } from '@/components/Charts/theme'
+
+import styles from './index.module.css'
 
 export type LineChartDatum = Record<string, string | number | null>
 

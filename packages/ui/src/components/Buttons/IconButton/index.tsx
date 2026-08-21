@@ -2,7 +2,8 @@ import { Button as BaseButton } from '@base-ui/react/button'
 import clsx from 'clsx'
 
 import type { ButtonProps } from '@/components/Buttons/Button'
-import styles from '@/components/Buttons/IconButton/index.module.css'
+
+import styles from './index.module.css'
 
 export type IconButtonProps = ButtonProps & {
   size?: 'sm' | 'md'

@@ -3,8 +3,9 @@ import clsx from 'clsx'
 
 import Typography from '@/components/DataDisplay/Typography'
 import Hint from '@/components/Forms/Hint'
-import styles from '@/components/Forms/Radio/index.module.css'
 import type { FormFieldProps } from '@/types/form.types'
+
+import styles from './index.module.css'
 
 export type RadioProps = React.ComponentProps<typeof BaseRadio.Root> & FormFieldProps
 

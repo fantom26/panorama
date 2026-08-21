@@ -4,7 +4,8 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@/components/DataDisplay/Typography'
-import styles from '@/components/Disclosure/Breadcrumbs/index.module.css'
+
+import styles from './index.module.css'
 
 export default function Breadcrumbs({
   children,

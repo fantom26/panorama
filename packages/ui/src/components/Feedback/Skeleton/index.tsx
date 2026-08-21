@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import styles from '@/components/Feedback/Skeleton/index.module.css'
+import styles from './index.module.css'
 
 export type SkeletonProps = React.ComponentProps<'span'> & {
   variant?: 'text' | 'rectangular'

@@ -1,9 +1,10 @@
 import { Field as BaseField } from '@base-ui/react/field'
 
 import Typography from '@/components/DataDisplay/Typography'
-import styles from '@/components/Forms/Field/index.module.css'
 import Hint from '@/components/Forms/Hint'
 import type { FormFieldProps } from '@/types/form.types'
+
+import styles from './index.module.css'
 
 export type FieldProps = Omit<React.ComponentProps<typeof BaseField.Root>, 'invalid'> &
   FormFieldProps & {

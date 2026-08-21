@@ -1,7 +1,7 @@
 import { Input as BaseInput } from '@base-ui/react/input'
 import clsx from 'clsx'
 
-import styles from '@/components/Forms/TextField/index.module.css'
+import styles from './index.module.css'
 
 export type TextFieldProps = React.ComponentProps<typeof BaseInput> & {
   startAdornment?: React.ReactNode

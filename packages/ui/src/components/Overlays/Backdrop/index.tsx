@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import styles from '@/components/Overlays/Backdrop/index.module.css'
+import styles from './index.module.css'
 
 export type BackdropProps = React.ComponentProps<'div'>
 

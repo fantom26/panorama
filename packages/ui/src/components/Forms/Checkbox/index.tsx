@@ -3,9 +3,10 @@ import clsx from 'clsx'
 
 import Icon from '@/components/DataDisplay/Icon'
 import Typography from '@/components/DataDisplay/Typography'
-import styles from '@/components/Forms/Checkbox/index.module.css'
 import Hint from '@/components/Forms/Hint'
 import type { FormFieldProps } from '@/types/form.types'
+
+import styles from './index.module.css'
 
 export type CheckboxProps = React.ComponentProps<typeof BaseCheckbox.Root> & FormFieldProps
 

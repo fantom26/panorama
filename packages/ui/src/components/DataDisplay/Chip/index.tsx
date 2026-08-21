@@ -1,8 +1,9 @@
 import { Button as BaseButton } from '@base-ui/react/button'
 import clsx from 'clsx'
 
-import styles from '@/components/DataDisplay/Chip/index.module.css'
 import Icon from '@/components/DataDisplay/Icon'
+
+import styles from './index.module.css'
 
 export type ChipProps = Omit<React.ComponentPropsWithoutRef<'span'>, 'onClick' | 'children'> & {
   variant?: 'outlined'

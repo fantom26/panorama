@@ -2,7 +2,8 @@ import { Select as BaseSelect } from '@base-ui/react/select'
 import clsx from 'clsx'
 
 import Icon from '@/components/DataDisplay/Icon'
-import styles from '@/components/Forms/Select/index.module.css'
+
+import styles from './index.module.css'
 
 export type SelectOption = {
   label: string

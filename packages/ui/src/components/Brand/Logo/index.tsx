@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 
-import styles from '@/components/Brand/Logo/index.module.css'
 import Typography from '@/components/DataDisplay/Typography'
+
+import styles from './index.module.css'
 
 const SIZE = 32
 

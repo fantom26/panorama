@@ -1,7 +1,7 @@
 import { Separator as BaseSeparator } from '@base-ui/react/separator'
 import clsx from 'clsx'
 
-import styles from '@/components/Layout/Divider/index.module.css'
+import styles from './index.module.css'
 
 export type DividerProps = React.ComponentProps<typeof BaseSeparator>
 

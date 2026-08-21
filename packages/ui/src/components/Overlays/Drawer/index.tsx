@@ -4,7 +4,8 @@ import clsx from 'clsx'
 import CloseButton from '@/components/Buttons/CloseButton'
 import Typography from '@/components/DataDisplay/Typography'
 import BackdropComponent from '@/components/Overlays/Backdrop'
-import styles from '@/components/Overlays/Drawer/index.module.css'
+
+import styles from './index.module.css'
 
 export type DrawerAnchor = 'top' | 'bottom' | 'left' | 'right'
 

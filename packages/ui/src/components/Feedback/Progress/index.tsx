@@ -2,7 +2,8 @@ import { Progress as BaseProgress } from '@base-ui/react/progress'
 import clsx from 'clsx'
 
 import Typography from '@/components/DataDisplay/Typography'
-import styles from '@/components/Feedback/Progress/index.module.css'
+
+import styles from './index.module.css'
 
 function Root({ className, ...rest }: React.ComponentProps<typeof BaseProgress.Root>) {
   return <BaseProgress.Root className={clsx(styles.root, className)} {...rest} />

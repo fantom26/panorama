@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next'
 
 import Icon from '@/components/DataDisplay/Icon'
 import Typography from '@/components/DataDisplay/Typography'
-import styles from '@/components/Forms/ExpandableSearch/index.module.css'
 import TextField from '@/components/Forms/TextField'
 import Dialog from '@/components/Overlays/Dialog'
+
+import styles from './index.module.css'
 
 export type ExpandableSearchProps = {
   placeholder?: string

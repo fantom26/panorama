@@ -3,7 +3,8 @@ import clsx from 'clsx'
 
 import CloseButton from '@/components/Buttons/CloseButton'
 import Typography from '@/components/DataDisplay/Typography'
-import styles from '@/components/Feedback/Toast/index.module.css'
+
+import styles from './index.module.css'
 
 export type ToastVariant = 'info' | 'success' | 'error' | 'warning'
 

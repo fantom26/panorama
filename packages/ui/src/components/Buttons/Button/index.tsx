@@ -1,7 +1,7 @@
 import { Button as BaseButton } from '@base-ui/react/button'
 import clsx from 'clsx'
 
-import styles from '@/components/Buttons/Button/index.module.css'
+import styles from './index.module.css'
 
 export type ButtonProps = React.ComponentProps<typeof BaseButton> & {
   variant?: 'contained' | 'outlined'

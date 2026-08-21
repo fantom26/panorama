@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 
-import styles from '@/components/DataDisplay/StatCard/index.module.css'
 import Typography, { type TypographyColor } from '@/components/DataDisplay/Typography'
 import Skeleton from '@/components/Feedback/Skeleton'
+
+import styles from './index.module.css'
 
 export type StatCardProps = React.ComponentProps<'div'> & {
   label: string
