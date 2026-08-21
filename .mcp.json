@@ -3,6 +3,10 @@
     "storybook-mcp-demo": {
       "url": "http://localhost:6006/mcp",
       "type": "http"
+    },
+    "figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "type": "http"
     }
   }
 }
