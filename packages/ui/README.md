@@ -18,6 +18,18 @@ This is a private, workspace-only package (pnpm workspaces / Turborepo) — it i
 import { Button, TextField } from '@repo/ui'
 ```
 
+## Import conventions
+
+Use `@repo/<package>` imports when consuming another workspace package, for example
+`@repo/ui`, `@repo/tokens`, or `@repo/i18n`. The `@/*` alias is private to this package
+and points to `packages/ui/src`; it is available only inside this package's source and
+Storybook configuration. Consumers should use the public `@repo/ui` entry point, never
+`@repo/ui/src/...` or `@/...` imports.
+
+The package uses Just-in-Time workspace resolution today. The consumer's toolchain
+compiles the UI source directly, so the package entry point keeps relative imports even
+though internal source files use `@/*`.
+
 ## Importing styles
 
 ```tsx
