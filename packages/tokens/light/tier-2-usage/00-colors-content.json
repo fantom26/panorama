@@ -7,6 +7,9 @@
       "subtle": {
         "value": "{color.brand.gray.600}"
       },
+      "muted": {
+        "value": "{color.neutral.500}"
+      },
       "brand": {
         "value": "{color.neutral.black}"
       },

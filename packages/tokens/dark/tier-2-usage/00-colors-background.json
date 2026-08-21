@@ -10,6 +10,9 @@
       "subtle": {
         "value": "{color.neutral.900}"
       },
+      "paper": {
+        "value": "{color.neutral.black}"
+      },
       "subtle-hover": {
         "value": "{color.neutral.800}"
       },

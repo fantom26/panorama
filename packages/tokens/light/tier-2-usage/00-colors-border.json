@@ -10,6 +10,9 @@
       "subtle": {
         "value": "{color.neutral.200}"
       },
+      "soft": {
+        "value": "{color.neutral.200}"
+      },
       "strong": {
         "value": "{color.neutral.900}"
       },

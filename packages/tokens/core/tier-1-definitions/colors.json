@@ -5,10 +5,10 @@
         "value": "#ffffff"
       },
       "100": {
-        "value": "#F1EFE8"
+        "value": "#FAFAF8"
       },
       "200": {
-        "value": "#EDEAE3"
+        "value": "#F0EDE6"
       },
       "300": {
         "value": "#E8E5DE"
@@ -17,7 +17,7 @@
         "value": "#B8B5AE"
       },
       "500": {
-        "value": "#7C796F"
+        "value": "#8A8782"
       },
       "600": {
         "value": "#4A4843"
