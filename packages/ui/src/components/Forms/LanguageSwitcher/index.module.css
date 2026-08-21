@@ -1,0 +1,22 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-sm);
+}
+
+.option {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+
+  &:focus-visible {
+    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+    outline-offset: var(--ds-theme-spacing-3xs);
+  }
+
+  @media (hover: hover) {
+    &:hover .label {
+      color: var(--ds-theme-color-content-brand);
+    }
+  }
+}
