@@ -1,4 +1,4 @@
-import Typography from '@/components/DataDisplay/Typography'
+import Typography from '../../DataDisplay/Typography'
 
 export type HintProps = {
   error?: boolean

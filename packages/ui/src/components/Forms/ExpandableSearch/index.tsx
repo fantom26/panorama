@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import Icon from '@/components/DataDisplay/Icon'
-import Typography from '@/components/DataDisplay/Typography'
-import TextField from '@/components/Forms/TextField'
-import Dialog from '@/components/Overlays/Dialog'
-
+import Icon from '../../DataDisplay/Icon'
+import Typography from '../../DataDisplay/Typography'
+import Dialog from '../../Overlays/Dialog'
+import TextField from '../TextField'
 import styles from './index.module.css'
 
 export type ExpandableSearchProps = {

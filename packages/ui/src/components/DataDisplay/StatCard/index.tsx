@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 
-import Typography, { type TypographyColor } from '@/components/DataDisplay/Typography'
-import Skeleton from '@/components/Feedback/Skeleton'
-
+import Skeleton from '../../Feedback/Skeleton'
+import Typography, { type TypographyColor } from '../Typography'
 import styles from './index.module.css'
 
 export type StatCardProps = React.ComponentProps<'div'> & {

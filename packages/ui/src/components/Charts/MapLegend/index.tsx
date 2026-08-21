@@ -1,9 +1,8 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import { CHART_RANK_OPACITIES } from '@/components/Charts/theme'
-import Typography from '@/components/DataDisplay/Typography'
-
+import Typography from '../../DataDisplay/Typography'
+import { CHART_RANK_OPACITIES } from '../theme'
 import styles from './index.module.css'
 
 export type MapLegendProps = Omit<React.ComponentProps<'div'>, 'children'> & {

@@ -2,7 +2,7 @@
 @import '@repo/tokens/dark/build/css/dark.css';
 @import '@fontsource/geist-sans/400.css';
 @import '@fontsource/geist-sans/500.css';
-@import '@/styles/normalize.css';
+@import './normalize.css';
 
 html {
   line-height: 1.15;

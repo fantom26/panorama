@@ -1,11 +1,10 @@
 import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox'
 import clsx from 'clsx'
 
-import Icon from '@/components/DataDisplay/Icon'
-import Typography from '@/components/DataDisplay/Typography'
-import Hint from '@/components/Forms/Hint'
-import type { FormFieldProps } from '@/types/form.types'
-
+import type { FormFieldProps } from '../../../types/form.types'
+import Icon from '../../DataDisplay/Icon'
+import Typography from '../../DataDisplay/Typography'
+import Hint from '../Hint'
 import styles from './index.module.css'
 
 export type CheckboxProps = React.ComponentProps<typeof BaseCheckbox.Root> & FormFieldProps

@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 
-import Typography from '@/components/DataDisplay/Typography'
-
+import Typography from '../../DataDisplay/Typography'
 import styles from './index.module.css'
 
 export type SectionProps = Omit<React.ComponentProps<'section'>, 'title' | 'children'> & {

@@ -1,9 +1,8 @@
 import { Toast as BaseToast } from '@base-ui/react/toast'
 import clsx from 'clsx'
 
-import CloseButton from '@/components/Buttons/CloseButton'
-import Typography from '@/components/DataDisplay/Typography'
-
+import CloseButton from '../../Buttons/CloseButton'
+import Typography from '../../DataDisplay/Typography'
 import styles from './index.module.css'
 
 export type ToastVariant = 'info' | 'success' | 'error' | 'warning'

@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 
-import Progress from '@/components/Feedback/Progress'
-
+import Progress from '../../Feedback/Progress'
 import styles from './index.module.css'
 
 export type RankingListDatum = { label: string; value: number }

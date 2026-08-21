@@ -3,8 +3,7 @@ import { Children, Fragment } from 'react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import Typography from '@/components/DataDisplay/Typography'
-
+import Typography from '../../DataDisplay/Typography'
 import styles from './index.module.css'
 
 export default function Breadcrumbs({

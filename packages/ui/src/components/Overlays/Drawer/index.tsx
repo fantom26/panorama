@@ -1,10 +1,9 @@
 import { Drawer as BaseDrawer } from '@base-ui/react/drawer'
 import clsx from 'clsx'
 
-import CloseButton from '@/components/Buttons/CloseButton'
-import Typography from '@/components/DataDisplay/Typography'
-import BackdropComponent from '@/components/Overlays/Backdrop'
-
+import CloseButton from '../../Buttons/CloseButton'
+import Typography from '../../DataDisplay/Typography'
+import BackdropComponent from '../Backdrop'
 import styles from './index.module.css'
 
 export type DrawerAnchor = 'top' | 'bottom' | 'left' | 'right'

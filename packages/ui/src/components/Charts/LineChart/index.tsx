@@ -10,8 +10,7 @@ import {
   createPanoramaChartTheme,
   mountReactiveChart,
   readPanoramaChartPalette
-} from '@/components/Charts/theme'
-
+} from '../theme'
 import styles from './index.module.css'
 
 export type LineChartDatum = Record<string, string | number | null>

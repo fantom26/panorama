@@ -1,10 +1,9 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import clsx from 'clsx'
 
-import CloseButton from '@/components/Buttons/CloseButton'
-import Typography from '@/components/DataDisplay/Typography'
-import BackdropComponent from '@/components/Overlays/Backdrop'
-
+import CloseButton from '../../Buttons/CloseButton'
+import Typography from '../../DataDisplay/Typography'
+import BackdropComponent from '../Backdrop'
 import styles from './index.module.css'
 
 function Backdrop({

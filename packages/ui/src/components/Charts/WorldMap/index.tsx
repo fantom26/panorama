@@ -12,8 +12,7 @@ import {
   createPanoramaChartTheme,
   mountReactiveChart,
   readPanoramaChartPalette
-} from '@/components/Charts/theme'
-
+} from '../theme'
 import styles from './index.module.css'
 
 export type WorldMapDatum = { id: string; value?: number | null }

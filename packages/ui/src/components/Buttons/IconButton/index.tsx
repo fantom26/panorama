@@ -1,8 +1,7 @@
 import { Button as BaseButton } from '@base-ui/react/button'
 import clsx from 'clsx'
 
-import type { ButtonProps } from '@/components/Buttons/Button'
-
+import type { ButtonProps } from '../Button'
 import styles from './index.module.css'
 
 export type IconButtonProps = ButtonProps & {

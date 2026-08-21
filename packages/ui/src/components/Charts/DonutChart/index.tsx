@@ -6,14 +6,13 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
+import Typography from '../../DataDisplay/Typography'
 import {
   CHART_RANK_OPACITIES,
   createPanoramaChartTheme,
   mountReactiveChart,
   readPanoramaChartPalette
-} from '@/components/Charts/theme'
-import Typography from '@/components/DataDisplay/Typography'
-
+} from '../theme'
 import styles from './index.module.css'
 
 export type DonutChartDatum = { label: string; value: number }

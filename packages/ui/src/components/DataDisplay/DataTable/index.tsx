@@ -2,10 +2,9 @@ import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tan
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import Icon from '@/components/DataDisplay/Icon'
-import Typography from '@/components/DataDisplay/Typography'
-import Skeleton from '@/components/Feedback/Skeleton'
-
+import Skeleton from '../../Feedback/Skeleton'
+import Icon from '../Icon'
+import Typography from '../Typography'
 import styles from './index.module.css'
 
 const LOADING_ROW_COUNT = 5

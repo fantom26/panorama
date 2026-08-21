@@ -1,9 +1,8 @@
 import { Field as BaseField } from '@base-ui/react/field'
 
-import Typography from '@/components/DataDisplay/Typography'
-import Hint from '@/components/Forms/Hint'
-import type { FormFieldProps } from '@/types/form.types'
-
+import type { FormFieldProps } from '../../../types/form.types'
+import Typography from '../../DataDisplay/Typography'
+import Hint from '../Hint'
 import styles from './index.module.css'
 
 export type FieldProps = Omit<React.ComponentProps<typeof BaseField.Root>, 'invalid'> &

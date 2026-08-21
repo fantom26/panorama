@@ -1,8 +1,7 @@
 import { Select as BaseSelect } from '@base-ui/react/select'
 import clsx from 'clsx'
 
-import Icon from '@/components/DataDisplay/Icon'
-
+import Icon from '../../DataDisplay/Icon'
 import styles from './index.module.css'
 
 export type SelectOption = {

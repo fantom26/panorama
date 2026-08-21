@@ -1,10 +1,9 @@
 import { Radio as BaseRadio } from '@base-ui/react/radio'
 import clsx from 'clsx'
 
-import Typography from '@/components/DataDisplay/Typography'
-import Hint from '@/components/Forms/Hint'
-import type { FormFieldProps } from '@/types/form.types'
-
+import type { FormFieldProps } from '../../../types/form.types'
+import Typography from '../../DataDisplay/Typography'
+import Hint from '../Hint'
 import styles from './index.module.css'
 
 export type RadioProps = React.ComponentProps<typeof BaseRadio.Root> & FormFieldProps

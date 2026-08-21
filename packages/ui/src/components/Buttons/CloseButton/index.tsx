@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import IconButton, { type IconButtonProps } from '@/components/Buttons/IconButton'
-import Icon from '@/components/DataDisplay/Icon'
+import Icon from '../../DataDisplay/Icon'
+import IconButton, { type IconButtonProps } from '../IconButton'
 
 export type CloseButtonProps = Omit<IconButtonProps, 'children'>
 

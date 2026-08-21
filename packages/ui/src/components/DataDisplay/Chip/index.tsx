@@ -1,8 +1,7 @@
 import { Button as BaseButton } from '@base-ui/react/button'
 import clsx from 'clsx'
 
-import Icon from '@/components/DataDisplay/Icon'
-
+import Icon from '../Icon'
 import styles from './index.module.css'
 
 export type ChipProps = Omit<React.ComponentPropsWithoutRef<'span'>, 'onClick' | 'children'> & {
