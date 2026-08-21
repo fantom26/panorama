@@ -1,14 +1,5 @@
-import { Provider } from 'react-redux'
-
-import Screen from '@/pages/Screen'
-import store from '@/store'
-
-function App() {
-  return (
-    <Provider store={store}>
-      <Screen />
-    </Provider>
-  )
+// This demo app has no content of its own — see the README's "Known limitations."
+// Component development happens in Storybook (`pnpm storybook`), not here.
+export default function App() {
+  return null
 }
-
-export default App
