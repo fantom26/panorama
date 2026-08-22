@@ -14,11 +14,12 @@ import {
   Typography,
   WorldMap
 } from '@repo/ui'
-import '@repo/ui/i18n'
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 import styles from './page.module.css'
+
+import '@repo/ui/i18n'
 
 const languages = [
   { code: 'en', label: 'EN' },

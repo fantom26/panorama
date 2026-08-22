@@ -7,19 +7,5 @@ export default {
   jsxSingleQuote: true,
   trailingComma: 'none',
   bracketSpacing: true,
-  endOfLine: 'lf',
-  plugins: ['@trivago/prettier-plugin-sort-imports'],
-  importOrder: [
-    '^node:(.*)$',
-    '^react$',
-    '^react-dom(/.*)?$',
-    '^react/(.*)$',
-    '^next(/.*)?$',
-    '<THIRD_PARTY_MODULES>',
-    '^@repo/(.*)$',
-    '^@/(.*)$',
-    '^[./]'
-  ],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true
+  endOfLine: 'lf'
 }

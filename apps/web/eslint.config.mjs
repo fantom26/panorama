@@ -1,5 +1,5 @@
-import jestPlugin from 'eslint-plugin-jest'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import jestPlugin from 'eslint-plugin-jest'
 
 import { nextJsConfig } from '@repo/eslint-config/next-js'
 
