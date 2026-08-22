@@ -43,6 +43,7 @@ export const Default: Story = {
     await userEvent.click(option)
 
     await expect(trigger).toHaveTextContent('Europe')
+    await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument())
   }
 }
 
