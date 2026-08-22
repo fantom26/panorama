@@ -8,7 +8,7 @@
         "value": "{color.brand.gray.600}"
       },
       "muted": {
-        "value": "{color.neutral.500}"
+        "value": "{color.neutral.600}"
       },
       "brand": {
         "value": "{color.neutral.black}"
