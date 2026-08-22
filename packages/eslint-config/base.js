@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import onlyWarn from 'eslint-plugin-only-warn'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import turboPlugin from 'eslint-plugin-turbo'
 import tseslint from 'typescript-eslint'
 
@@ -24,6 +25,28 @@ export const config = [
   {
     plugins: {
       onlyWarn
+    }
+  },
+  {
+    plugins: {
+      'simple-import-sort': simpleImportSort
+    },
+    rules: {
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^node:'],
+            ['^react$', '^react-dom(/.*)?$', '^react/'],
+            ['^next(/.*)?$'],
+            ['^@?\\w'],
+            ['^@repo/'],
+            ['^@/'],
+            ['^\\.']
+          ]
+        }
+      ],
+      'simple-import-sort/exports': 'error'
     }
   },
   {

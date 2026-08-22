@@ -1,7 +1,8 @@
 import type { Preview } from '@storybook/react-vite'
 
-import '../src/styles/index.css'
 import { decorators } from './decorators'
+
+import '../src/styles/index.css'
 
 const preview: Preview = {
   // to automatically generate documentation for our components
