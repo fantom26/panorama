@@ -16,6 +16,8 @@ import {
 } from '@repo/ui'
 import '@repo/ui/i18n'
 
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+
 import styles from './page.module.css'
 
 const languages = [
@@ -78,23 +80,28 @@ const gdpHeatmap = [
 ]
 
 export default function GlobalPage() {
+  const isTablet = useMediaQuery('(min-width: 768px)')
+  const isDesktop = useMediaQuery('(min-width: 1440px)')
+  const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
+  const donutSize = isTablet ? 160 : 130
+
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
+      <header className={styles.topBar}>
         <div className={styles.brand}>
           <Logo />
-          <Typography variant='body-sm' component='span'>
+          <Typography variant='body-sm' component='span' className={styles.pageName}>
             Global
           </Typography>
         </div>
-        <div className={styles.headerControls}>
-          <ExpandableSearch placeholder='Search countries' />
+        <div className={styles.iconControls}>
           <LanguageSwitcher languages={languages} />
           <span className={styles.dividerWrap}>
             <Divider orientation='vertical' />
           </span>
           <ThemeToggle />
         </div>
+        <ExpandableSearch placeholder='Search countries' className={styles.search} />
       </header>
 
       <div className={styles.titleBlock}>
@@ -130,7 +137,7 @@ export default function GlobalPage() {
           className={`${styles.column} ${styles.columnDivided}`}
         >
           <div className={styles.heatmapBody}>
-            <WorldMap data={gdpHeatmap} height={340} format={(value) => `$${value}B`} />
+            <WorldMap data={gdpHeatmap} height={heatmapHeight} format={(value) => `$${value}B`} />
             <MapLegend range='$10M ─────── $26T' />
           </div>
         </Section>
@@ -155,7 +162,11 @@ export default function GlobalPage() {
           action='Click slice to drill'
           className={`${styles.column} ${styles.columnDivided}`}
         >
-          <DonutChart data={populationByRegion} layout='row' />
+          <DonutChart
+            data={populationByRegion}
+            layout={isTablet ? 'row' : 'column'}
+            size={donutSize}
+          />
         </Section>
 
         <Section

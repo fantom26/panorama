@@ -2,29 +2,36 @@
   background-color: var(--ds-theme-color-background-paper);
 }
 
-.breadcrumb {
-  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-xl) 0;
-}
-
-.header {
-  display: flex;
+.topBar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'brand iconControls'
+    'search search';
   align-items: center;
-  justify-content: space-between;
-  gap: var(--ds-theme-spacing-md);
-  padding: var(--ds-theme-spacing-md) var(--ds-theme-spacing-xl);
+  column-gap: var(--ds-theme-spacing-sm);
+  row-gap: var(--ds-theme-spacing-sm);
+  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md);
   border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
 }
 
 .brand {
+  grid-area: brand;
   display: flex;
   align-items: center;
-  gap: var(--ds-theme-spacing-lg);
+  gap: var(--ds-theme-spacing-sm);
 }
 
-.headerControls {
+.pageName {
+  display: none;
+}
+
+.iconControls {
+  grid-area: iconControls;
   display: flex;
   align-items: center;
-  gap: var(--ds-theme-spacing-md);
+  gap: var(--ds-theme-spacing-sm);
+  justify-self: end;
 }
 
 .dividerWrap {
@@ -32,55 +39,124 @@
   height: 1rem;
 }
 
+.search {
+  grid-area: search;
+}
+
+.search.search {
+  max-width: none;
+}
+
 .titleBlock {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--ds-theme-spacing-md);
-  padding: var(--ds-theme-spacing-xl) var(--ds-theme-spacing-xl) var(--ds-theme-spacing-lg);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ds-theme-spacing-2xs);
+  padding: var(--ds-theme-spacing-lg) var(--ds-theme-spacing-md) var(--ds-theme-spacing-md);
   border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
 }
 
 .titleMeta {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--ds-theme-spacing-3xs);
 }
 
 .stats {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stats > * {
   border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
 }
 
 .twoColRow {
   display: grid;
-}
-
-.twoColRow.heatmapRow {
-  grid-template-columns: 1.6fr 1fr;
-  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
-}
-
-.twoColRow.evenRow {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .column {
-  padding-inline: var(--ds-theme-spacing-lg);
+  padding-inline: var(--ds-theme-spacing-md);
   min-width: 0;
-}
-
-.column.column {
-  border-bottom: none;
-}
-
-.columnDivided {
-  border-right: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
 }
 
 .heatmapBody {
   display: flex;
   flex-direction: column;
   gap: var(--ds-theme-spacing-sm);
+}
+
+@media (min-width: 768px) {
+  .topBar {
+    padding: var(--ds-theme-spacing-md) var(--ds-theme-spacing-lg);
+  }
+
+  .titleBlock {
+    padding: var(--ds-theme-spacing-lg) var(--ds-theme-spacing-lg) var(--ds-theme-spacing-md);
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .twoColRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .twoColRow.heatmapRow {
+    border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  }
+
+  .column {
+    padding-inline: var(--ds-theme-spacing-lg);
+  }
+
+  .column.column {
+    border-bottom: none;
+  }
+
+  .columnDivided {
+    border-right: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  }
+}
+
+@media (min-width: 1440px) {
+  .topBar {
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas: 'brand . search iconControls';
+    padding: var(--ds-theme-spacing-md) var(--ds-theme-spacing-xl);
+  }
+
+  .brand {
+    gap: var(--ds-theme-spacing-lg);
+  }
+
+  .pageName {
+    display: block;
+  }
+
+  .search.search {
+    max-width: 16rem;
+  }
+
+  .titleBlock {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--ds-theme-spacing-xl) var(--ds-theme-spacing-xl) var(--ds-theme-spacing-lg);
+  }
+
+  .titleMeta {
+    align-items: flex-end;
+  }
+
+  .stats {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .twoColRow.heatmapRow {
+    grid-template-columns: 1.6fr 1fr;
+  }
 }
