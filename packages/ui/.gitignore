@@ -26,6 +26,10 @@ npm-debug.log*
 /storybook-static
 build-storybook.log
 
+# storybook-design-token's parsed-CSS cache — machine-generated,
+# includes absolute local paths, regenerated on every Storybook run
+/public/design-tokens.source.json
+
 .pnp.*
 .yarn/*
 !.yarn/patches
