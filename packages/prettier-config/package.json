@@ -11,9 +11,6 @@
     "format:check": "prettier --check . --ignore-path ../../.prettierignore"
   },
   "prettier": "./index.js",
-  "dependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2"
-  },
   "peerDependencies": {
     "prettier": "^3.8.0"
   },
