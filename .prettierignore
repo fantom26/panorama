@@ -8,3 +8,4 @@ pnpm-lock.yaml
 **/coverage/
 **/public/mockServiceWorker.js
 **/*.tsbuildinfo
+**/next-env.d.ts

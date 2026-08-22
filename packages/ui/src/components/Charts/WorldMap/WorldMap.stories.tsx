@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, waitFor } from 'storybook/test'
 
 import MapLegend from '@/components/Charts/MapLegend'
 import WorldMap from '@/components/Charts/WorldMap'
