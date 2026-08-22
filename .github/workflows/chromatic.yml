@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'packages/ui/**'
+      - 'packages/tokens/**'
 
 jobs:
   chromatic:
