@@ -8,6 +8,7 @@
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
     },
     "@repo/ui#build": {
+      "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
     "@repo/tokens#build": {
