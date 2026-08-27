@@ -10,18 +10,18 @@ const INDICATOR = {
   unemployment: 'IMF.LUR'
 } as const
 
-const TILE_LABELS = [
-  'Countries',
-  'Total population',
-  'Average GDP',
-  'Avg inflation',
-  'Avg unemployment'
+const TILE_KEYS = [
+  'countries',
+  'totalPopulation',
+  'averageGdp',
+  'avgInflation',
+  'avgUnemployment'
 ] as const
 
-type TileLabel = (typeof TILE_LABELS)[number]
+export type TileKey = (typeof TILE_KEYS)[number]
 
 export type GlobalStat = {
-  label: TileLabel
+  key: TileKey
   value: string
 }
 
@@ -45,7 +45,7 @@ export type GlobalOverview = {
 }
 
 const EMPTY_OVERVIEW: GlobalOverview = {
-  tiles: TILE_LABELS.map((label) => ({ label, value: '—' })),
+  tiles: TILE_KEYS.map((key) => ({ key, value: '—' })),
   gdpByCountry: [],
   gdpRange: '',
   gdpByRegion: [],
@@ -86,12 +86,12 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
     return [...totals].map(([label, value]) => ({ label, value })).sort((a, b) => b.value - a.value)
   }
 
-  const value: Record<TileLabel, string> = {
-    Countries: String(countries.count),
-    'Total population': formatCompactNumber(sum(valuesOf(population))),
-    'Average GDP': formatCompactUsd(mean(valuesOf(gdp))),
-    'Avg inflation': formatPercent(mean(valuesOf(inflation))),
-    'Avg unemployment': formatPercent(mean(valuesOf(unemployment)))
+  const value: Record<TileKey, string> = {
+    countries: String(countries.count),
+    totalPopulation: formatCompactNumber(sum(valuesOf(population))),
+    averageGdp: formatCompactUsd(mean(valuesOf(gdp))),
+    avgInflation: formatPercent(mean(valuesOf(inflation))),
+    avgUnemployment: formatPercent(mean(valuesOf(unemployment)))
   }
 
   const gdpValues = gdpByCountry.map((country) => country.value)
@@ -102,7 +102,7 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
     .map((row) => ({ label: row.country, value: row.value }))
 
   return {
-    tiles: TILE_LABELS.map((label) => ({ label, value: value[label] })),
+    tiles: TILE_KEYS.map((key) => ({ key, value: value[key] })),
     gdpByCountry,
     gdpRange,
     gdpByRegion: byRegion(gdp),

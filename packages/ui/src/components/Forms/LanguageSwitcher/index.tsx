@@ -7,10 +7,10 @@ import styles from './index.module.css'
 
 export type LanguageOption = { code: string; label: string }
 
-export type LanguageSwitcherProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+export type LanguageSwitcherProps = Omit<React.ComponentProps<'div'>, 'children' | 'onChange'> & {
   languages: LanguageOption[]
-  value?: string
-  onChange?: (code: string) => void
+  value: string
+  onChange: (code: string) => void
 }
 
 export default function LanguageSwitcher({
@@ -20,16 +20,7 @@ export default function LanguageSwitcher({
   className,
   ...rest
 }: LanguageSwitcherProps) {
-  const { t, i18n } = useTranslation()
-  const current = value ?? i18n.language
-
-  function handleSelect(code: string) {
-    if (onChange) {
-      onChange(code)
-    } else {
-      i18n.changeLanguage(code)
-    }
-  }
+  const { t } = useTranslation()
 
   return (
     <div
@@ -39,13 +30,13 @@ export default function LanguageSwitcher({
       {...rest}
     >
       {languages.map((language) => {
-        const active = language.code === current
+        const active = language.code === value
         return (
           <BaseButton
             key={language.code}
             className={styles.option}
             aria-pressed={active}
-            onClick={() => handleSelect(language.code)}
+            onClick={() => onChange(language.code)}
           >
             <Typography
               variant='meta-sm'
