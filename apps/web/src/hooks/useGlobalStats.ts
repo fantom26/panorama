@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchCountries, fetchRanking, type RankingResponse } from '@/lib/statistics-api'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/utils/format'
 
-/** Indicator codes on the Statistics of the World API. */
 const INDICATOR = {
   population: 'SP.POP.TOTL',
   gdp: 'IMF.NGDPD',
@@ -11,12 +10,21 @@ const INDICATOR = {
   unemployment: 'IMF.LUR'
 } as const
 
+const TILE_LABELS = [
+  'Countries',
+  'Total population',
+  'Average GDP',
+  'Avg inflation',
+  'Avg unemployment'
+] as const
+
+type TileLabel = (typeof TILE_LABELS)[number]
+
 export type GlobalStat = {
-  label: string
+  label: TileLabel
   value: string
 }
 
-/** One row per country for the GDP choropleth, keyed by ISO 3166-1 alpha-2 (WorldMap's id). */
 export type CountryValue = {
   id: string
   value: number
@@ -25,6 +33,13 @@ export type CountryValue = {
 export type GlobalOverview = {
   tiles: GlobalStat[]
   gdpByCountry: CountryValue[]
+  gdpRange: string
+}
+
+const EMPTY_OVERVIEW: GlobalOverview = {
+  tiles: TILE_LABELS.map((label) => ({ label, value: '—' })),
+  gdpByCountry: [],
+  gdpRange: ''
 }
 
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0)
@@ -49,20 +64,29 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
     return id ? [{ id, value: row.value }] : []
   })
 
-  const tiles: GlobalStat[] = [
-    { label: 'Countries', value: String(countries.count) },
-    { label: 'Total population', value: formatCompactNumber(sum(valuesOf(population))) },
-    { label: 'Average GDP', value: formatCompactUsd(mean(valuesOf(gdp))) },
-    { label: 'Avg inflation', value: formatPercent(mean(valuesOf(inflation))) },
-    { label: 'Avg unemployment', value: formatPercent(mean(valuesOf(unemployment))) }
-  ]
+  const value: Record<TileLabel, string> = {
+    Countries: String(countries.count),
+    'Total population': formatCompactNumber(sum(valuesOf(population))),
+    'Average GDP': formatCompactUsd(mean(valuesOf(gdp))),
+    'Avg inflation': formatPercent(mean(valuesOf(inflation))),
+    'Avg unemployment': formatPercent(mean(valuesOf(unemployment)))
+  }
 
-  return { tiles, gdpByCountry }
+  const gdpValues = gdpByCountry.map((country) => country.value)
+  const gdpRange = `${formatCompactUsd(Math.min(...gdpValues))} ─────── ${formatCompactUsd(Math.max(...gdpValues))}`
+
+  return {
+    tiles: TILE_LABELS.map((label) => ({ label, value: value[label] })),
+    gdpByCountry,
+    gdpRange
+  }
 }
 
 export function useGlobalStats() {
-  return useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ['global-overview'],
     queryFn: fetchGlobalOverview
   })
+
+  return { overview: data ?? EMPTY_OVERVIEW, isPending }
 }

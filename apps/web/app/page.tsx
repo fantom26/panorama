@@ -30,14 +30,6 @@ const languages = [
   { code: 'ar', label: 'ع' }
 ]
 
-const statLabels = [
-  'Countries',
-  'Total population',
-  'Average GDP',
-  'Avg inflation',
-  'Avg unemployment'
-]
-
 const gdpByRegion = [
   { label: 'Asia', value: 38400 },
   { label: 'Europe', value: 24100 },
@@ -55,7 +47,7 @@ const populationByRegion = [
 ]
 
 export default function GlobalPage() {
-  const { data, isPending, isError } = useGlobalStats()
+  const { overview, isPending } = useGlobalStats()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
@@ -100,11 +92,9 @@ export default function GlobalPage() {
       </div>
 
       <div className={styles.stats}>
-        {isPending || isError
-          ? statLabels.map((label) => (
-              <StatCard key={label} variant='row' label={label} value='—' loading={isPending} />
-            ))
-          : data.tiles.map((stat) => <StatCard key={stat.label} variant='row' {...stat} />)}
+        {overview.tiles.map((stat) => (
+          <StatCard key={stat.label} variant='row' {...stat} loading={isPending} />
+        ))}
       </div>
 
       <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
@@ -122,12 +112,8 @@ export default function GlobalPage() {
               </>
             ) : (
               <>
-                <WorldMap
-                  data={data?.gdpByCountry ?? []}
-                  height={heatmapHeight}
-                  format={formatGdp}
-                />
-                <MapLegend range='$10M ─────── $26T' />
+                <WorldMap data={overview.gdpByCountry} height={heatmapHeight} format={formatGdp} />
+                <MapLegend range={overview.gdpRange} />
               </>
             )}
           </div>
