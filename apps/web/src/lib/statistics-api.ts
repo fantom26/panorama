@@ -3,17 +3,26 @@
  * Unauthenticated access is allowed at up to 1,000 requests/day per IP, so no key is sent.
  */
 
+import type { Alpha2Code, Alpha3Code } from '../types/iso'
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://statisticsoftheworld.com'
+
+export type CountryRow = {
+  id: Alpha3Code
+  iso2: Alpha2Code
+  name: string
+  region: string
+}
 
 export type CountriesResponse = {
   count: number
   total: number
-  data: { id: string; name: string; region: string }[]
+  data: CountryRow[]
 }
 
 export type RankingRow = {
   rank: number
-  countryId: string
+  countryId: Alpha3Code
   country: string
   value: number
   year: string

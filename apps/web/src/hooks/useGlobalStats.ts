@@ -1,9 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchCountries, fetchRanking } from '@/lib/statistics-api'
+import { fetchCountries, fetchRanking, type RankingResponse } from '@/lib/statistics-api'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/utils/format'
 
-/** Indicator codes on the Statistics of the World API. */
 const INDICATOR = {
   population: 'SP.POP.TOTL',
   gdp: 'IMF.NGDPD',
@@ -11,15 +10,54 @@ const INDICATOR = {
   unemployment: 'IMF.LUR'
 } as const
 
+const TILE_LABELS = [
+  'Countries',
+  'Total population',
+  'Average GDP',
+  'Avg inflation',
+  'Avg unemployment'
+] as const
+
+type TileLabel = (typeof TILE_LABELS)[number]
+
 export type GlobalStat = {
-  label: string
+  label: TileLabel
   value: string
+}
+
+export type CountryValue = {
+  id: string
+  value: number
+}
+
+export type LabelledValue = {
+  label: string
+  value: number
+}
+
+export type GlobalOverview = {
+  tiles: GlobalStat[]
+  gdpByCountry: CountryValue[]
+  gdpRange: string
+  gdpByRegion: LabelledValue[]
+  populationByRegion: LabelledValue[]
+  topInflation: LabelledValue[]
+}
+
+const EMPTY_OVERVIEW: GlobalOverview = {
+  tiles: TILE_LABELS.map((label) => ({ label, value: '—' })),
+  gdpByCountry: [],
+  gdpRange: '',
+  gdpByRegion: [],
+  populationByRegion: [],
+  topInflation: []
 }
 
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0)
 const mean = (values: number[]) => (values.length ? sum(values) / values.length : 0)
+const valuesOf = (ranking: RankingResponse) => ranking.data.map((row) => row.value)
 
-async function fetchGlobalStats(): Promise<GlobalStat[]> {
+async function fetchGlobalOverview(): Promise<GlobalOverview> {
   const [countries, population, gdp, inflation, unemployment] = await Promise.all([
     fetchCountries(),
     fetchRanking(INDICATOR.population),
@@ -28,20 +66,56 @@ async function fetchGlobalStats(): Promise<GlobalStat[]> {
     fetchRanking(INDICATOR.unemployment)
   ])
 
-  const values = (ranking: { data: { value: number }[] }) => ranking.data.map((row) => row.value)
+  const alpha2ById = new Map(
+    countries.data.map((country) => [country.id, country.iso2.toUpperCase()])
+  )
+  const regionById = new Map(countries.data.map((country) => [country.id, country.region.trim()]))
 
-  return [
-    { label: 'Countries', value: String(countries.count) },
-    { label: 'Total population', value: formatCompactNumber(sum(values(population))) },
-    { label: 'Average GDP', value: formatCompactUsd(mean(values(gdp))) },
-    { label: 'Avg inflation', value: formatPercent(mean(values(inflation))) },
-    { label: 'Avg unemployment', value: formatPercent(mean(values(unemployment))) }
-  ]
+  const gdpByCountry = gdp.data.flatMap((row) => {
+    const id = alpha2ById.get(row.countryId)
+    return id ? [{ id, value: row.value }] : []
+  })
+
+  const byRegion = (ranking: RankingResponse): LabelledValue[] => {
+    const totals = new Map<string, number>()
+    for (const row of ranking.data) {
+      const region = regionById.get(row.countryId)
+      if (!region) continue
+      totals.set(region, (totals.get(region) ?? 0) + row.value)
+    }
+    return [...totals].map(([label, value]) => ({ label, value })).sort((a, b) => b.value - a.value)
+  }
+
+  const value: Record<TileLabel, string> = {
+    Countries: String(countries.count),
+    'Total population': formatCompactNumber(sum(valuesOf(population))),
+    'Average GDP': formatCompactUsd(mean(valuesOf(gdp))),
+    'Avg inflation': formatPercent(mean(valuesOf(inflation))),
+    'Avg unemployment': formatPercent(mean(valuesOf(unemployment)))
+  }
+
+  const gdpValues = gdpByCountry.map((country) => country.value)
+  const gdpRange = `${formatCompactUsd(Math.min(...gdpValues))} ─────── ${formatCompactUsd(Math.max(...gdpValues))}`
+
+  const topInflation = inflation.data
+    .slice(0, 8)
+    .map((row) => ({ label: row.country, value: row.value }))
+
+  return {
+    tiles: TILE_LABELS.map((label) => ({ label, value: value[label] })),
+    gdpByCountry,
+    gdpRange,
+    gdpByRegion: byRegion(gdp),
+    populationByRegion: byRegion(population),
+    topInflation
+  }
 }
 
 export function useGlobalStats() {
-  return useQuery({
-    queryKey: ['global-stats'],
-    queryFn: fetchGlobalStats
+  const { data, isPending } = useQuery({
+    queryKey: ['global-overview'],
+    queryFn: fetchGlobalOverview
   })
+
+  return { overview: data ?? EMPTY_OVERVIEW, isPending }
 }

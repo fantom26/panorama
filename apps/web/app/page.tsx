@@ -9,6 +9,7 @@ import {
   MapLegend,
   RankingList,
   Section,
+  Skeleton,
   StatCard,
   ThemeToggle,
   Typography,
@@ -17,6 +18,7 @@ import {
 
 import { useGlobalStats } from '@/hooks/useGlobalStats'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { formatGdp, formatPercent } from '@/utils/format'
 
 import styles from './page.module.css'
 
@@ -28,56 +30,8 @@ const languages = [
   { code: 'ar', label: 'ع' }
 ]
 
-const statLabels = [
-  'Countries',
-  'Total population',
-  'Average GDP',
-  'Avg inflation',
-  'Avg unemployment'
-]
-
-const gdpByRegion = [
-  { label: 'Asia', value: 38400 },
-  { label: 'Europe', value: 24100 },
-  { label: 'Americas', value: 31200 },
-  { label: 'Africa', value: 3100 },
-  { label: 'Oceania', value: 1800 }
-]
-
-const populationByRegion = [
-  { label: 'Asia', value: 4720 },
-  { label: 'Africa', value: 1480 },
-  { label: 'Americas', value: 1050 },
-  { label: 'Europe', value: 745 },
-  { label: 'Oceania', value: 45 }
-]
-
-const topLanguages = [
-  { label: 'English', value: 67 },
-  { label: 'French', value: 29 },
-  { label: 'Arabic', value: 23 },
-  { label: 'Spanish', value: 21 },
-  { label: 'Portuguese', value: 10 },
-  { label: 'German', value: 6 },
-  { label: 'Russian', value: 6 },
-  { label: 'Chinese', value: 5 }
-]
-
-const gdpHeatmap = [
-  { id: 'US', value: 27400 },
-  { id: 'CN', value: 17700 },
-  { id: 'DE', value: 4460 },
-  { id: 'JP', value: 4200 },
-  { id: 'IN', value: 3730 },
-  { id: 'GB', value: 3340 },
-  { id: 'FR', value: 3030 },
-  { id: 'BR', value: 2170 },
-  { id: 'AU', value: 1720 },
-  { id: 'ZA', value: 400 }
-]
-
 export default function GlobalPage() {
-  const { data: stats, isPending, isError } = useGlobalStats()
+  const { overview, isPending } = useGlobalStats()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
@@ -122,11 +76,9 @@ export default function GlobalPage() {
       </div>
 
       <div className={styles.stats}>
-        {isPending || isError
-          ? statLabels.map((label) => (
-              <StatCard key={label} variant='row' label={label} value='—' loading={isPending} />
-            ))
-          : stats.map((stat) => <StatCard key={stat.label} variant='row' {...stat} />)}
+        {overview.tiles.map((stat) => (
+          <StatCard key={stat.label} variant='row' {...stat} loading={isPending} />
+        ))}
       </div>
 
       <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
@@ -137,21 +89,26 @@ export default function GlobalPage() {
           className={`${styles.column} ${styles.columnDivided}`}
         >
           <div className={styles.heatmapBody}>
-            <WorldMap data={gdpHeatmap} height={heatmapHeight} format={(value) => `$${value}B`} />
-            <MapLegend range='$10M ─────── $26T' />
+            {isPending ? (
+              <>
+                <Skeleton variant='rectangular' width='100%' height={heatmapHeight} />
+                <Skeleton width='100%' />
+              </>
+            ) : (
+              <>
+                <WorldMap data={overview.gdpByCountry} height={heatmapHeight} format={formatGdp} />
+                <MapLegend range={overview.gdpRange} />
+              </>
+            )}
           </div>
         </Section>
 
-        <Section
-          number='02'
-          title='GDP by region'
-          action='Avg, USD billions'
-          className={styles.column}
-        >
-          <RankingList
-            data={gdpByRegion}
-            formatValue={(value) => `$${(value / 1000).toFixed(1)}T`}
-          />
+        <Section number='02' title='GDP by region' action='Total, USD' className={styles.column}>
+          {isPending ? (
+            <Skeleton variant='rectangular' width='100%' height={220} />
+          ) : (
+            <RankingList data={overview.gdpByRegion} formatValue={formatGdp} />
+          )}
         </Section>
       </div>
 
@@ -162,20 +119,28 @@ export default function GlobalPage() {
           action='Click slice to drill'
           className={`${styles.column} ${styles.columnDivided}`}
         >
-          <DonutChart
-            data={populationByRegion}
-            layout={isTablet ? 'row' : 'column'}
-            size={donutSize}
-          />
+          {isPending ? (
+            <Skeleton variant='rectangular' width='100%' height={donutSize} />
+          ) : (
+            <DonutChart
+              data={overview.populationByRegion}
+              layout={isTablet ? 'row' : 'column'}
+              size={donutSize}
+            />
+          )}
         </Section>
 
         <Section
           number='04'
-          title='Top languages'
-          action='Countries where spoken'
+          title='Highest inflation'
+          action='Consumer prices, YoY'
           className={styles.column}
         >
-          <RankingList data={topLanguages} formatValue={(value) => `${value} countries`} />
+          {isPending ? (
+            <Skeleton variant='rectangular' width='100%' height={220} />
+          ) : (
+            <RankingList data={overview.topInflation} formatValue={formatPercent} />
+          )}
         </Section>
       </div>
     </div>
