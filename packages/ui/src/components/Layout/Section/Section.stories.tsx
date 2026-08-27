@@ -25,7 +25,6 @@ const populationByRegion = [
 const meta = {
   component: Section,
   args: {
-    number: '01',
     title: 'GDP heatmap'
   }
 } satisfies Meta<typeof Section>
@@ -38,29 +37,25 @@ export const Default: Story = {
     children: <Typography variant='body-sm'>Choropleth map placeholder.</Typography>
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('01')).toBeInTheDocument()
     await expect(canvas.getByRole('heading', { name: 'GDP heatmap' })).toBeInTheDocument()
   }
 }
 
-export const WithAction: Story = {
+export const WithRankingList: Story = {
   args: {
-    number: '02',
     title: 'GDP by region',
-    action: 'USD, billions',
     children: (
       <RankingList data={gdpByRegion} formatValue={(value) => `$${(value / 1000).toFixed(1)}T`} />
     )
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('USD, billions')).toBeInTheDocument()
+    await expect(canvas.getByRole('heading', { name: 'GDP by region' })).toBeInTheDocument()
     await expect(canvas.getAllByRole('progressbar')).toHaveLength(gdpByRegion.length)
   }
 }
 
 export const WithChartChildren: Story = {
   args: {
-    number: '03',
     title: 'Population by region',
     children: <DonutChart data={populationByRegion} size={160} />
   },
@@ -68,4 +63,22 @@ export const WithChartChildren: Story = {
     await expect(canvas.getByRole('heading', { name: 'Population by region' })).toBeInTheDocument()
     await expect(canvas.getByText('Asia')).toBeInTheDocument()
   }
+}
+
+/** Numbers come from a CSS counter — siblings increment 01, 02, 03… on their own. */
+export const Numbered: Story = {
+  args: { children: null },
+  render: (args) => (
+    <div>
+      <Section {...args} title='GDP heatmap'>
+        <Typography variant='body-sm'>First section — counter shows 01.</Typography>
+      </Section>
+      <Section {...args} title='GDP by region'>
+        <Typography variant='body-sm'>Second — 02.</Typography>
+      </Section>
+      <Section {...args} title='Population by region'>
+        <Typography variant='body-sm'>Third — 03.</Typography>
+      </Section>
+    </div>
+  )
 }
