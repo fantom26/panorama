@@ -1,3 +1,4 @@
+import pluginQuery from '@tanstack/eslint-plugin-query'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import jestPlugin from 'eslint-plugin-jest'
 
@@ -5,6 +6,7 @@ import { nextJsConfig } from '@repo/eslint-config/next-js'
 
 const eslintConfig = defineConfig([
   ...nextJsConfig,
+  ...pluginQuery.configs['flat/recommended'],
   {
     files: ['**/*.{test,spec}.{js,jsx,ts,tsx}'],
     ...jestPlugin.configs['flat/recommended'],
