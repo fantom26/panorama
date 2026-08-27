@@ -18,24 +18,30 @@ import {
 
 import { useGlobalStats } from '@/hooks/useGlobalStats'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useTranslation } from '@/i18n'
 import { formatGdp, formatPercent } from '@/utils/format'
 
 import styles from './page.module.css'
 
-import '@repo/ui/i18n'
-
 const languages = [
   { code: 'en', label: 'EN' },
-  { code: 'uk', label: 'УК' },
   { code: 'ar', label: 'ع' }
 ]
 
 export default function GlobalPage() {
+  const { t, i18n } = useTranslation('global')
   const { overview, isPending } = useGlobalStats()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
   const donutSize = isTablet ? 160 : 130
+
+  function handleLanguageChange(code: string) {
+    i18n.changeLanguage(code)
+    const root = document.documentElement
+    root.lang = code
+    root.dir = i18n.dir(code)
+  }
 
   return (
     <div className={styles.page}>
@@ -43,47 +49,57 @@ export default function GlobalPage() {
         <div className={styles.brand}>
           <Logo />
           <Typography variant='body-sm' component='span' className={styles.pageName}>
-            Global
+            {t('pageName')}
           </Typography>
         </div>
         <div className={styles.iconControls}>
-          <LanguageSwitcher languages={languages} />
+          <LanguageSwitcher
+            languages={languages}
+            value={i18n.language}
+            onChange={handleLanguageChange}
+          />
           <span className={styles.dividerWrap}>
             <Divider orientation='vertical' />
           </span>
           <ThemeToggle />
         </div>
-        <ExpandableSearch placeholder='Search countries' className={styles.search} />
+        <ExpandableSearch placeholder={t('search.placeholder')} className={styles.search} />
       </header>
 
       <div className={styles.titleBlock}>
         <div>
           <Typography variant='meta-sm' color='subtle' component='div'>
-            Dashboard
+            {t('header.eyebrow')}
           </Typography>
           <Typography variant='headline-sm' component='h1'>
-            Global overview
+            {t('header.title')}
           </Typography>
         </div>
         <div className={styles.titleMeta}>
           <Typography variant='body-sm' color='muted' component='div'>
-            Last sync · 14:02 UTC
+            {t('header.lastSync', { time: '14:02 UTC' })}
           </Typography>
           <Typography variant='body-sm' color='knockout' component='div'>
-            Data: REST Countries v3.1 / World Bank WDI
+            {t('header.dataSource')}
           </Typography>
         </div>
       </div>
 
       <div className={styles.stats}>
         {overview.tiles.map((stat) => (
-          <StatCard key={stat.label} variant='row' {...stat} loading={isPending} />
+          <StatCard
+            key={stat.key}
+            variant='row'
+            label={t(`tiles.${stat.key}`)}
+            value={stat.value}
+            loading={isPending}
+          />
         ))}
       </div>
 
       <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
         <Section
-          title='GDP heatmap — click a country to drill down'
+          title={t('sections.gdpHeatmap')}
           className={`${styles.column} ${styles.columnDivided}`}
         >
           <div className={styles.heatmapBody}>
@@ -101,7 +117,7 @@ export default function GlobalPage() {
           </div>
         </Section>
 
-        <Section title='GDP by region' className={styles.column}>
+        <Section title={t('sections.gdpByRegion')} className={styles.column}>
           {isPending ? (
             <Skeleton variant='rectangular' width='100%' height={220} />
           ) : (
@@ -112,7 +128,7 @@ export default function GlobalPage() {
 
       <div className={`${styles.twoColRow} ${styles.evenRow}`}>
         <Section
-          title='Population by region'
+          title={t('sections.populationByRegion')}
           className={`${styles.column} ${styles.columnDivided}`}
         >
           {isPending ? (
@@ -126,7 +142,7 @@ export default function GlobalPage() {
           )}
         </Section>
 
-        <Section title='Highest inflation' className={styles.column}>
+        <Section title={t('sections.highestInflation')} className={styles.column}>
           {isPending ? (
             <Skeleton variant='rectangular' width='100%' height={220} />
           ) : (
