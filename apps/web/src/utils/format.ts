@@ -18,3 +18,6 @@ export const formatCompactUsd = (value: number) => compactUsd.format(value)
 
 /** e.g. 7.5609 -> "7.6%" */
 export const formatPercent = (value: number) => `${value.toFixed(1)}%`
+
+/** e.g. 32383920000000 -> "$32.4T" */
+export const formatGdp = (value: number) => `$${(value / 1e12).toFixed(1)}T`

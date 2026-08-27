@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchCountries, fetchRanking } from '@/lib/statistics-api'
+import { fetchCountries, fetchRanking, type RankingResponse } from '@/lib/statistics-api'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/utils/format'
 
 /** Indicator codes on the Statistics of the World API. */
@@ -16,10 +16,22 @@ export type GlobalStat = {
   value: string
 }
 
+/** One row per country for the GDP choropleth, keyed by ISO 3166-1 alpha-2 (WorldMap's id). */
+export type CountryValue = {
+  id: string
+  value: number
+}
+
+export type GlobalOverview = {
+  tiles: GlobalStat[]
+  gdpByCountry: CountryValue[]
+}
+
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0)
 const mean = (values: number[]) => (values.length ? sum(values) / values.length : 0)
+const valuesOf = (ranking: RankingResponse) => ranking.data.map((row) => row.value)
 
-async function fetchGlobalStats(): Promise<GlobalStat[]> {
+async function fetchGlobalOverview(): Promise<GlobalOverview> {
   const [countries, population, gdp, inflation, unemployment] = await Promise.all([
     fetchCountries(),
     fetchRanking(INDICATOR.population),
@@ -28,20 +40,29 @@ async function fetchGlobalStats(): Promise<GlobalStat[]> {
     fetchRanking(INDICATOR.unemployment)
   ])
 
-  const values = (ranking: { data: { value: number }[] }) => ranking.data.map((row) => row.value)
+  const alpha2ById = new Map(
+    countries.data.map((country) => [country.id, country.iso2.toUpperCase()])
+  )
 
-  return [
+  const gdpByCountry = gdp.data.flatMap((row) => {
+    const id = alpha2ById.get(row.countryId)
+    return id ? [{ id, value: row.value }] : []
+  })
+
+  const tiles: GlobalStat[] = [
     { label: 'Countries', value: String(countries.count) },
-    { label: 'Total population', value: formatCompactNumber(sum(values(population))) },
-    { label: 'Average GDP', value: formatCompactUsd(mean(values(gdp))) },
-    { label: 'Avg inflation', value: formatPercent(mean(values(inflation))) },
-    { label: 'Avg unemployment', value: formatPercent(mean(values(unemployment))) }
+    { label: 'Total population', value: formatCompactNumber(sum(valuesOf(population))) },
+    { label: 'Average GDP', value: formatCompactUsd(mean(valuesOf(gdp))) },
+    { label: 'Avg inflation', value: formatPercent(mean(valuesOf(inflation))) },
+    { label: 'Avg unemployment', value: formatPercent(mean(valuesOf(unemployment))) }
   ]
+
+  return { tiles, gdpByCountry }
 }
 
 export function useGlobalStats() {
   return useQuery({
-    queryKey: ['global-stats'],
-    queryFn: fetchGlobalStats
+    queryKey: ['global-overview'],
+    queryFn: fetchGlobalOverview
   })
 }
