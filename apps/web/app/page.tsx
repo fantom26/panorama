@@ -15,6 +15,7 @@ import {
   WorldMap
 } from '@repo/ui'
 
+import { useGlobalStats } from '@/hooks/useGlobalStats'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 import styles from './page.module.css'
@@ -27,17 +28,12 @@ const languages = [
   { code: 'ar', label: 'ع' }
 ]
 
-const stats = [
-  { label: 'Countries', value: '249', trend: 'World Bank · REST Countries' },
-  {
-    label: 'Total population',
-    value: '7.95B',
-    trend: '+0.87% YoY',
-    trendColor: 'success' as const
-  },
-  { label: 'Average GDP', value: '$418B', trend: 'nominal, USD' },
-  { label: 'Avg inflation', value: '5.4%', trend: '+0.9pp YoY', trendColor: 'error' as const },
-  { label: 'Avg unemployment', value: '6.2%', trend: '−0.3pp YoY', trendColor: 'success' as const }
+const statLabels = [
+  'Countries',
+  'Total population',
+  'Average GDP',
+  'Avg inflation',
+  'Avg unemployment'
 ]
 
 const gdpByRegion = [
@@ -81,6 +77,7 @@ const gdpHeatmap = [
 ]
 
 export default function GlobalPage() {
+  const { data: stats, isPending, isError } = useGlobalStats()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
@@ -125,9 +122,11 @@ export default function GlobalPage() {
       </div>
 
       <div className={styles.stats}>
-        {stats.map((stat) => (
-          <StatCard key={stat.label} variant='row' {...stat} />
-        ))}
+        {isPending || isError
+          ? statLabels.map((label) => (
+              <StatCard key={label} variant='row' label={label} value='—' loading={isPending} />
+            ))
+          : stats.map((stat) => <StatCard key={stat.label} variant='row' {...stat} />)}
       </div>
 
       <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>

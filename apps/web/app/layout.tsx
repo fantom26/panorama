@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import Providers from './providers'
+
 import '@repo/ui/styles.css'
 
 export const metadata: Metadata = {
@@ -14,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' data-theme='light'>
-      <body className='panorama-normalize'>{children}</body>
+      <body className='panorama-normalize'>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }
