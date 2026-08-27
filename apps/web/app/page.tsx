@@ -83,9 +83,7 @@ export default function GlobalPage() {
 
       <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
         <Section
-          number='01'
           title='GDP heatmap — click a country to drill down'
-          action='USD, log scale →'
           className={`${styles.column} ${styles.columnDivided}`}
         >
           <div className={styles.heatmapBody}>
@@ -103,7 +101,7 @@ export default function GlobalPage() {
           </div>
         </Section>
 
-        <Section number='02' title='GDP by region' action='Total, USD' className={styles.column}>
+        <Section title='GDP by region' className={styles.column}>
           {isPending ? (
             <Skeleton variant='rectangular' width='100%' height={220} />
           ) : (
@@ -114,9 +112,7 @@ export default function GlobalPage() {
 
       <div className={`${styles.twoColRow} ${styles.evenRow}`}>
         <Section
-          number='03'
           title='Population by region'
-          action='Click slice to drill'
           className={`${styles.column} ${styles.columnDivided}`}
         >
           {isPending ? (
@@ -130,12 +126,7 @@ export default function GlobalPage() {
           )}
         </Section>
 
-        <Section
-          number='04'
-          title='Highest inflation'
-          action='Consumer prices, YoY'
-          className={styles.column}
-        >
+        <Section title='Highest inflation' className={styles.column}>
           {isPending ? (
             <Skeleton variant='rectangular' width='100%' height={220} />
           ) : (
