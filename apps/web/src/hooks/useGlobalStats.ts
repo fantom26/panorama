@@ -30,16 +30,25 @@ export type CountryValue = {
   value: number
 }
 
+export type RegionValue = {
+  label: string
+  value: number
+}
+
 export type GlobalOverview = {
   tiles: GlobalStat[]
   gdpByCountry: CountryValue[]
   gdpRange: string
+  gdpByRegion: RegionValue[]
+  populationByRegion: RegionValue[]
 }
 
 const EMPTY_OVERVIEW: GlobalOverview = {
   tiles: TILE_LABELS.map((label) => ({ label, value: '—' })),
   gdpByCountry: [],
-  gdpRange: ''
+  gdpRange: '',
+  gdpByRegion: [],
+  populationByRegion: []
 }
 
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0)
@@ -58,11 +67,22 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
   const alpha2ById = new Map(
     countries.data.map((country) => [country.id, country.iso2.toUpperCase()])
   )
+  const regionById = new Map(countries.data.map((country) => [country.id, country.region.trim()]))
 
   const gdpByCountry = gdp.data.flatMap((row) => {
     const id = alpha2ById.get(row.countryId)
     return id ? [{ id, value: row.value }] : []
   })
+
+  const byRegion = (ranking: RankingResponse): RegionValue[] => {
+    const totals = new Map<string, number>()
+    for (const row of ranking.data) {
+      const region = regionById.get(row.countryId)
+      if (!region) continue
+      totals.set(region, (totals.get(region) ?? 0) + row.value)
+    }
+    return [...totals].map(([label, value]) => ({ label, value })).sort((a, b) => b.value - a.value)
+  }
 
   const value: Record<TileLabel, string> = {
     Countries: String(countries.count),
@@ -78,7 +98,9 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
   return {
     tiles: TILE_LABELS.map((label) => ({ label, value: value[label] })),
     gdpByCountry,
-    gdpRange
+    gdpRange,
+    gdpByRegion: byRegion(gdp),
+    populationByRegion: byRegion(population)
   }
 }
 

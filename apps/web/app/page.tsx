@@ -30,22 +30,6 @@ const languages = [
   { code: 'ar', label: 'ع' }
 ]
 
-const gdpByRegion = [
-  { label: 'Asia', value: 38400 },
-  { label: 'Europe', value: 24100 },
-  { label: 'Americas', value: 31200 },
-  { label: 'Africa', value: 3100 },
-  { label: 'Oceania', value: 1800 }
-]
-
-const populationByRegion = [
-  { label: 'Asia', value: 4720 },
-  { label: 'Africa', value: 1480 },
-  { label: 'Americas', value: 1050 },
-  { label: 'Europe', value: 745 },
-  { label: 'Oceania', value: 45 }
-]
-
 export default function GlobalPage() {
   const { overview, isPending } = useGlobalStats()
   const isTablet = useMediaQuery('(min-width: 768px)')
@@ -119,16 +103,12 @@ export default function GlobalPage() {
           </div>
         </Section>
 
-        <Section
-          number='02'
-          title='GDP by region'
-          action='Avg, USD billions'
-          className={styles.column}
-        >
-          <RankingList
-            data={gdpByRegion}
-            formatValue={(value) => `$${(value / 1000).toFixed(1)}T`}
-          />
+        <Section number='02' title='GDP by region' action='Total, USD' className={styles.column}>
+          {isPending ? (
+            <Skeleton variant='rectangular' width='100%' height={220} />
+          ) : (
+            <RankingList data={overview.gdpByRegion} formatValue={formatGdp} />
+          )}
         </Section>
       </div>
 
@@ -139,11 +119,15 @@ export default function GlobalPage() {
           action='Click slice to drill'
           className={`${styles.column} ${styles.columnDivided}`}
         >
-          <DonutChart
-            data={populationByRegion}
-            layout={isTablet ? 'row' : 'column'}
-            size={donutSize}
-          />
+          {isPending ? (
+            <Skeleton variant='rectangular' width='100%' height={donutSize} />
+          ) : (
+            <DonutChart
+              data={overview.populationByRegion}
+              layout={isTablet ? 'row' : 'column'}
+              size={donutSize}
+            />
+          )}
         </Section>
       </div>
     </div>
