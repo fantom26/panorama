@@ -18,7 +18,7 @@ import {
 
 import { useGlobalStats } from '@/hooks/useGlobalStats'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { formatGdp } from '@/utils/format'
+import { formatGdp, formatPercent } from '@/utils/format'
 
 import styles from './page.module.css'
 
@@ -127,6 +127,19 @@ export default function GlobalPage() {
               layout={isTablet ? 'row' : 'column'}
               size={donutSize}
             />
+          )}
+        </Section>
+
+        <Section
+          number='04'
+          title='Highest inflation'
+          action='Consumer prices, YoY'
+          className={styles.column}
+        >
+          {isPending ? (
+            <Skeleton variant='rectangular' width='100%' height={220} />
+          ) : (
+            <RankingList data={overview.topInflation} formatValue={formatPercent} />
           )}
         </Section>
       </div>

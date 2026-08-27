@@ -30,7 +30,7 @@ export type CountryValue = {
   value: number
 }
 
-export type RegionValue = {
+export type LabelledValue = {
   label: string
   value: number
 }
@@ -39,8 +39,9 @@ export type GlobalOverview = {
   tiles: GlobalStat[]
   gdpByCountry: CountryValue[]
   gdpRange: string
-  gdpByRegion: RegionValue[]
-  populationByRegion: RegionValue[]
+  gdpByRegion: LabelledValue[]
+  populationByRegion: LabelledValue[]
+  topInflation: LabelledValue[]
 }
 
 const EMPTY_OVERVIEW: GlobalOverview = {
@@ -48,7 +49,8 @@ const EMPTY_OVERVIEW: GlobalOverview = {
   gdpByCountry: [],
   gdpRange: '',
   gdpByRegion: [],
-  populationByRegion: []
+  populationByRegion: [],
+  topInflation: []
 }
 
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0)
@@ -74,7 +76,7 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
     return id ? [{ id, value: row.value }] : []
   })
 
-  const byRegion = (ranking: RankingResponse): RegionValue[] => {
+  const byRegion = (ranking: RankingResponse): LabelledValue[] => {
     const totals = new Map<string, number>()
     for (const row of ranking.data) {
       const region = regionById.get(row.countryId)
@@ -95,12 +97,17 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
   const gdpValues = gdpByCountry.map((country) => country.value)
   const gdpRange = `${formatCompactUsd(Math.min(...gdpValues))} ─────── ${formatCompactUsd(Math.max(...gdpValues))}`
 
+  const topInflation = inflation.data
+    .slice(0, 8)
+    .map((row) => ({ label: row.country, value: row.value }))
+
   return {
     tiles: TILE_LABELS.map((label) => ({ label, value: value[label] })),
     gdpByCountry,
     gdpRange,
     gdpByRegion: byRegion(gdp),
-    populationByRegion: byRegion(population)
+    populationByRegion: byRegion(population),
+    topInflation
   }
 }
 
