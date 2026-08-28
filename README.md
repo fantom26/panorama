@@ -29,6 +29,16 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
   import by package name (`@repo/ui`). Intra-package, use the `@/` alias to the
   package's `src` (`@/components/Field`). Same-folder siblings may stay relative.
 
+### Data fetching
+
+`apps/web` reads from the [Statistics of the World API](https://statisticsoftheworld.com)
+unauthenticated, which caps usage at **1,000 requests/day per IP**, and the underlying
+data updates on a monthly cadence at most. `app/providers.tsx` configures the shared
+`QueryClient` accordingly — `staleTime: Infinity` and `refetchOnWindowFocus: false` — so
+react-query treats a fetched response as good for the rest of the session instead of
+silently re-requesting it (e.g. on every tab focus), which would otherwise burn through
+the daily budget for no benefit.
+
 ### Utilities
 
 This Turborepo has some additional tools already setup for you:
