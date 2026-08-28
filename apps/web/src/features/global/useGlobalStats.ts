@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { type QueryFunctionContext, useQuery } from '@tanstack/react-query'
 
-import { fetchCountries, fetchRanking, type RankingResponse } from '@/shared/api/statistics-api'
+import { fetchRanking, type RankingResponse } from '@/shared/api/statistics-api'
+import { countriesQuery } from '@/shared/hooks/useCountries'
 import { INDICATOR } from '@/shared/model/indicators'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/shared/utils/format'
@@ -55,9 +56,9 @@ const sum = (values: number[]) => values.reduce((total, value) => total + value,
 const mean = (values: number[]) => (values.length ? sum(values) / values.length : 0)
 const valuesOf = (ranking: RankingResponse) => ranking.data.map((row) => row.value)
 
-async function fetchGlobalOverview(): Promise<GlobalOverview> {
+async function fetchGlobalOverview({ client }: QueryFunctionContext): Promise<GlobalOverview> {
   const [countries, population, gdp, inflation, unemployment] = await Promise.all([
-    fetchCountries(),
+    client.fetchQuery(countriesQuery),
     fetchRanking(INDICATOR.population),
     fetchRanking(INDICATOR.gdp),
     fetchRanking(INDICATOR.inflation),
