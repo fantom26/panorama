@@ -3,6 +3,8 @@
  * Unauthenticated access is allowed at up to 1,000 requests/day per IP, so no key is sent.
  */
 
+import type { IndicatorFormat } from '@/utils/format'
+
 import type { Alpha2Code, Alpha3Code } from '../types/iso'
 import type { IndicatorId } from './indicators'
 
@@ -44,7 +46,7 @@ export type IndicatorValue = {
   category: string
   value: number
   year: number | string
-  format: 'number' | 'currency' | 'percent' | 'ratio' | 'index' | 'years'
+  format: IndicatorFormat
   source: string
 }
 
@@ -56,7 +58,7 @@ export type CountryDetail = {
 export type HistoryPoint = { year: number; value: number }
 
 export type HistoryResponse = {
-  indicator: { id: IndicatorId; label: string; format: string; source: string }
+  indicator: { id: IndicatorId; label: string; format: IndicatorFormat; source: string }
   country: Alpha3Code
   count: number
   data: HistoryPoint[]
