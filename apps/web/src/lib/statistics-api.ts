@@ -4,6 +4,7 @@
  */
 
 import type { Alpha2Code, Alpha3Code } from '../types/iso'
+import type { IndicatorId } from './indicators'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://statisticsoftheworld.com'
 
@@ -51,6 +52,6 @@ export function fetchCountries() {
   return get<CountriesResponse>('/api/v1/countries')
 }
 
-export function fetchRanking(indicator: string) {
+export function fetchRanking(indicator: IndicatorId) {
   return get<RankingResponse>(`/api/v1/rankings/${indicator}`)
 }

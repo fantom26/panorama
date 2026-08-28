@@ -1,14 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { INDICATOR } from '@/lib/indicators'
 import { fetchCountries, fetchRanking, type RankingResponse } from '@/lib/statistics-api'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/utils/format'
-
-const INDICATOR = {
-  population: 'SP.POP.TOTL',
-  gdp: 'IMF.NGDPD',
-  inflation: 'IMF.PCPIPCH',
-  unemployment: 'IMF.LUR'
-} as const
 
 const TILE_KEYS = [
   'countries',
