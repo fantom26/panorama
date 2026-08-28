@@ -8,6 +8,8 @@ import { useParams } from 'next/navigation'
 import {
   Breadcrumbs,
   Button,
+  type ColumnDef,
+  DataTable,
   LineChart,
   Section,
   Skeleton,
@@ -20,10 +22,12 @@ import AppHeader from '@/components/AppHeader'
 import { useCountry, useCountryHistory } from '@/hooks/useCountry'
 import { useTranslation } from '@/i18n'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/lib/indicators'
+import type { IndicatorValue } from '@/lib/statistics-api'
 import type { Alpha3Code } from '@/types/iso'
 import {
   formatCompactNumber,
   formatGdp,
+  formatIndicatorValue,
   formatNumber,
   formatPercent,
   formatUsd
@@ -49,7 +53,7 @@ const CHART_TABS = [
 export default function CountryPage() {
   const { id } = useParams<{ id: Alpha3Code }>()
   const { t } = useTranslation('country')
-  const { country, stats, isPending } = useCountry(id)
+  const { country, stats, indicators, isPending } = useCountry(id)
   const [activeIndicator, setActiveIndicator] = useState<IndicatorId>(INDICATOR.gdp)
   const { history, isPending: isHistoryPending } = useCountryHistory(id, activeIndicator)
 
@@ -59,6 +63,17 @@ export default function CountryPage() {
   const lastYear = history.at(-1)?.year
   const yearRange =
     firstYear !== undefined && lastYear !== undefined ? `${firstYear}–${lastYear}` : ''
+
+  const indicatorColumns: ColumnDef<IndicatorValue>[] = [
+    { accessorKey: 'label', header: t('table.indicator') },
+    { accessorKey: 'category', header: t('table.category') },
+    { accessorKey: 'year', header: t('table.year') },
+    {
+      accessorKey: 'value',
+      header: t('table.value'),
+      cell: (info) => formatIndicatorValue(info.getValue<number>(), info.row.original.format)
+    }
+  ]
 
   const statTiles = [
     {
@@ -182,6 +197,19 @@ export default function CountryPage() {
             )}
           </Tabs.Panel>
         </Tabs.Root>
+      </Section>
+
+      <Section
+        title={t('sections.indicators', { count: indicators.length })}
+        className={styles.indicators}
+      >
+        <DataTable
+          state={isPending ? { status: 'loading' } : { status: 'ready', data: indicators }}
+          columns={indicatorColumns}
+          enablePagination
+          enableColumnFilters
+          pageSize={8}
+        />
       </Section>
     </div>
   )

@@ -19,6 +19,8 @@ import Icon from '../Icon'
 import Typography from '../Typography'
 import styles from './index.module.css'
 
+export type { ColumnDef } from '@tanstack/react-table'
+
 const LOADING_ROW_COUNT = 5
 
 export type TableStateLoading = { status: 'loading' }
