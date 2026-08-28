@@ -2,6 +2,7 @@
 
 import { Divider, ExpandableSearch, LanguageSwitcher, Logo, ThemeToggle } from '@repo/ui'
 
+import CompareIndicator from '@/components/CompareIndicator'
 import { useTranslation } from '@/i18n'
 
 import styles from './AppHeader.module.css'
@@ -33,6 +34,7 @@ export default function AppHeader({ children }: AppHeaderProps) {
         {children}
       </div>
       <div className={styles.iconControls}>
+        <CompareIndicator />
         <LanguageSwitcher
           languages={languages}
           value={i18n.language}
