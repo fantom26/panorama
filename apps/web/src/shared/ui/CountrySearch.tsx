@@ -18,7 +18,6 @@ import styles from './CountrySearch.module.css'
 
 const OPTION_ID = (id: string) => `country-search-option-${id}`
 
-/** Header command palette: ⌘K / click opens a searchable, scrollable list of every country. */
 export default function CountrySearch() {
   const { t } = useTranslation('global')
   const router = useRouter()
@@ -33,7 +32,6 @@ export default function CountrySearch() {
   const itemRefs = useRef<(HTMLLIElement | null)[]>([])
   itemRefs.current.length = results.length
 
-  // ⌘K / Ctrl+K toggles the palette from anywhere.
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
@@ -46,7 +44,6 @@ export default function CountrySearch() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // Reset the query once the dialog is fully closed.
   useEffect(() => {
     if (!open) setQuery('')
   }, [open])
@@ -193,7 +190,6 @@ export default function CountrySearch() {
                     onClick={() => setOpen(false)}
                   >
                     <Flag code={country.iso2} className={styles.flag} />
-                    <span className={styles.chip}>{country.iso2.toUpperCase()}</span>
                     <span className={styles.text}>
                       <Typography component='span' variant='body-sm'>
                         {country.name}

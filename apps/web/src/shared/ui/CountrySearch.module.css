@@ -84,6 +84,7 @@
 }
 
 .results {
+  min-height: 21rem;
   max-height: 21rem;
   overflow-y: auto;
 }
@@ -109,19 +110,6 @@
 
 .flag {
   flex-shrink: 0;
-}
-
-.chip {
-  flex-shrink: 0;
-  min-width: 1.75rem;
-  padding: var(--ds-theme-spacing-3xs) var(--ds-theme-spacing-2xs);
-  border-radius: var(--ds-theme-border-radius-sm);
-  background-color: var(--ds-theme-color-background-subtle);
-  color: var(--ds-theme-color-content-subtle);
-  font-size: 0.625rem;
-  line-height: 1;
-  letter-spacing: 0.05em;
-  text-align: center;
 }
 
 .text {
