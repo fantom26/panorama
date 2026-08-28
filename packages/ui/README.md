@@ -100,7 +100,7 @@ Also runs automatically in CI on every push via `.github/workflows/chromatic.yml
 - **Data Display**: Chip, DataTable, Icon, StatCard, Typography
 - **Disclosure**: Breadcrumbs, Tabs
 - **Feedback**: Progress, Skeleton, Toast (+ `useToastManager`)
-- **Forms**: Checkbox, ExpandableSearch, Field, Hint, Radio, Select, TextField
+- **Forms**: Checkbox, Field, Hint, Radio, Select, TextField
 - **Layout**: Divider
 - **Overlays**: Dialog, Drawer
 

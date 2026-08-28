@@ -28,10 +28,6 @@ export default {
     next: 'Next',
     pageOf: 'Page {{page}} of {{count}}'
   },
-  expandableSearch: {
-    placeholder: 'Search',
-    shortcutHint: '⌘K'
-  },
   themeToggle: {
     ariaLabel: 'Toggle color theme',
     light: 'Light',
