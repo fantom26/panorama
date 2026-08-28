@@ -1,0 +1,9 @@
+.flag {
+  display: block;
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: var(--ds-theme-border-radius-sm);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-soft);
+  background-color: var(--ds-theme-color-background-subtle);
+}
