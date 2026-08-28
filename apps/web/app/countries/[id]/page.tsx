@@ -1,13 +1,25 @@
 'use client'
 
+import { useState } from 'react'
+
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-import { Breadcrumbs, Button, StatCard, Typography } from '@repo/ui'
+import {
+  Breadcrumbs,
+  Button,
+  LineChart,
+  Section,
+  Skeleton,
+  StatCard,
+  Tabs,
+  Typography
+} from '@repo/ui'
 
 import AppHeader from '@/components/AppHeader'
-import { useCountry } from '@/hooks/useCountry'
+import { useCountry, useCountryHistory } from '@/hooks/useCountry'
 import { useTranslation } from '@/i18n'
+import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/lib/indicators'
 import type { Alpha3Code } from '@/types/iso'
 import {
   formatCompactNumber,
@@ -23,12 +35,30 @@ function tileValue(value: number | null, format: (value: number) => string) {
   return value === null ? '—' : format(value)
 }
 
+const CHART_TABS = [
+  { id: INDICATOR.gdp, labelKey: 'chart.gdp', formatValue: formatGdp },
+  { id: INDICATOR.gdpPerCapita, labelKey: 'chart.gdpPerCapita', formatValue: formatUsd },
+  { id: INDICATOR.inflation, labelKey: 'chart.inflation', formatValue: formatPercent },
+  { id: INDICATOR.unemployment, labelKey: 'chart.unemployment', formatValue: formatPercent }
+] as const satisfies readonly {
+  id: (typeof CHART_INDICATORS)[number]
+  labelKey: string
+  formatValue: (value: number) => string
+}[]
+
 export default function CountryPage() {
   const { id } = useParams<{ id: Alpha3Code }>()
   const { t } = useTranslation('country')
   const { country, stats, isPending } = useCountry(id)
+  const [activeIndicator, setActiveIndicator] = useState<IndicatorId>(INDICATOR.gdp)
+  const { history, isPending: isHistoryPending } = useCountryHistory(id, activeIndicator)
 
   const region = country?.region.trim() ?? ''
+  const activeTab = CHART_TABS.find((tab) => tab.id === activeIndicator) ?? CHART_TABS[0]
+  const firstYear = history[0]?.year
+  const lastYear = history.at(-1)?.year
+  const yearRange =
+    firstYear !== undefined && lastYear !== undefined ? `${firstYear}–${lastYear}` : ''
 
   const statTiles = [
     {
@@ -117,6 +147,42 @@ export default function CountryPage() {
           />
         ))}
       </div>
+
+      <Section
+        title={t('sections.historical', { label: t(activeTab.labelKey), range: yearRange })}
+        className={styles.historical}
+      >
+        <Tabs.Root
+          value={activeIndicator}
+          onValueChange={(value) => setActiveIndicator(value as IndicatorId)}
+        >
+          <Tabs.List>
+            {CHART_TABS.map((tab) => (
+              <Tabs.Tab key={tab.id} value={tab.id}>
+                {t(tab.labelKey)}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+          <Tabs.Panel value={activeIndicator}>
+            {isHistoryPending ? (
+              <Skeleton variant='rectangular' width='100%' height={240} />
+            ) : (
+              <LineChart
+                dataset={history}
+                xAxis={{ dataKey: 'year' }}
+                series={[
+                  {
+                    dataKey: 'value',
+                    label: t(activeTab.labelKey),
+                    valueFormatter: activeTab.formatValue
+                  }
+                ]}
+                height={240}
+              />
+            )}
+          </Tabs.Panel>
+        </Tabs.Root>
+      </Section>
     </div>
   )
 }
