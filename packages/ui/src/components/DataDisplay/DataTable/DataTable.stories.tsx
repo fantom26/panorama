@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
-import { expect } from 'storybook/test'
+import { expect, userEvent, waitFor } from 'storybook/test'
 
 import DataTable from '@/components/DataDisplay/DataTable'
 import type { CountryData } from '@/types/country.types'
@@ -19,6 +19,21 @@ const countries: CountryData[] = [
   { id: 'UA', name: 'Ukraine', region: 'Europe' },
   { id: 'FR', name: 'France', region: 'Europe' },
   { id: 'JP', name: 'Japan', region: 'Asia' }
+]
+
+const manyCountries: CountryData[] = [
+  { id: 'UA', name: 'Ukraine', region: 'Europe' },
+  { id: 'FR', name: 'France', region: 'Europe' },
+  { id: 'JP', name: 'Japan', region: 'Asia' },
+  { id: 'DE', name: 'Germany', region: 'Europe' },
+  { id: 'BR', name: 'Brazil', region: 'Americas' },
+  { id: 'IN', name: 'India', region: 'Asia' },
+  { id: 'ZA', name: 'South Africa', region: 'Africa' },
+  { id: 'CA', name: 'Canada', region: 'Americas' },
+  { id: 'AU', name: 'Australia', region: 'Oceania' },
+  { id: 'EG', name: 'Egypt', region: 'Africa' },
+  { id: 'MX', name: 'Mexico', region: 'Americas' },
+  { id: 'CN', name: 'China', region: 'Asia' }
 ]
 
 const meta = {
@@ -80,5 +95,61 @@ export const ErrorState: Story = {
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('alert')).toHaveTextContent('Failed to load countries')
+  }
+}
+
+export const Paginated: Story = {
+  render: () => (
+    <DataTable
+      state={{ status: 'ready', data: manyCountries }}
+      columns={useColumns()}
+      enablePagination
+      pageSize={5}
+    />
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getAllByRole('row')).toHaveLength(6) // header + 5 data rows
+    await expect(canvas.getByText('Page 1 of 3')).toBeVisible()
+    await expect(canvas.getByRole('button', { name: 'Prev' })).toBeDisabled()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Next' }))
+    await waitFor(() => expect(canvas.getByText('Page 2 of 3')).toBeVisible())
+    await expect(canvas.getByRole('button', { name: 'Prev' })).toBeEnabled()
+  }
+}
+
+export const Filterable: Story = {
+  render: () => (
+    <DataTable
+      state={{ status: 'ready', data: manyCountries }}
+      columns={useColumns()}
+      enableColumnFilters
+    />
+  ),
+  play: async ({ canvas }) => {
+    const nameFilter = canvas.getByRole('textbox', { name: 'Filter Name' })
+    await userEvent.type(nameFilter, 'an')
+
+    await waitFor(() => {
+      expect(canvas.getByRole('cell', { name: 'Germany' })).toBeVisible()
+      expect(canvas.getByRole('cell', { name: 'France' })).toBeVisible()
+      expect(canvas.queryByRole('cell', { name: 'Ukraine' })).not.toBeInTheDocument()
+    })
+  }
+}
+
+export const PaginatedAndFilterable: Story = {
+  render: () => (
+    <DataTable
+      state={{ status: 'ready', data: manyCountries }}
+      columns={useColumns()}
+      enablePagination
+      enableColumnFilters
+      pageSize={5}
+    />
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('textbox', { name: 'Filter Name' })).toBeVisible()
+    await expect(canvas.getByText(/Page 1 of/)).toBeVisible()
   }
 }
