@@ -1,0 +1,4 @@
+body {
+  counter-reset: section;
+  background-color: var(--ds-theme-color-background-paper);
+}

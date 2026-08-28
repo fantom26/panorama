@@ -19,6 +19,8 @@ import {
 } from '@repo/ui'
 
 import AppHeader from '@/components/AppHeader'
+import TitleBlock from '@/components/TitleBlock'
+import TitleMeta from '@/components/TitleMeta'
 import { useCountry, useCountryHistory } from '@/hooks/useCountry'
 import { useTranslation } from '@/i18n'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/lib/indicators'
@@ -107,7 +109,7 @@ export default function CountryPage() {
   ] as const
 
   return (
-    <div className={styles.page}>
+    <>
       <AppHeader>
         <Breadcrumbs>
           <Link href='/'>
@@ -126,7 +128,7 @@ export default function CountryPage() {
         </Breadcrumbs>
       </AppHeader>
 
-      <div className={styles.titleBlock}>
+      <TitleBlock className={styles.titleBlock}>
         <div>
           <Typography variant='meta-sm' color='subtle' component='div'>
             {country ? `${country.iso2.toUpperCase()} · ${country.id}` : id}
@@ -134,11 +136,11 @@ export default function CountryPage() {
           <Typography variant='headline-sm' component='h1'>
             {country?.name ?? id}
           </Typography>
-          <div className={styles.titleMeta}>
+          <TitleMeta>
             <Typography variant='body-sm' color='muted' component='div'>
               {country ? `${region} · ${country.incomeLevel}` : ''}
             </Typography>
-          </div>
+          </TitleMeta>
         </div>
         <div className={styles.actions}>
           <Button variant='outlined' disabled>
@@ -148,7 +150,7 @@ export default function CountryPage() {
             {t('buttons.addToCompare')}
           </Button>
         </div>
-      </div>
+      </TitleBlock>
 
       <div className={styles.stats}>
         {statTiles.map((tile) => (
@@ -211,6 +213,6 @@ export default function CountryPage() {
           pageSize={8}
         />
       </Section>
-    </div>
+    </>
   )
 }

@@ -14,6 +14,8 @@ import {
 } from '@repo/ui'
 
 import AppHeader from '@/components/AppHeader'
+import TitleBlock from '@/components/TitleBlock'
+import TitleMeta from '@/components/TitleMeta'
 import { useGlobalStats } from '@/hooks/useGlobalStats'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useTranslation } from '@/i18n'
@@ -37,14 +39,14 @@ export default function GlobalPage() {
   }
 
   return (
-    <div className={styles.page}>
+    <>
       <AppHeader>
         <Typography variant='body-sm' component='span' className={styles.pageName}>
           {t('pageName')}
         </Typography>
       </AppHeader>
 
-      <div className={styles.titleBlock}>
+      <TitleBlock className={styles.titleBlock}>
         <div>
           <Typography variant='meta-sm' color='subtle' component='div'>
             {t('header.eyebrow')}
@@ -53,15 +55,15 @@ export default function GlobalPage() {
             {t('header.title')}
           </Typography>
         </div>
-        <div className={styles.titleMeta}>
+        <TitleMeta className={styles.rightMeta}>
           <Typography variant='body-sm' color='muted' component='div'>
             {t('header.lastSync', { time: '14:02 UTC' })}
           </Typography>
           <Typography variant='body-sm' color='knockout' component='div'>
             {t('header.dataSource')}
           </Typography>
-        </div>
-      </div>
+        </TitleMeta>
+      </TitleBlock>
 
       <div className={styles.stats}>
         {overview.tiles.map((stat) => (
@@ -133,6 +135,6 @@ export default function GlobalPage() {
           )}
         </Section>
       </div>
-    </div>
+    </>
   )
 }
