@@ -21,5 +21,8 @@ export default {
     gdpByRegion: 'GDP by region',
     populationByRegion: 'Population by region',
     highestInflation: 'Highest inflation'
+  },
+  compareIndicator: {
+    aria: 'View country comparison ({{count}})'
   }
 } as const

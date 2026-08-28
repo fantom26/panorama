@@ -13,7 +13,9 @@ export default {
     unemployment: 'Unemployment'
   },
   buttons: {
-    addToCompare: '+ Add to Compare'
+    addToCompare: '+ Add to Compare',
+    inCompare: 'View comparison',
+    compareFull: 'Comparison is full (5)'
   },
   sections: {
     historical: 'Historical · {{label}} ({{range}})',

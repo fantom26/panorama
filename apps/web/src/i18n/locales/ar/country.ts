@@ -13,7 +13,9 @@ export default {
     unemployment: 'البطالة'
   },
   buttons: {
-    addToCompare: '+ إضافة للمقارنة'
+    addToCompare: '+ إضافة للمقارنة',
+    inCompare: 'عرض المقارنة',
+    compareFull: 'المقارنة ممتلئة (5)'
   },
   sections: {
     historical: 'تاريخي · {{label}} ({{range}})',

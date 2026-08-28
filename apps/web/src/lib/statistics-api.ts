@@ -64,13 +64,24 @@ export type HistoryResponse = {
   data: HistoryPoint[]
 }
 
+/** Thrown on any non-2xx response; `status` lets callers treat a 404 (unknown country) differently from a transient failure. */
+export class StatisticsApiError extends Error {
+  readonly status: number
+
+  constructor(status: number, path: string) {
+    super(`Statistics API request failed: ${status} ${path}`)
+    this.name = 'StatisticsApiError'
+    this.status = status
+  }
+}
+
 async function get<T>(path: string): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`, {
     headers: { accept: 'application/json' }
   })
 
   if (!response.ok) {
-    throw new Error(`Statistics API request failed: ${response.status} ${path}`)
+    throw new StatisticsApiError(response.status, path)
   }
 
   return response.json() as Promise<T>
