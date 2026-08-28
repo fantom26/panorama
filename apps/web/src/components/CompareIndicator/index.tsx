@@ -19,6 +19,7 @@ export default function CompareIndicator() {
       size='sm'
       aria-label={t('compareIndicator.aria', { count })}
       render={<Link href={`/compare?countries=${serializeCompareParam(codes)}`} />}
+      nativeButton={false}
     >
       <Icon name='git-compare' />
     </IconButton>

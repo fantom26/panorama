@@ -7,12 +7,6 @@ import type { Alpha3Code } from '@/types/iso'
 
 const EMPTY: readonly Alpha3Code[] = Object.freeze([])
 
-/**
- * React binding for the compare-list store. Until the component has mounted on the
- * client, `codes` reads as an empty list so the first render matches the server
- * (zustand's `persist` rehydrates synchronously from `localStorage`, which the
- * server has no access to). `hydrated` flips to `true` after mount.
- */
 export function useCompareList() {
   const hydrated = useIsClient()
   const storeCodes = useCompareStore((state) => state.codes)
