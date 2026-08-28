@@ -1,5 +1,7 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import {
   DonutChart,
   MapLegend,
@@ -15,6 +17,7 @@ import AppHeader from '@/components/AppHeader'
 import { useGlobalStats } from '@/hooks/useGlobalStats'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useTranslation } from '@/i18n'
+import type { Alpha2Code } from '@/types/iso'
 import { formatGdp, formatPercent } from '@/utils/format'
 
 import styles from './page.module.css'
@@ -22,10 +25,16 @@ import styles from './page.module.css'
 export default function GlobalPage() {
   const { t } = useTranslation('global')
   const { overview, isPending } = useGlobalStats()
+  const router = useRouter()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
   const donutSize = isTablet ? 160 : 130
+
+  function handleCountrySelect(alpha2: string) {
+    const id = overview.countryIdByAlpha2[alpha2.toLowerCase() as Alpha2Code]
+    if (id) router.push(`/countries/${id}`)
+  }
 
   return (
     <div className={styles.page}>
@@ -79,7 +88,12 @@ export default function GlobalPage() {
               </>
             ) : (
               <>
-                <WorldMap data={overview.gdpByCountry} height={heatmapHeight} format={formatGdp} />
+                <WorldMap
+                  data={overview.gdpByCountry}
+                  height={heatmapHeight}
+                  format={formatGdp}
+                  onSelect={handleCountrySelect}
+                />
                 <MapLegend range={overview.gdpRange} />
               </>
             )}

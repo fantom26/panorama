@@ -17,7 +17,7 @@ import styles from './index.module.css'
 
 export type WorldMapDatum = { id: string; value?: number | null }
 
-export type WorldMapProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+export type WorldMapProps = Omit<React.ComponentProps<'div'>, 'children' | 'onSelect'> & {
   data?: WorldMapDatum[]
   /** heat = value-shaded choropleth; lit = flat dim base with only `highlight` inked. */
   mode?: 'heat' | 'lit'
