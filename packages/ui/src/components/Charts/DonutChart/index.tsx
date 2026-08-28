@@ -17,11 +17,13 @@ import styles from './index.module.css'
 
 export type DonutChartDatum = { label: string; value: number }
 
-export type DonutChartProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+export type DonutChartProps = {
   data: DonutChartDatum[]
   size?: number
   legend?: boolean
   layout?: 'row' | 'column'
+  className?: string
+  style?: React.CSSProperties
 }
 
 // Ramp has 5 steps and clamps rather than wraps, so a 6th+ item would otherwise repeat
@@ -41,8 +43,7 @@ export default function DonutChart({
   legend = true,
   layout = 'row',
   className,
-  style,
-  ...rest
+  style
 }: DonutChartProps) {
   const { t } = useTranslation()
   const chartRef = useRef<HTMLDivElement>(null)
@@ -94,7 +95,7 @@ export default function DonutChart({
   }, [chartData])
 
   return (
-    <div className={clsx(styles.root, styles[layout], className)} style={style} {...rest}>
+    <div className={clsx(styles.root, styles[layout], className)} style={style}>
       <div ref={chartRef} className={styles.chart} style={{ width: size, height: size }} />
       {legend && (
         <div className={styles.legend}>

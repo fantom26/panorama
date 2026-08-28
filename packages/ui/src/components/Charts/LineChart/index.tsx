@@ -21,11 +21,13 @@ export type LineChartSeries = {
   valueFormatter?: (value: number) => string
 }
 
-export type LineChartProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+export type LineChartProps = {
   dataset: LineChartDatum[]
   xAxis: { dataKey: string }
   series: LineChartSeries[]
   height?: number
+  className?: string
+  style?: React.CSSProperties
 }
 
 // Series separate by shade AND dash pattern together, so they stay legible in grayscale,
@@ -38,8 +40,7 @@ export default function LineChart({
   series,
   height = 280,
   className,
-  style,
-  ...rest
+  style
 }: LineChartProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -149,11 +150,6 @@ export default function LineChart({
   }, [dataset, xAxis, series])
 
   return (
-    <div
-      ref={containerRef}
-      className={clsx(styles.root, className)}
-      style={{ height, ...style }}
-      {...rest}
-    />
+    <div ref={containerRef} className={clsx(styles.root, className)} style={{ height, ...style }} />
   )
 }

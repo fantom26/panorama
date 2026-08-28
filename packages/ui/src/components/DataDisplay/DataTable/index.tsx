@@ -1,11 +1,25 @@
-import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { useState } from 'react'
+
+import {
+  type ColumnDef,
+  type ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable
+} from '@tanstack/react-table'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
+import Button from '../../Buttons/Button'
 import Skeleton from '../../Feedback/Skeleton'
+import TextField from '../../Forms/TextField'
 import Icon from '../Icon'
 import Typography from '../Typography'
 import styles from './index.module.css'
+
+export type { ColumnDef } from '@tanstack/react-table'
 
 const LOADING_ROW_COUNT = 5
 
@@ -21,15 +35,32 @@ export type DataTableProps<TData> = {
   state: TableState<TData>
   columns: ColumnDef<TData>[]
   className?: string
+  enableColumnFilters?: boolean
+  enablePagination?: boolean
+  pageSize?: number
 }
 
-export default function DataTable<TData>({ state, columns, className }: DataTableProps<TData>) {
+export default function DataTable<TData>({
+  state,
+  columns,
+  className,
+  enableColumnFilters = false,
+  enablePagination = false,
+  pageSize = 10
+}: DataTableProps<TData>) {
   const { t } = useTranslation()
   const data = state.status === 'ready' ? state.data : []
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel()
+    state: { columnFilters },
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: enableColumnFilters ? getFilteredRowModel() : undefined,
+    getPaginationRowModel: enablePagination ? getPaginationRowModel() : undefined,
+    initialState: { pagination: { pageSize } }
   })
   const columnCount = table.getAllLeafColumns().length
   const isEmpty = state.status === 'empty' || (state.status === 'ready' && data.length === 0)
@@ -91,6 +122,9 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
     ))
   }
 
+  const pageIndex = table.getState().pagination.pageIndex
+  const pageCount = table.getPageCount()
+
   return (
     <div
       className={clsx(styles.root, className)}
@@ -111,9 +145,50 @@ export default function DataTable<TData>({ state, columns, className }: DataTabl
               ))}
             </tr>
           ))}
+          {enableColumnFilters && (
+            <tr className={styles.row}>
+              {table.getAllLeafColumns().map((column) => (
+                <th key={column.id} className={styles.headerCell}>
+                  {column.getCanFilter() && (
+                    <TextField
+                      aria-label={t('dataTable.filterColumnAriaLabel', {
+                        column: String(column.columnDef.header)
+                      })}
+                      placeholder={t('dataTable.filterPlaceholder')}
+                      value={(column.getFilterValue() as string) ?? ''}
+                      onChange={(event) => column.setFilterValue(event.target.value)}
+                    />
+                  )}
+                </th>
+              ))}
+            </tr>
+          )}
         </thead>
         <tbody>{body}</tbody>
       </table>
+      {enablePagination && pageCount > 0 && (
+        <div className={styles.pagination}>
+          <Typography variant='meta-sm' color='muted' component='span'>
+            {t('dataTable.pageOf', { page: pageIndex + 1, count: pageCount })}
+          </Typography>
+          <div className={styles.paginationControls}>
+            <Button
+              variant='outlined'
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              {t('dataTable.prev')}
+            </Button>
+            <Button
+              variant='outlined'
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              {t('dataTable.next')}
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -21,7 +21,12 @@ export default {
   },
   dataTable: {
     error: 'Something went wrong',
-    noData: 'No data'
+    noData: 'No data',
+    filterPlaceholder: 'Filter…',
+    filterColumnAriaLabel: 'Filter {{column}}',
+    prev: 'Prev',
+    next: 'Next',
+    pageOf: 'Page {{page}} of {{count}}'
   },
   expandableSearch: {
     placeholder: 'Search',

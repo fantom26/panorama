@@ -1,14 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { INDICATOR } from '@/lib/indicators'
 import { fetchCountries, fetchRanking, type RankingResponse } from '@/lib/statistics-api'
+import type { Alpha2Code, Alpha3Code } from '@/types/iso'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/utils/format'
-
-const INDICATOR = {
-  population: 'SP.POP.TOTL',
-  gdp: 'IMF.NGDPD',
-  inflation: 'IMF.PCPIPCH',
-  unemployment: 'IMF.LUR'
-} as const
 
 const TILE_KEYS = [
   'countries',
@@ -42,6 +37,8 @@ export type GlobalOverview = {
   gdpByRegion: LabelledValue[]
   populationByRegion: LabelledValue[]
   topInflation: LabelledValue[]
+  /** Alpha-2 (lowercase, e.g. `iso2` as returned by the API) -> Alpha-3 route id. */
+  countryIdByAlpha2: Partial<Record<Alpha2Code, Alpha3Code>>
 }
 
 const EMPTY_OVERVIEW: GlobalOverview = {
@@ -50,7 +47,8 @@ const EMPTY_OVERVIEW: GlobalOverview = {
   gdpRange: '',
   gdpByRegion: [],
   populationByRegion: [],
-  topInflation: []
+  topInflation: [],
+  countryIdByAlpha2: {}
 }
 
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0)
@@ -70,6 +68,9 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
     countries.data.map((country) => [country.id, country.iso2.toUpperCase()])
   )
   const regionById = new Map(countries.data.map((country) => [country.id, country.region.trim()]))
+  const countryIdByAlpha2 = Object.fromEntries(
+    countries.data.map((country) => [country.iso2, country.id])
+  ) as Partial<Record<Alpha2Code, Alpha3Code>>
 
   const gdpByCountry = gdp.data.flatMap((row) => {
     const id = alpha2ById.get(row.countryId)
@@ -107,7 +108,8 @@ async function fetchGlobalOverview(): Promise<GlobalOverview> {
     gdpRange,
     gdpByRegion: byRegion(gdp),
     populationByRegion: byRegion(population),
-    topInflation
+    topInflation,
+    countryIdByAlpha2
   }
 }
 

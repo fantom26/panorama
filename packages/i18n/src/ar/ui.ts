@@ -21,7 +21,12 @@ export default {
   },
   dataTable: {
     error: 'حدث خطأ ما',
-    noData: 'لا توجد بيانات'
+    noData: 'لا توجد بيانات',
+    filterPlaceholder: 'تصفية…',
+    filterColumnAriaLabel: 'تصفية {{column}}',
+    prev: 'السابق',
+    next: 'التالي',
+    pageOf: 'صفحة {{page}} من {{count}}'
   },
   expandableSearch: {
     placeholder: 'بحث',

@@ -46,12 +46,14 @@ function Content({ className, ...rest }: React.ComponentProps<typeof BaseDrawer.
   return <BaseDrawer.Content className={clsx(styles.content, className)} {...rest} />
 }
 
-function Header({ className, ...rest }: React.ComponentProps<'div'>) {
-  return <div className={clsx(styles.header, className)} {...rest} />
+type DrawerSectionProps = { children: React.ReactNode; className?: string }
+
+function Header({ className, children }: DrawerSectionProps) {
+  return <div className={clsx(styles.header, className)}>{children}</div>
 }
 
-function Footer({ className, ...rest }: React.ComponentProps<'div'>) {
-  return <div className={clsx(styles.footer, className)} {...rest} />
+function Footer({ className, children }: DrawerSectionProps) {
+  return <div className={clsx(styles.footer, className)}>{children}</div>
 }
 
 function Title({ className, ...rest }: React.ComponentProps<typeof BaseDrawer.Title>) {

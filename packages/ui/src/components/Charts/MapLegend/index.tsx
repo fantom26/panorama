@@ -5,20 +5,21 @@ import Typography from '../../DataDisplay/Typography'
 import { CHART_RANK_OPACITIES } from '../theme'
 import styles from './index.module.css'
 
-export type MapLegendProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+export type MapLegendProps = {
   from?: string
   to?: string
   range?: string
+  className?: string
 }
 
 // Low → high reads light → dark, i.e. the ramp in reverse rank order.
 const RAMP_LOW_TO_HIGH = [...CHART_RANK_OPACITIES].reverse()
 
-export default function MapLegend({ from, to, range, className, ...rest }: MapLegendProps) {
+export default function MapLegend({ from, to, range, className }: MapLegendProps) {
   const { t } = useTranslation()
 
   return (
-    <div className={clsx(styles.root, className)} {...rest}>
+    <div className={clsx(styles.root, className)}>
       <Typography variant='meta-sm' color='subtle' component='span'>
         {from ?? t('charts.mapLegend.low')}
       </Typography>

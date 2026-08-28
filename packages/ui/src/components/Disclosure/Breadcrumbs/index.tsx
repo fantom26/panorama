@@ -6,12 +6,17 @@ import { useTranslation } from 'react-i18next'
 import Typography from '../../DataDisplay/Typography'
 import styles from './index.module.css'
 
+export type BreadcrumbsProps = {
+  children: React.ReactNode
+  className?: string
+  'aria-label'?: string
+}
+
 export default function Breadcrumbs({
   children,
   className,
-  'aria-label': ariaLabel,
-  ...rest
-}: React.ComponentProps<'nav'>) {
+  'aria-label': ariaLabel
+}: BreadcrumbsProps) {
   const { t } = useTranslation()
   const items = Children.toArray(children)
 
@@ -19,7 +24,6 @@ export default function Breadcrumbs({
     <nav
       aria-label={ariaLabel ?? t('breadcrumbs.ariaLabel')}
       className={clsx(styles.root, className)}
-      {...rest}
     >
       <ol className={styles.list}>
         {items.map((item, index) => (

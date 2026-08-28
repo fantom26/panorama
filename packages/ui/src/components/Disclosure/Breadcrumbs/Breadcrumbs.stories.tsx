@@ -5,7 +5,8 @@ import Typography from '@/components/DataDisplay/Typography'
 import Breadcrumbs from '@/components/Disclosure/Breadcrumbs'
 
 const meta = {
-  component: Breadcrumbs
+  component: Breadcrumbs,
+  args: { children: null }
 } satisfies Meta<typeof Breadcrumbs>
 
 export default meta

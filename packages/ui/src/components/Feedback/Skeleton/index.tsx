@@ -2,10 +2,12 @@ import clsx from 'clsx'
 
 import styles from './index.module.css'
 
-export type SkeletonProps = React.ComponentProps<'span'> & {
+export type SkeletonProps = {
   variant?: 'text' | 'rectangular'
   width?: number | string
   height?: number | string
+  className?: string
+  style?: React.CSSProperties
 }
 
 export default function Skeleton({
@@ -13,15 +15,13 @@ export default function Skeleton({
   width,
   height,
   className,
-  style,
-  ...rest
+  style
 }: SkeletonProps) {
   return (
     <span
       className={clsx(styles.skeleton, styles[variant], className)}
       style={{ width, height, ...style }}
       aria-hidden='true'
-      {...rest}
     />
   )
 }

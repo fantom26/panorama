@@ -10,14 +10,43 @@ const compactUsd = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0
 })
 
+const usd = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0
+})
+
+const number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 })
+
 /** e.g. 8192078152 -> "8.19B" */
 export const formatCompactNumber = (value: number) => compactNumber.format(value)
 
 /** e.g. 652331208333 -> "$652B" */
 export const formatCompactUsd = (value: number) => compactUsd.format(value)
 
+/** e.g. 60496.44 -> "$60,496" */
+export const formatUsd = (value: number) => usd.format(value)
+
+/** e.g. 357680 -> "357,680" */
+export const formatNumber = (value: number) => number.format(value)
+
 /** e.g. 7.5609 -> "7.6%" */
 export const formatPercent = (value: number) => `${value.toFixed(1)}%`
 
 /** e.g. 32383920000000 -> "$32.4T" */
 export const formatGdp = (value: number) => `$${(value / 1e12).toFixed(1)}T`
+
+/** SOTW's `IndicatorValue.format` field — shared with statistics-api.ts's IndicatorValue type. */
+export type IndicatorFormat = 'number' | 'currency' | 'percent' | 'ratio' | 'index' | 'years'
+
+/** Renders an indicator's raw value per its declared SOTW format. */
+export function formatIndicatorValue(value: number, format: IndicatorFormat) {
+  switch (format) {
+    case 'currency':
+      return formatUsd(value)
+    case 'percent':
+      return formatPercent(value)
+    default:
+      return formatNumber(value)
+  }
+}

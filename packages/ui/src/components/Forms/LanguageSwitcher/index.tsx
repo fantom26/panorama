@@ -7,18 +7,18 @@ import styles from './index.module.css'
 
 export type LanguageOption = { code: string; label: string }
 
-export type LanguageSwitcherProps = Omit<React.ComponentProps<'div'>, 'children' | 'onChange'> & {
+export type LanguageSwitcherProps = {
   languages: LanguageOption[]
   value: string
   onChange: (code: string) => void
+  className?: string
 }
 
 export default function LanguageSwitcher({
   languages,
   value,
   onChange,
-  className,
-  ...rest
+  className
 }: LanguageSwitcherProps) {
   const { t } = useTranslation()
 
@@ -27,7 +27,6 @@ export default function LanguageSwitcher({
       role='group'
       aria-label={t('languageSwitcher.ariaLabel')}
       className={clsx(styles.root, className)}
-      {...rest}
     >
       {languages.map((language) => {
         const active = language.code === value

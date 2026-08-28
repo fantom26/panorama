@@ -3,7 +3,10 @@
  * Unauthenticated access is allowed at up to 1,000 requests/day per IP, so no key is sent.
  */
 
+import type { IndicatorFormat } from '@/utils/format'
+
 import type { Alpha2Code, Alpha3Code } from '../types/iso'
+import type { IndicatorId } from './indicators'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://statisticsoftheworld.com'
 
@@ -12,6 +15,8 @@ export type CountryRow = {
   iso2: Alpha2Code
   name: string
   region: string
+  incomeLevel: string
+  capitalCity: string | null
 }
 
 export type CountriesResponse = {
@@ -35,6 +40,30 @@ export type RankingResponse = {
   data: RankingRow[]
 }
 
+export type IndicatorValue = {
+  id: IndicatorId
+  label: string
+  category: string
+  value: number
+  year: number | string
+  format: IndicatorFormat
+  source: string
+}
+
+export type CountryDetail = {
+  country: CountryRow
+  indicators: IndicatorValue[]
+}
+
+export type HistoryPoint = { year: number; value: number }
+
+export type HistoryResponse = {
+  indicator: { id: IndicatorId; label: string; format: IndicatorFormat; source: string }
+  country: Alpha3Code
+  count: number
+  data: HistoryPoint[]
+}
+
 async function get<T>(path: string): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`, {
     headers: { accept: 'application/json' }
@@ -51,6 +80,14 @@ export function fetchCountries() {
   return get<CountriesResponse>('/api/v1/countries')
 }
 
-export function fetchRanking(indicator: string) {
+export function fetchRanking(indicator: IndicatorId) {
   return get<RankingResponse>(`/api/v1/rankings/${indicator}`)
+}
+
+export function fetchCountry(id: Alpha3Code) {
+  return get<CountryDetail>(`/api/v1/countries/${id}`)
+}
+
+export function fetchHistory(indicator: IndicatorId, id: Alpha3Code) {
+  return get<HistoryResponse>(`/api/v1/history/${indicator}/${id}`)
 }

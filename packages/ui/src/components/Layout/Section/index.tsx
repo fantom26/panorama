@@ -3,14 +3,15 @@ import clsx from 'clsx'
 import Typography from '../../DataDisplay/Typography'
 import styles from './index.module.css'
 
-export type SectionProps = Omit<React.ComponentProps<'section'>, 'title' | 'children'> & {
+export type SectionProps = {
   title: string
   children: React.ReactNode
+  className?: string
 }
 
-export default function Section({ title, children, className, ...rest }: SectionProps) {
+export default function Section({ title, children, className }: SectionProps) {
   return (
-    <section className={clsx(styles.section, className)} {...rest}>
+    <section className={clsx(styles.section, className)}>
       <div className={styles.header}>
         <Typography variant='meta-sm' color='muted' component='div' className={styles.number} />
         <Typography variant='label-sm' component='h2'>
