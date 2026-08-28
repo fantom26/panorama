@@ -10,11 +10,20 @@ const compactUsd = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0
 })
 
+const usd = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0
+})
+
 /** e.g. 8192078152 -> "8.19B" */
 export const formatCompactNumber = (value: number) => compactNumber.format(value)
 
 /** e.g. 652331208333 -> "$652B" */
 export const formatCompactUsd = (value: number) => compactUsd.format(value)
+
+/** e.g. 60496.44 -> "$60,496" */
+export const formatUsd = (value: number) => usd.format(value)
 
 /** e.g. 7.5609 -> "7.6%" */
 export const formatPercent = (value: number) => `${value.toFixed(1)}%`

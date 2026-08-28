@@ -13,6 +13,8 @@ export type CountryRow = {
   iso2: Alpha2Code
   name: string
   region: string
+  incomeLevel: string
+  capitalCity: string | null
 }
 
 export type CountriesResponse = {
@@ -36,6 +38,30 @@ export type RankingResponse = {
   data: RankingRow[]
 }
 
+export type IndicatorValue = {
+  id: IndicatorId
+  label: string
+  category: string
+  value: number
+  year: number | string
+  format: 'number' | 'currency' | 'percent' | 'ratio' | 'index' | 'years'
+  source: string
+}
+
+export type CountryDetail = {
+  country: CountryRow
+  indicators: IndicatorValue[]
+}
+
+export type HistoryPoint = { year: number; value: number }
+
+export type HistoryResponse = {
+  indicator: { id: IndicatorId; label: string; format: string; source: string }
+  country: Alpha3Code
+  count: number
+  data: HistoryPoint[]
+}
+
 async function get<T>(path: string): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`, {
     headers: { accept: 'application/json' }
@@ -54,4 +80,12 @@ export function fetchCountries() {
 
 export function fetchRanking(indicator: IndicatorId) {
   return get<RankingResponse>(`/api/v1/rankings/${indicator}`)
+}
+
+export function fetchCountry(id: Alpha3Code) {
+  return get<CountryDetail>(`/api/v1/countries/${id}`)
+}
+
+export function fetchHistory(indicator: IndicatorId, id: Alpha3Code) {
+  return get<HistoryResponse>(`/api/v1/history/${indicator}/${id}`)
 }
