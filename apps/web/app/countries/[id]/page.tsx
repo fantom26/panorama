@@ -117,11 +117,6 @@ export default function CountryPage() {
               {t('breadcrumb.global')}
             </Typography>
           </Link>
-          {region && (
-            <Typography variant='body-sm' color='muted' component='span'>
-              {region}
-            </Typography>
-          )}
           <Typography variant='body-sm' color='knockout' component='span' aria-current='page'>
             {country?.name ?? id}
           </Typography>
@@ -143,9 +138,6 @@ export default function CountryPage() {
           </TitleMeta>
         </div>
         <div className={styles.actions}>
-          <Button variant='outlined' disabled>
-            {t('buttons.back', { region: region || t('breadcrumb.global') })}
-          </Button>
           <Button variant='contained' disabled>
             {t('buttons.addToCompare')}
           </Button>

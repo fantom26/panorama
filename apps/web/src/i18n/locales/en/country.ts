@@ -13,7 +13,6 @@ export default {
     unemployment: 'Unemployment'
   },
   buttons: {
-    back: 'Back to {{region}}',
     addToCompare: '+ Add to Compare'
   },
   sections: {

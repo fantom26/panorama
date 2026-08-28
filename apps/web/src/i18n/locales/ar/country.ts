@@ -13,7 +13,6 @@ export default {
     unemployment: 'البطالة'
   },
   buttons: {
-    back: 'العودة إلى {{region}}',
     addToCompare: '+ إضافة للمقارنة'
   },
   sections: {
