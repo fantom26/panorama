@@ -17,6 +17,7 @@
   "dependencies": {
     "@repo/ui": "workspace:*",
     "@tanstack/react-query": "^5.102.7",
+    "clsx": "catalog:",
     "next": "16.3.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
