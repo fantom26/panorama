@@ -27,7 +27,18 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 - **Imports**: no relative `./` or `../` imports across a folder boundary. Cross-package,
   import by package name (`@repo/ui`). Intra-package, use the `@/` alias to the
-  package's `src` (`@/components/Field`). Same-folder siblings may stay relative.
+  package's `src` (`@/shared/ui/Field`). Same-folder siblings may stay relative.
+
+- **`apps/web` source layout**: `app/` stays route-only (each `page.tsx` is a thin
+  re-export). `src/` is organised by feature:
+  - `src/features/<name>/` — one flat folder per page-area (`global`, `country`,
+    `compare`): its page component, hook(s), local logic and `locales.ts`.
+  - `src/shared/` — cross-feature code: `api/`, `store/`, `ui/`, `model/`, `hooks/`,
+    `utils/`, `types/`.
+  - `src/i18n.ts` — registers each feature's locale bundles.
+
+  Dependency direction: `app/` → `features/*` → `shared/`. Features never import other
+  features; `shared/` imports nothing from `features/` or `app/`.
 
 ### Data fetching
 
