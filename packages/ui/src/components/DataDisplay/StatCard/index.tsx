@@ -4,14 +4,14 @@ import Skeleton from '../../Feedback/Skeleton'
 import Typography, { type TypographyColor } from '../Typography'
 import styles from './index.module.css'
 
-export type StatCardProps = React.ComponentProps<'div'> & {
+export type StatCardProps = {
   label: string
   value: React.ReactNode
   trend?: string
   trendColor?: 'default' | 'success' | 'error'
   loading?: boolean
-  /** 'card': bordered, standalone tile. 'row': flush cell in a divided strip. */
   variant?: 'card' | 'row'
+  className?: string
 }
 
 const trendColorMap: Record<NonNullable<StatCardProps['trendColor']>, TypographyColor> = {
@@ -27,8 +27,7 @@ export default function StatCard({
   trendColor = 'default',
   loading = false,
   variant = 'card',
-  className,
-  ...rest
+  className
 }: StatCardProps) {
   const content = loading ? (
     <>
@@ -61,7 +60,6 @@ export default function StatCard({
     <div
       className={clsx(styles.statCard, variant === 'row' && styles.row, className)}
       aria-busy={loading || undefined}
-      {...rest}
     >
       {content}
     </div>

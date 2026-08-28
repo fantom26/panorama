@@ -5,21 +5,21 @@ import styles from './index.module.css'
 
 export type RankingListDatum = { label: string; value: number }
 
-export type RankingListProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+export type RankingListProps = {
   data: RankingListDatum[]
   formatValue?: (value: number) => string
+  className?: string
 }
 
 export default function RankingList({
   data,
   formatValue = (value) => value.toLocaleString(),
-  className,
-  ...rest
+  className
 }: RankingListProps) {
   const max = Math.max(...data.map((datum) => datum.value))
 
   return (
-    <div className={clsx(styles.root, className)} {...rest}>
+    <div className={clsx(styles.root, className)}>
       {data.map((datum) => (
         <Progress.Root key={datum.label} value={(datum.value / max) * 100}>
           <Progress.Label>{datum.label}</Progress.Label>

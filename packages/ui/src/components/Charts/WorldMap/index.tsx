@@ -17,7 +17,7 @@ import styles from './index.module.css'
 
 export type WorldMapDatum = { id: string; value?: number | null }
 
-export type WorldMapProps = Omit<React.ComponentProps<'div'>, 'children' | 'onSelect'> & {
+export type WorldMapProps = {
   data?: WorldMapDatum[]
   /** heat = value-shaded choropleth; lit = flat dim base with only `highlight` inked. */
   mode?: 'heat' | 'lit'
@@ -29,6 +29,8 @@ export type WorldMapProps = Omit<React.ComponentProps<'div'>, 'children' | 'onSe
   format?: (value: number) => string
   onSelect?: (id: string, name: string) => void
   height?: number
+  className?: string
+  style?: React.CSSProperties
 }
 
 type WorldMapDataContext = { id: string; value?: number | null; name?: string }
@@ -42,8 +44,7 @@ export default function WorldMap({
   onSelect,
   height = 420,
   className,
-  style,
-  ...rest
+  style
 }: WorldMapProps) {
   const { t } = useTranslation()
   const chartRef = useRef<HTMLDivElement>(null)
@@ -149,11 +150,6 @@ export default function WorldMap({
   }, [data, mode, highlight, buckets, format, onSelect, t])
 
   return (
-    <div
-      ref={chartRef}
-      className={clsx(styles.root, className)}
-      style={{ height, ...style }}
-      {...rest}
-    />
+    <div ref={chartRef} className={clsx(styles.root, className)} style={{ height, ...style }} />
   )
 }
