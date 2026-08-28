@@ -1,21 +1,17 @@
 'use client'
 
 import {
-  Divider,
   DonutChart,
-  ExpandableSearch,
-  LanguageSwitcher,
-  Logo,
   MapLegend,
   RankingList,
   Section,
   Skeleton,
   StatCard,
-  ThemeToggle,
   Typography,
   WorldMap
 } from '@repo/ui'
 
+import AppHeader from '@/components/AppHeader'
 import { useGlobalStats } from '@/hooks/useGlobalStats'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useTranslation } from '@/i18n'
@@ -23,48 +19,21 @@ import { formatGdp, formatPercent } from '@/utils/format'
 
 import styles from './page.module.css'
 
-const languages = [
-  { code: 'en', label: 'EN' },
-  { code: 'ar', label: 'ع' }
-]
-
 export default function GlobalPage() {
-  const { t, i18n } = useTranslation('global')
+  const { t } = useTranslation('global')
   const { overview, isPending } = useGlobalStats()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
   const donutSize = isTablet ? 160 : 130
 
-  function handleLanguageChange(code: string) {
-    i18n.changeLanguage(code)
-    const root = document.documentElement
-    root.lang = code
-    root.dir = i18n.dir(code)
-  }
-
   return (
     <div className={styles.page}>
-      <header className={styles.topBar}>
-        <div className={styles.brand}>
-          <Logo />
-          <Typography variant='body-sm' component='span' className={styles.pageName}>
-            {t('pageName')}
-          </Typography>
-        </div>
-        <div className={styles.iconControls}>
-          <LanguageSwitcher
-            languages={languages}
-            value={i18n.language}
-            onChange={handleLanguageChange}
-          />
-          <span className={styles.dividerWrap}>
-            <Divider orientation='vertical' />
-          </span>
-          <ThemeToggle />
-        </div>
-        <ExpandableSearch placeholder={t('search.placeholder')} className={styles.search} />
-      </header>
+      <AppHeader>
+        <Typography variant='body-sm' component='span' className={styles.pageName}>
+          {t('pageName')}
+        </Typography>
+      </AppHeader>
 
       <div className={styles.titleBlock}>
         <div>
