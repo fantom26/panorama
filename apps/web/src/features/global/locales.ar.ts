@@ -1,7 +1,14 @@
 export default {
   pageName: 'عالمي',
   search: {
-    placeholder: 'ابحث عن الدول'
+    placeholder: 'ابحث عن الدول',
+    shortcutHint: '⌘K',
+    resultsCount_one: 'نتيجة واحدة',
+    resultsCount_other: '{{count}} نتيجة',
+    empty: 'لا توجد دول',
+    error: 'تعذّر تحميل الدول',
+    hints: '↑↓ للتنقل · ↵ للاختيار · esc للإغلاق',
+    brand: 'بحث بانوراما'
   },
   header: {
     eyebrow: 'لوحة التحكم',

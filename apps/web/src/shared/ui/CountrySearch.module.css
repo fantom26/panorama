@@ -1,0 +1,167 @@
+/* Trigger — an input-styled button in the header (mirrors @repo/ui ExpandableSearch, minus max-width). */
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-xs);
+  width: 100%;
+  height: 2rem;
+  padding: 0 var(--ds-theme-spacing-sm);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: var(--ds-theme-border-radius-md);
+  background-color: var(--ds-theme-color-background-default);
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--ds-theme-color-background-default-hover);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+    outline-offset: -1px;
+  }
+}
+
+.adornment {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--ds-theme-color-content-subtle);
+}
+
+.placeholder {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shortcut {
+  flex-shrink: 0;
+  padding: var(--ds-theme-spacing-3xs) var(--ds-theme-spacing-2xs);
+  border-radius: var(--ds-theme-border-radius-sm);
+  background-color: var(--ds-theme-color-background-subtle);
+  color: var(--ds-theme-color-content-subtle);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+/* Popup — override the shared Dialog.Popup padding/gap so the three bands manage their own spacing
+   and only the results list scrolls. This module is imported after @repo/ui, so equal-specificity
+   rules here win. */
+.popup {
+  max-width: 35rem;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-sm);
+  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md);
+  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  color: var(--ds-theme-color-content-default);
+  font: inherit;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--ds-theme-color-content-subtle);
+}
+
+.count {
+  flex-shrink: 0;
+}
+
+.results {
+  max-height: 21rem;
+  overflow-y: auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-sm);
+  width: 100%;
+  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md);
+  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  color: var(--ds-theme-color-content-default);
+  text-align: start;
+}
+
+.results li:last-child .row {
+  border-bottom: none;
+}
+
+.rowActive {
+  background-color: var(--ds-theme-color-background-default-hover);
+}
+
+.flag {
+  flex-shrink: 0;
+}
+
+.chip {
+  flex-shrink: 0;
+  min-width: 1.75rem;
+  padding: var(--ds-theme-spacing-3xs) var(--ds-theme-spacing-2xs);
+  border-radius: var(--ds-theme-border-radius-sm);
+  background-color: var(--ds-theme-color-background-subtle);
+  color: var(--ds-theme-color-content-subtle);
+  font-size: 0.625rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.enter {
+  flex-shrink: 0;
+  padding: var(--ds-theme-spacing-3xs) var(--ds-theme-spacing-2xs);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: var(--ds-theme-border-radius-sm);
+  color: var(--ds-theme-color-content-subtle);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-theme-spacing-sm);
+  padding: var(--ds-theme-spacing-xs) var(--ds-theme-spacing-md);
+  border-top: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  color: var(--ds-theme-color-content-subtle);
+  font-size: 0.6875rem;
+}
+
+.state {
+  padding: var(--ds-theme-spacing-md);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
