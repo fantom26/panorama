@@ -21,8 +21,10 @@ import {
 import AppHeader from '@/components/AppHeader'
 import TitleBlock from '@/components/TitleBlock'
 import TitleMeta from '@/components/TitleMeta'
+import { useCompareList } from '@/hooks/useCompareList'
 import { useCountry, useCountryHistory } from '@/hooks/useCountry'
 import { useTranslation } from '@/i18n'
+import { serializeCompareParam } from '@/lib/compare-url'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/lib/indicators'
 import type { IndicatorValue } from '@/lib/statistics-api'
 import type { Alpha3Code } from '@/types/iso'
@@ -56,6 +58,8 @@ export default function CountryPage() {
   const { id } = useParams<{ id: Alpha3Code }>()
   const { t } = useTranslation('country')
   const { country, stats, indicators, isPending } = useCountry(id)
+  const compare = useCompareList()
+  const inCompare = compare.has(id)
   const [activeIndicator, setActiveIndicator] = useState<IndicatorId>(INDICATOR.gdp)
   const { history, isPending: isHistoryPending } = useCountryHistory(id, activeIndicator)
 
@@ -138,9 +142,23 @@ export default function CountryPage() {
           </TitleMeta>
         </div>
         <div className={styles.actions}>
-          <Button variant='contained' disabled>
-            {t('buttons.addToCompare')}
-          </Button>
+          {inCompare ? (
+            <Button
+              variant='outlined'
+              render={<Link href={`/compare?countries=${serializeCompareParam(compare.codes)}`} />}
+            >
+              {t('buttons.inCompare')}
+            </Button>
+          ) : (
+            <Button
+              variant='contained'
+              disabled={!compare.hydrated || compare.isFull}
+              title={compare.isFull ? t('buttons.compareFull') : undefined}
+              onClick={() => compare.add(id)}
+            >
+              {t('buttons.addToCompare')}
+            </Button>
+          )}
         </div>
       </TitleBlock>
 
