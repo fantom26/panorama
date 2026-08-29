@@ -1,0 +1,66 @@
+{
+  "country": {
+    "id": "USA",
+    "iso2": "us",
+    "name": "United States",
+    "region": "North America",
+    "incomeLevel": "High income",
+    "capitalCity": "Washington D.C."
+  },
+  "indicators": [
+    {
+      "id": "FX.USD",
+      "label": "Exchange Rate (per USD)",
+      "category": "Financial Markets",
+      "value": 1,
+      "year": "2026",
+      "format": "number",
+      "source": "market_provider"
+    },
+    {
+      "id": "IMF.NGDPD",
+      "label": "GDP (Current USD)",
+      "category": "Economy",
+      "value": 32383920000000,
+      "year": "2026",
+      "format": "currency",
+      "source": "imf"
+    },
+    {
+      "id": "IMF.NGDP_RPCH",
+      "label": "Real GDP Growth (%)",
+      "category": "Economy",
+      "value": 2.3,
+      "year": "2026",
+      "format": "percent",
+      "source": "imf"
+    },
+    {
+      "id": "IMF.NGDPDPC",
+      "label": "GDP per Capita (USD)",
+      "category": "Economy",
+      "value": 94429.753,
+      "year": "2026",
+      "format": "currency",
+      "source": "imf"
+    },
+    {
+      "id": "IMF.PPPGDP",
+      "label": "GDP, PPP (Intl $)",
+      "category": "Economy",
+      "value": 32383920000000,
+      "year": "2026",
+      "format": "currency",
+      "source": "imf"
+    },
+    {
+      "id": "NV.AGR.TOTL.ZS",
+      "label": "Agriculture Value Added (% of GDP)",
+      "category": "Economy",
+      "value": 0.942961672907101,
+      "year": "2021",
+      "format": "percent",
+      "source": "wb"
+    }
+  ]
+}
