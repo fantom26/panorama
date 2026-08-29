@@ -16,6 +16,11 @@ export default {
   screen: {
     title: 'الدول'
   },
+  meta: {
+    title: 'بانوراما',
+    description:
+      'لوحة تحكم مالية عالمية بالتنقل التفصيلي — إحصاءات الدول والتصنيفات والمقارنات من واجهة Statistics of the World البرمجية.'
+  },
   errors: {
     generic: {
       title: 'حدث خطأ ما',

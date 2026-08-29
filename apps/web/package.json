@@ -15,6 +15,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@repo/i18n": "workspace:*",
     "@repo/ui": "workspace:*",
     "@tanstack/react-query": "^5.102.7",
     "clsx": "catalog:",
