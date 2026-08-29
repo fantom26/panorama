@@ -43,9 +43,6 @@ export default {
     aggregateRegions: 'تجميع المناطق',
     aggregateRegionsHint: 'يتطلب تفعيل خاصية المقارنة'
   },
-  expandableSearch: {
-    placeholder: 'البحث عن الدول'
-  },
   field: {
     searchLabel: 'بحث',
     searchPlaceholder: 'البحث عن الدول',

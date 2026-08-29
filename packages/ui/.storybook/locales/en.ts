@@ -43,9 +43,6 @@ export default {
     aggregateRegions: 'Aggregate regions',
     aggregateRegionsHint: 'Requires the compare flag'
   },
-  expandableSearch: {
-    placeholder: 'Search countries'
-  },
   field: {
     searchLabel: 'Search',
     searchPlaceholder: 'Search countries',

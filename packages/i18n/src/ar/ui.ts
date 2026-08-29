@@ -28,10 +28,6 @@ export default {
     next: 'التالي',
     pageOf: 'صفحة {{page}} من {{count}}'
   },
-  expandableSearch: {
-    placeholder: 'بحث',
-    shortcutHint: '⌘K'
-  },
   themeToggle: {
     ariaLabel: 'تبديل السمة اللونية',
     light: 'فاتح',

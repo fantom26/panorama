@@ -1,7 +1,14 @@
 export default {
   pageName: 'Global',
   search: {
-    placeholder: 'Search countries'
+    placeholder: 'Search countries',
+    shortcutHint: '⌘K',
+    resultsCount_one: '{{count}} result',
+    resultsCount_other: '{{count}} results',
+    empty: 'No countries found',
+    error: 'Could not load countries',
+    hints: '↑↓ navigate · ↵ select · esc close',
+    brand: 'panorama search'
   },
   header: {
     eyebrow: 'Dashboard',

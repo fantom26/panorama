@@ -35,10 +35,6 @@
   grid-area: search;
 }
 
-.search.search {
-  max-width: none;
-}
-
 @media (min-width: 768px) {
   .topBar {
     grid-template-columns: auto 1fr auto auto;
@@ -50,7 +46,7 @@
     gap: var(--ds-theme-spacing-lg);
   }
 
-  .search.search {
+  .search {
     max-width: 16rem;
   }
 }

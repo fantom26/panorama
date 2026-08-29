@@ -1,11 +1,12 @@
 'use client'
 
-import { Divider, ExpandableSearch, LanguageSwitcher, Logo, ThemeToggle } from '@repo/ui'
+import { Divider, LanguageSwitcher, Logo, ThemeToggle } from '@repo/ui'
 
 import { useTranslation } from '@/i18n'
 
 import styles from './AppHeader.module.css'
 import CompareIndicator from './CompareIndicator'
+import CountrySearch from './CountrySearch'
 
 const languages = [
   { code: 'en', label: 'EN' },
@@ -18,7 +19,7 @@ export type AppHeaderProps = {
 }
 
 export default function AppHeader({ children }: AppHeaderProps) {
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
 
   function handleLanguageChange(code: string) {
     i18n.changeLanguage(code)
@@ -45,10 +46,9 @@ export default function AppHeader({ children }: AppHeaderProps) {
         </span>
         <ThemeToggle />
       </div>
-      <ExpandableSearch
-        placeholder={t('search.placeholder', { ns: 'global' })}
-        className={styles.search}
-      />
+      <div className={styles.search}>
+        <CountrySearch />
+      </div>
     </header>
   )
 }
