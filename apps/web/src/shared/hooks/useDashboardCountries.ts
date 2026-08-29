@@ -37,8 +37,16 @@ export const dashboardCountriesQuery = queryOptions({
   queryFn: fetchDashboardCountries
 })
 
-export function useDashboardCountries() {
-  const { data, isPending, isError, refetch } = useQuery(dashboardCountriesQuery)
+type UseDashboardCountriesOptions = {
+  /** Throw on fetch failure so a wrapping <ErrorBoundary> renders instead of a silent empty list. */
+  throwOnError?: boolean
+}
+
+export function useDashboardCountries({ throwOnError = false }: UseDashboardCountriesOptions = {}) {
+  const { data, isPending, isError, refetch } = useQuery({
+    ...dashboardCountriesQuery,
+    throwOnError
+  })
 
   return { countries: data ?? EMPTY, isPending, isError, refetch }
 }

@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ds-theme-spacing-sm);
+  padding: var(--ds-theme-spacing-md);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-utility-error);
+  border-radius: var(--ds-theme-border-radius-md);
+  background-color: var(--ds-theme-color-background-subtle);
+  color: var(--ds-theme-color-content-utility-error);
+}
+
+.details {
+  width: 100%;
+  color: var(--ds-theme-color-content-muted);
+}
+
+.message {
+  margin-block-start: var(--ds-theme-spacing-2xs);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
