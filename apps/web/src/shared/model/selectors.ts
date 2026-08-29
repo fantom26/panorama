@@ -1,11 +1,6 @@
 import type { Country } from '@/shared/model/country'
 import { avg, groupBy, sum } from '@/shared/utils/aggregate'
 
-/**
- * Pure selectors over the `Country[]` from `useDashboardCountries()`. Every drill-down page
- * derives its data by filtering this one cached list rather than fetching its own.
- */
-
 export function selectCountryById(id: string, list: readonly Country[]): Country | null {
   return list.find((country) => country.id === id) ?? null
 }

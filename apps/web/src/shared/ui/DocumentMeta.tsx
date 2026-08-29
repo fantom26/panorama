@@ -8,8 +8,6 @@ export default function DocumentMeta() {
   const { t, i18n } = useTranslation('common')
 
   useEffect(() => {
-    document.title = t('meta.title')
-
     let tag = document.head.querySelector<HTMLMetaElement>('meta[name="description"]')
     if (!tag) {
       tag = document.createElement('meta')

@@ -9,7 +9,6 @@ import styles from './ErrorBoundary.module.css'
 
 type ErrorBoundaryProps = {
   children: React.ReactNode
-  /** Run alongside the query-cache reset — pass a hook's `refetch` to reload just this widget. */
   onReset?: () => void
 }
 
@@ -32,11 +31,6 @@ function Fallback({ error, resetErrorBoundary }: FallbackProps) {
   )
 }
 
-/**
- * Wraps a single data-driven widget. On Retry the React Query error cache is reset (so the
- * widget's failed query refetches) and any `onReset` runs. Keep one boundary per widget so a
- * failed SOTW call degrades just that tile rather than the whole page.
- */
 export default function ErrorBoundary({ children, onReset }: ErrorBoundaryProps) {
   return (
     <QueryErrorResetBoundary>

@@ -16,7 +16,6 @@ export type CountryRow = {
   region: string
   incomeLevel: string
   capitalCity: string | null
-  /** Capital coordinates, returned as strings (e.g. `"34.5228"`); parsed to numbers in the model layer. */
   latitude: string | null
   longitude: string | null
 }

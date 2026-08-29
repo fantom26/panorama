@@ -58,20 +58,17 @@ describe('selectGlobalOverview', () => {
 
     expect(overview.tiles.find((tile) => tile.key === 'countries')?.value).toBe('3')
 
-    // gdpByCountry keys on uppercase ISO-2 and drops the null-gdp country
     expect(overview.gdpByCountry).toEqual([
       { id: 'DE', value: 4 },
       { id: 'FR', value: 3 }
     ])
 
-    // regions ranked by summed value; a region contributes only where the metric is present
     expect(overview.gdpByRegion).toEqual([{ label: 'Europe & Central Asia', value: 7 }])
     expect(overview.populationByRegion).toEqual([
       { label: 'South Asia', value: 1428 },
       { label: 'Europe & Central Asia', value: 152 }
     ])
 
-    // inflation ranking, highest first
     expect(overview.topInflation.map((row) => row.label)).toEqual(['IND', 'DEU', 'FRA'])
 
     expect(overview.countryIdByAlpha2).toEqual({ de: 'DEU', fr: 'FRA', in: 'IND' })

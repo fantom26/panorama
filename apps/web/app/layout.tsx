@@ -10,9 +10,8 @@ import Providers from './providers'
 import '@repo/ui/styles.css'
 import './globals.css'
 
-// Server-rendered default; DocumentMeta re-syncs title + description to the active locale.
 export const metadata: Metadata = {
-  title: resources.en.common.meta.title,
+  title: 'Panorama',
   description: resources.en.common.meta.description
 }
 

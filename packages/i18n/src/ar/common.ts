@@ -17,7 +17,6 @@ export default {
     title: 'الدول'
   },
   meta: {
-    title: 'Panorama',
     description:
       'لوحة تحكم مالية عالمية بالتنقل التفصيلي — إحصاءات الدول والتصنيفات والمقارنات من واجهة Statistics of the World البرمجية.'
   },

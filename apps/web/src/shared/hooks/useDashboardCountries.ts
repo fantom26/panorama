@@ -8,11 +8,6 @@ import { INDICATOR } from '@/shared/model/indicators'
 
 const EMPTY: Country[] = []
 
-/**
- * The home dashboard base dataset: the country catalog left-joined with the five
- * DASHBOARD_INDICATORS rankings. Reuses `countriesQuery` via `client.fetchQuery` so the
- * catalog request is shared with the search modal and never fetched twice.
- */
 async function fetchDashboardCountries({ client }: QueryFunctionContext): Promise<Country[]> {
   const [catalog, population, gdp, gdpPerCapita, inflation, unemployment] = await Promise.all([
     client.fetchQuery(countriesQuery),
@@ -38,7 +33,6 @@ export const dashboardCountriesQuery = queryOptions({
 })
 
 type UseDashboardCountriesOptions = {
-  /** Throw on fetch failure so a wrapping <ErrorBoundary> renders instead of a silent empty list. */
   throwOnError?: boolean
 }
 

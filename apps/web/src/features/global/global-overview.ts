@@ -24,7 +24,6 @@ export type GlobalOverview = {
   gdpByRegion: LabelledValue[]
   populationByRegion: LabelledValue[]
   topInflation: LabelledValue[]
-  /** Alpha-2 (lowercase, e.g. `iso2` as returned by the API) -> Alpha-3 route id. */
   countryIdByAlpha2: Partial<Record<Alpha2Code, Alpha3Code>>
 }
 
@@ -51,7 +50,6 @@ function byRegion(countries: readonly Country[], metric: Metric): LabelledValue[
   return [...totals].map(([label, value]) => ({ label, value })).sort((a, b) => b.value - a.value)
 }
 
-/** Derive the fixed home-dashboard view model from the cached Country[]. Pure. */
 export function selectGlobalOverview(countries: readonly Country[]): GlobalOverview {
   if (countries.length === 0) return EMPTY_OVERVIEW
 

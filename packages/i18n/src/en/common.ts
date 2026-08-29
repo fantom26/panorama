@@ -17,7 +17,6 @@ export default {
     title: 'Countries'
   },
   meta: {
-    title: 'Panorama',
     description:
       'Global drill-down finance dashboard — country statistics, rankings and comparisons from the Statistics of the World API.'
   },

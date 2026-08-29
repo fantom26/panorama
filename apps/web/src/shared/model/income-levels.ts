@@ -1,8 +1,3 @@
-/**
- * The four income tiers SOTW reports, and their URL slugs. `incomeLevel` is the second
- * drill-down dimension (SOTW has no subregion). The catalog also carries an "Aggregate"
- * value on non-country rows — not a drill-down target, so it is not listed.
- */
 export const INCOME_LEVELS = {
   high: 'High income',
   'upper-middle': 'Upper middle income',
@@ -19,12 +14,10 @@ const SLUG_BY_LEVEL = Object.fromEntries(
   Object.entries(INCOME_LEVELS).map(([slug, name]) => [name, slug])
 ) as Record<IncomeLevelName, IncomeSlug>
 
-/** Display name for a route slug, or `undefined` for an unknown slug. */
 export function levelFromSlug(slug: string): IncomeLevelName | undefined {
   return INCOME_LEVELS[slug as IncomeSlug]
 }
 
-/** Slug for a SOTW income-level string, or `undefined` if it is not one of the four. */
 export function slugFromLevel(level: string): IncomeSlug | undefined {
   return SLUG_BY_LEVEL[level as IncomeLevelName]
 }

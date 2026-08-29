@@ -1,14 +1,8 @@
 import type { CountryRow, IndicatorValue, RankingResponse } from '@/shared/api/statistics-api'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 
-/** The five headline metrics merged onto the catalog from the dashboard rankings. */
 export type CountryMetric = 'population' | 'gdp' | 'gdpPerCapita' | 'inflation' | 'unemployment'
 
-/**
- * A catalog country enriched with the dashboard ranking metrics. Every page derives
- * its data from `Country[]` via pure selectors — no per-page list fetch. Any metric
- * (and the capital coordinates) may be `null` when SOTW has no observation.
- */
 export type Country = {
   id: Alpha3Code
   iso2: Alpha2Code
@@ -35,11 +29,6 @@ function toFiniteNumber(value: string | null): number | null {
   return Number.isFinite(parsed) ? parsed : null
 }
 
-/**
- * Left-join each ranking onto the country catalog by `id === countryId`. Countries with
- * no row in a given ranking keep `null` for that metric; the join never drops a catalog
- * country and never throws.
- */
 export function mergeRankingsIntoCountries(
   rows: readonly CountryRow[],
   rankings: CountryMetricRankings
