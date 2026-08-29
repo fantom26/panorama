@@ -16,3 +16,16 @@ export const CHART_INDICATORS = [
   INDICATOR.inflation,
   INDICATOR.unemployment
 ] as const satisfies readonly IndicatorId[]
+
+/**
+ * The five rankings merged onto the country catalog to build the home dashboard dataset.
+ * One ranking call returns a value for every country, so this is 5 requests, never a
+ * per-country fan-out.
+ */
+export const DASHBOARD_INDICATORS = [
+  INDICATOR.population,
+  INDICATOR.gdp,
+  INDICATOR.gdpPerCapita,
+  INDICATOR.inflation,
+  INDICATOR.unemployment
+] as const satisfies readonly IndicatorId[]

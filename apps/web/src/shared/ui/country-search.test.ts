@@ -10,6 +10,8 @@ function country(overrides: Partial<CountryRow> & Pick<CountryRow, 'id' | 'name'
     region: 'Region',
     incomeLevel: 'High income',
     capitalCity: null,
+    latitude: null,
+    longitude: null,
     ...overrides
   }
 }

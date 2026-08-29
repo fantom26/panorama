@@ -16,6 +16,9 @@ export type CountryRow = {
   region: string
   incomeLevel: string
   capitalCity: string | null
+  /** Capital coordinates, returned as strings (e.g. `"34.5228"`); parsed to numbers in the model layer. */
+  latitude: string | null
+  longitude: string | null
 }
 
 export type CountriesResponse = {
@@ -49,7 +52,7 @@ export type IndicatorValue = {
   source: string
 }
 
-export type CountryDetail = {
+export type CountryDetailResponse = {
   country: CountryRow
   indicators: IndicatorValue[]
 }
@@ -95,7 +98,7 @@ export function fetchRanking(indicator: IndicatorId) {
 }
 
 export function fetchCountry(id: Alpha3Code) {
-  return get<CountryDetail>(`/api/v1/countries/${id}`)
+  return get<CountryDetailResponse>(`/api/v1/countries/${id}`)
 }
 
 export function fetchHistory(indicator: IndicatorId, id: Alpha3Code) {

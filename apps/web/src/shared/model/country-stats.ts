@@ -1,4 +1,4 @@
-import type { CountryDetail } from '@/shared/api/statistics-api'
+import type { CountryDetailResponse } from '@/shared/api/statistics-api'
 import { INDICATOR } from '@/shared/model/indicators'
 
 /** The headline indicators shown on the country page's stat strip and the /compare matrix. */
@@ -12,7 +12,7 @@ export type CountryStats = {
   unemployment: number | null
 }
 
-export function selectStats(detail: CountryDetail): CountryStats {
+export function selectStats(detail: CountryDetailResponse): CountryStats {
   const valueById = new Map(detail.indicators.map((indicator) => [indicator.id, indicator.value]))
 
   return {
