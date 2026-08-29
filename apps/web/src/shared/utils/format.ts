@@ -1,3 +1,5 @@
+import type { IndicatorFormat } from '@/shared/api/schemas'
+
 const compactNumber = new Intl.NumberFormat('en-US', {
   notation: 'compact',
   maximumFractionDigits: 2
@@ -36,8 +38,8 @@ export const formatPercent = (value: number) => `${value.toFixed(1)}%`
 /** e.g. 32383920000000 -> "$32.4T" */
 export const formatGdp = (value: number) => `$${(value / 1e12).toFixed(1)}T`
 
-/** SOTW's `IndicatorValue.format` field — shared with statistics-api.ts's IndicatorValue type. */
-export type IndicatorFormat = 'number' | 'currency' | 'percent' | 'ratio' | 'index' | 'years'
+/** SOTW's `IndicatorValue.format` field — derived from the Zod schema so the two can't drift. */
+export type { IndicatorFormat }
 
 /** Renders an indicator's raw value per its declared SOTW format. */
 export function formatIndicatorValue(value: number, format: IndicatorFormat) {

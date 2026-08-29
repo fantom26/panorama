@@ -21,7 +21,7 @@ function row(over: Partial<CountryRow> = {}): CountryRow {
 
 function ranking(entries: Array<[countryId: Alpha3Code, value: number]>): RankingResponse {
   return {
-    indicator: { id: 'X', label: 'X', category: 'Economy', source: 'imf' },
+    indicator: { id: 'X', label: 'X', category: 'Economy', format: 'number', source: 'imf' },
     count: entries.length,
     total: entries.length,
     data: entries.map(([countryId, value], index) => ({

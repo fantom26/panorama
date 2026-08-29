@@ -23,7 +23,7 @@ export type CountryDetail = Country & { indicators: IndicatorValue[] }
 
 export type CountryMetricRankings = Partial<Record<CountryMetric, RankingResponse>>
 
-function toFiniteNumber(value: string | null): number | null {
+function toFiniteNumber(value: string | null | undefined): number | null {
   if (value == null) return null
   const parsed = Number(value)
   return Number.isFinite(parsed) ? parsed : null
