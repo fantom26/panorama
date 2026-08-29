@@ -18,6 +18,7 @@ import { useTranslation } from '@/i18n'
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
 import type { Alpha2Code } from '@/shared/types/iso'
 import AppHeader from '@/shared/ui/AppHeader'
+import ErrorBoundary from '@/shared/ui/ErrorBoundary'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'
 import { formatGdp, formatPercent } from '@/shared/utils/format'
@@ -26,7 +27,7 @@ import styles from './GlobalOverviewPage.module.css'
 
 export default function GlobalOverviewPage() {
   const { t } = useTranslation('global')
-  const { overview, isPending } = useGlobalStats()
+  const { overview, isPending, refetch } = useGlobalStats()
   const router = useRouter()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
@@ -65,76 +66,78 @@ export default function GlobalOverviewPage() {
         </TitleMeta>
       </TitleBlock>
 
-      <div className={styles.stats}>
-        {overview.tiles.map((stat) => (
-          <StatCard
-            key={stat.key}
-            variant='row'
-            label={t(`tiles.${stat.key}`)}
-            value={stat.value}
-            loading={isPending}
-          />
-        ))}
-      </div>
-
-      <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
-        <Section
-          title={t('sections.gdpHeatmap')}
-          className={`${styles.column} ${styles.columnDivided}`}
-        >
-          <div className={styles.heatmapBody}>
-            {isPending ? (
-              <>
-                <Skeleton variant='rectangular' width='100%' height={heatmapHeight} />
-                <Skeleton width='100%' />
-              </>
-            ) : (
-              <>
-                <WorldMap
-                  data={overview.gdpByCountry}
-                  height={heatmapHeight}
-                  format={formatGdp}
-                  onSelect={handleCountrySelect}
-                />
-                <MapLegend range={overview.gdpRange} />
-              </>
-            )}
-          </div>
-        </Section>
-
-        <Section title={t('sections.gdpByRegion')} className={styles.column}>
-          {isPending ? (
-            <Skeleton variant='rectangular' width='100%' height={220} />
-          ) : (
-            <RankingList data={overview.gdpByRegion} formatValue={formatGdp} />
-          )}
-        </Section>
-      </div>
-
-      <div className={`${styles.twoColRow} ${styles.evenRow}`}>
-        <Section
-          title={t('sections.populationByRegion')}
-          className={`${styles.column} ${styles.columnDivided}`}
-        >
-          {isPending ? (
-            <Skeleton variant='rectangular' width='100%' height={donutSize} />
-          ) : (
-            <DonutChart
-              data={overview.populationByRegion}
-              layout={isTablet ? 'row' : 'column'}
-              size={donutSize}
+      <ErrorBoundary onReset={refetch}>
+        <div className={styles.stats}>
+          {overview.tiles.map((stat) => (
+            <StatCard
+              key={stat.key}
+              variant='row'
+              label={t(`tiles.${stat.key}`)}
+              value={stat.value}
+              loading={isPending}
             />
-          )}
-        </Section>
+          ))}
+        </div>
 
-        <Section title={t('sections.highestInflation')} className={styles.column}>
-          {isPending ? (
-            <Skeleton variant='rectangular' width='100%' height={220} />
-          ) : (
-            <RankingList data={overview.topInflation} formatValue={formatPercent} />
-          )}
-        </Section>
-      </div>
+        <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
+          <Section
+            title={t('sections.gdpHeatmap')}
+            className={`${styles.column} ${styles.columnDivided}`}
+          >
+            <div className={styles.heatmapBody}>
+              {isPending ? (
+                <>
+                  <Skeleton variant='rectangular' width='100%' height={heatmapHeight} />
+                  <Skeleton width='100%' />
+                </>
+              ) : (
+                <>
+                  <WorldMap
+                    data={overview.gdpByCountry}
+                    height={heatmapHeight}
+                    format={formatGdp}
+                    onSelect={handleCountrySelect}
+                  />
+                  <MapLegend range={overview.gdpRange} />
+                </>
+              )}
+            </div>
+          </Section>
+
+          <Section title={t('sections.gdpByRegion')} className={styles.column}>
+            {isPending ? (
+              <Skeleton variant='rectangular' width='100%' height={220} />
+            ) : (
+              <RankingList data={overview.gdpByRegion} formatValue={formatGdp} />
+            )}
+          </Section>
+        </div>
+
+        <div className={`${styles.twoColRow} ${styles.evenRow}`}>
+          <Section
+            title={t('sections.populationByRegion')}
+            className={`${styles.column} ${styles.columnDivided}`}
+          >
+            {isPending ? (
+              <Skeleton variant='rectangular' width='100%' height={donutSize} />
+            ) : (
+              <DonutChart
+                data={overview.populationByRegion}
+                layout={isTablet ? 'row' : 'column'}
+                size={donutSize}
+              />
+            )}
+          </Section>
+
+          <Section title={t('sections.highestInflation')} className={styles.column}>
+            {isPending ? (
+              <Skeleton variant='rectangular' width='100%' height={220} />
+            ) : (
+              <RankingList data={overview.topInflation} formatValue={formatPercent} />
+            )}
+          </Section>
+        </div>
+      </ErrorBoundary>
     </>
   )
 }

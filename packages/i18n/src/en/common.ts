@@ -15,5 +15,21 @@ export default {
   },
   screen: {
     title: 'Countries'
+  },
+  meta: {
+    description:
+      'Global drill-down finance dashboard — country statistics, rankings and comparisons from the Statistics of the World API.'
+  },
+  errors: {
+    generic: {
+      title: 'Something went wrong',
+      description: 'The page hit an unexpected error.'
+    },
+    notFound: {
+      pageLabel: 'Page not found',
+      title: '404',
+      description: 'This page doesn’t exist.',
+      backHome: 'Back to home'
+    }
   }
 } as const

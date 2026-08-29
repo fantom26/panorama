@@ -9,8 +9,15 @@ export const INDICATOR = {
 
 export type IndicatorId = (typeof INDICATOR)[keyof typeof INDICATOR]
 
-/** The subset plotted on the country page's historical chart (population/area are stat-only). */
 export const CHART_INDICATORS = [
+  INDICATOR.gdp,
+  INDICATOR.gdpPerCapita,
+  INDICATOR.inflation,
+  INDICATOR.unemployment
+] as const satisfies readonly IndicatorId[]
+
+export const DASHBOARD_INDICATORS = [
+  INDICATOR.population,
   INDICATOR.gdp,
   INDICATOR.gdpPerCapita,
   INDICATOR.inflation,

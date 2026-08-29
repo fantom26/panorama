@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import { useQueries } from '@tanstack/react-query'
 
+import { queryKeys } from '@/shared/api/query-keys'
 import { type CountryRow, fetchCountry, StatisticsApiError } from '@/shared/api/statistics-api'
 import { type CountryStats, selectStats } from '@/shared/model/country-stats'
 import { useCompareStore } from '@/shared/store/compare'
@@ -20,7 +21,7 @@ export function useCompareCountries(codes: readonly Alpha3Code[]) {
 
   const { columns, isPending, missing } = useQueries({
     queries: codes.map((code) => ({
-      queryKey: ['country', code],
+      queryKey: queryKeys.country(code),
       queryFn: () => fetchCountry(code)
     })),
     combine: (results) => {
