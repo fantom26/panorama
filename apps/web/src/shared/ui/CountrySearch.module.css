@@ -1,4 +1,3 @@
-/* Trigger — an input-styled button in the header (mirrors @repo/ui ExpandableSearch, minus max-width). */
 .trigger {
   display: flex;
   align-items: center;
@@ -49,9 +48,6 @@
   line-height: 1;
 }
 
-/* Popup — override the shared Dialog.Popup padding/gap so the three bands manage their own spacing
-   and only the results list scrolls. This module is imported after @repo/ui, so equal-specificity
-   rules here win. */
 .popup {
   max-width: 35rem;
   padding: 0;
