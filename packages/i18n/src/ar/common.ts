@@ -20,6 +20,12 @@ export default {
     generic: {
       title: 'حدث خطأ ما',
       description: 'واجهت الصفحة خطأً غير متوقع.'
+    },
+    notFound: {
+      pageLabel: 'الصفحة غير موجودة',
+      title: '404',
+      description: 'هذه الصفحة غير موجودة.',
+      backHome: 'العودة إلى الصفحة الرئيسية'
     }
   }
 } as const
