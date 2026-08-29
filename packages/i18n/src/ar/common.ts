@@ -15,5 +15,11 @@ export default {
   },
   screen: {
     title: 'الدول'
+  },
+  errors: {
+    generic: {
+      title: 'حدث خطأ ما',
+      description: 'واجهت الصفحة خطأً غير متوقع.'
+    }
   }
 } as const

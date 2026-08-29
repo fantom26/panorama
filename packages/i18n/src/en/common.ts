@@ -15,5 +15,11 @@ export default {
   },
   screen: {
     title: 'Countries'
+  },
+  errors: {
+    generic: {
+      title: 'Something went wrong',
+      description: 'The page hit an unexpected error.'
+    }
   }
 } as const
