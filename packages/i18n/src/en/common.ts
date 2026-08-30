@@ -30,6 +30,10 @@ export default {
       title: '404',
       description: 'This page doesn’t exist.',
       backHome: 'Back to home'
+    },
+    section: {
+      title: 'This section could not be loaded.',
+      details: 'Details'
     }
   }
 } as const

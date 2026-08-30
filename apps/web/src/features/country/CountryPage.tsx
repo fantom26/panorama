@@ -18,13 +18,13 @@ import {
   Typography
 } from '@repo/ui'
 
+import { assertCountryId, assertFound } from '@/features/country/country-not-found'
 import { useCountry, useCountryHistory } from '@/features/country/useCountry'
 import { useTranslation } from '@/i18n'
 import type { IndicatorValue } from '@/shared/api/statistics-api'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/shared/model/indicators'
 import { useCompareList } from '@/shared/store/compare'
 import { serializeCompareParam } from '@/shared/store/compare'
-import type { Alpha3Code } from '@/shared/types/iso'
 import AppHeader from '@/shared/ui/AppHeader'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'
@@ -55,13 +55,17 @@ const CHART_TABS = [
 }[]
 
 export default function CountryPage() {
-  const { id } = useParams<{ id: Alpha3Code }>()
+  const { id } = useParams<{ id: string }>()
+  assertCountryId(id)
+
   const { t } = useTranslation('country')
-  const { country, stats, indicators, isPending } = useCountry(id)
+  const { country, stats, indicators, isPending, error } = useCountry(id)
   const compare = useCompareList()
   const inCompare = compare.has(id)
   const [activeIndicator, setActiveIndicator] = useState<IndicatorId>(INDICATOR.gdp)
   const { history, isPending: isHistoryPending } = useCountryHistory(id, activeIndicator)
+
+  assertFound(error)
 
   const region = country?.region.trim() ?? ''
   const activeTab = CHART_TABS.find((tab) => tab.id === activeIndicator) ?? CHART_TABS[0]

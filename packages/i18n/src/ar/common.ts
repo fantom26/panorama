@@ -30,6 +30,10 @@ export default {
       title: '404',
       description: 'هذه الصفحة غير موجودة.',
       backHome: 'العودة إلى الصفحة الرئيسية'
+    },
+    section: {
+      title: 'تعذّر تحميل هذا القسم.',
+      details: 'التفاصيل'
     }
   }
 } as const
