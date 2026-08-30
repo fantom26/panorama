@@ -1,0 +1,48 @@
+{
+  "indicator": {
+    "id": "SP.POP.TOTL",
+    "label": "Population",
+    "category": "People",
+    "format": "number",
+    "source": "wb"
+  },
+  "count": 5,
+  "total": 217,
+  "data": [
+    {
+      "rank": 1,
+      "countryId": "IND",
+      "country": "India",
+      "value": 1463865525,
+      "year": "2025"
+    },
+    {
+      "rank": 2,
+      "countryId": "CHN",
+      "country": "China",
+      "value": 1406585000,
+      "year": "2025"
+    },
+    {
+      "rank": 3,
+      "countryId": "USA",
+      "country": "United States",
+      "value": 341784857,
+      "year": "2025"
+    },
+    {
+      "rank": 4,
+      "countryId": "IDN",
+      "country": "Indonesia",
+      "value": 285721236,
+      "year": "2025"
+    },
+    {
+      "rank": 5,
+      "countryId": "PAK",
+      "country": "Pakistan",
+      "value": 255219554,
+      "year": "2025"
+    }
+  ]
+}

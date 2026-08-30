@@ -1,0 +1,48 @@
+{
+  "indicator": {
+    "id": "IMF.NGDPD",
+    "label": "GDP (Current USD)",
+    "format": "currency",
+    "source": "imf"
+  },
+  "country": "USA",
+  "count": 5,
+  "data": [
+    {
+      "year": 2000,
+      "value": 10250950000000
+    },
+    {
+      "year": 2001,
+      "value": 10581925000000
+    },
+    {
+      "year": 2002,
+      "value": 10929100000000
+    },
+    {
+      "year": 2003,
+      "value": 11456450000000
+    },
+    {
+      "year": 2004,
+      "value": 12217175000000
+    }
+  ],
+  "meta": {
+    "attribution": {
+      "sources": [
+        {
+          "code": "imf",
+          "name": "International Monetary Fund (World Economic Outlook & IMF databases)",
+          "license": "IMF Terms",
+          "url": "https://www.imf.org/en/Data",
+          "reuse": "Review the IMF Terms for the intended use; IMF data is also available free of charge from the IMF."
+        }
+      ],
+      "notice": "Licenses and reuse rights vary by source. Retain each provider attribution and review its linked terms before redistributing. IMF data is available free of charge from the IMF (imf.org/en/Data).",
+      "retrieved": "2026-08-29",
+      "provided_by": "statisticsoftheworld.com"
+    }
+  }
+}

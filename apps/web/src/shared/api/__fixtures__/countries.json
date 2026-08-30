@@ -1,0 +1,56 @@
+{
+  "count": 218,
+  "total": 218,
+  "data": [
+    {
+      "id": "CHI",
+      "iso2": "jg",
+      "name": "Channel Islands",
+      "region": "Europe & Central Asia",
+      "incomeLevel": "High income",
+      "capitalCity": "",
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "DEU",
+      "iso2": "de",
+      "name": "Germany",
+      "region": "Europe & Central Asia",
+      "incomeLevel": "High income",
+      "capitalCity": "Berlin",
+      "latitude": "52.5235",
+      "longitude": "13.4115"
+    },
+    {
+      "id": "GIB",
+      "iso2": "gi",
+      "name": "Gibraltar",
+      "region": "Europe & Central Asia",
+      "incomeLevel": "High income",
+      "capitalCity": "",
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "IND",
+      "iso2": "in",
+      "name": "India",
+      "region": "South Asia",
+      "incomeLevel": "Lower middle income",
+      "capitalCity": "New Delhi",
+      "latitude": "28.6353",
+      "longitude": "77.225"
+    },
+    {
+      "id": "USA",
+      "iso2": "us",
+      "name": "United States",
+      "region": "North America",
+      "incomeLevel": "High income",
+      "capitalCity": "Washington D.C.",
+      "latitude": "38.8895",
+      "longitude": "-77.032"
+    }
+  ]
+}

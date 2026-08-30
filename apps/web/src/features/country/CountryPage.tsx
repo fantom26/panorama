@@ -73,11 +73,18 @@ export default function CountryPage() {
   const indicatorColumns: ColumnDef<IndicatorValue>[] = [
     { accessorKey: 'label', header: t('table.indicator') },
     { accessorKey: 'category', header: t('table.category') },
-    { accessorKey: 'year', header: t('table.year') },
+    {
+      accessorKey: 'year',
+      header: t('table.year'),
+      cell: (info) => info.getValue<number | string | null>() ?? '—'
+    },
     {
       accessorKey: 'value',
       header: t('table.value'),
-      cell: (info) => formatIndicatorValue(info.getValue<number>(), info.row.original.format)
+      cell: (info) => {
+        const value = info.getValue<number | null>()
+        return value === null ? '—' : formatIndicatorValue(value, info.row.original.format)
+      }
     }
   ]
 
