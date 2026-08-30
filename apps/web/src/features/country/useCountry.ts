@@ -8,7 +8,6 @@ import type { Alpha3Code } from '@/shared/types/iso'
 
 export type { CountryStats }
 
-/** A 404 (unknown country) is handled by the page via `assertFound`; anything else is a real failure. */
 const isMissingCountry = (error: unknown) =>
   error instanceof StatisticsApiError && error.status === 404
 

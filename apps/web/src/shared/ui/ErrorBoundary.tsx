@@ -17,7 +17,6 @@ type ErrorBoundaryProps = {
 }
 
 function Fallback({ error, resetErrorBoundary }: FallbackProps) {
-  // Let framework interrupts (notFound(), redirect()) pass through to their own boundaries.
   unstable_rethrow(error)
 
   const { t } = useTranslation('common')

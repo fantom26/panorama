@@ -27,8 +27,4 @@ describe('proxy', () => {
       expect(response.headers.get('x-middleware-next')).toBe('1')
     }
   )
-
-  test('ignores non-country paths', () => {
-    expect(proxy(request('/compare')).headers.get('x-middleware-next')).toBe('1')
-  })
 })

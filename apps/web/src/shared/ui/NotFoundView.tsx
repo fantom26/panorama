@@ -8,7 +8,6 @@ import { useTranslation } from '@/i18n'
 
 import styles from './NotFoundView.module.css'
 
-/** Shared 404 body, used by the root and segment-level `not-found.tsx` files. */
 export default function NotFoundView() {
   const { t } = useTranslation('common')
 
@@ -20,7 +19,7 @@ export default function NotFoundView() {
       <Typography variant='body-default' color='muted' component='p'>
         {t('errors.notFound.description')}
       </Typography>
-      <Button variant='outlined' render={<Link href='/' />}>
+      <Button variant='outlined' render={<Link href='/' />} nativeButton={false}>
         {t('errors.notFound.backHome')}
       </Button>
     </main>

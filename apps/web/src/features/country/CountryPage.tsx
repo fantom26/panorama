@@ -56,7 +56,7 @@ const CHART_TABS = [
 
 export default function CountryPage() {
   const { id } = useParams<{ id: string }>()
-  assertCountryId(id) // malformed route param → not-found; also narrows `id` to Alpha3Code
+  assertCountryId(id)
 
   const { t } = useTranslation('country')
   const { country, stats, indicators, isPending, error } = useCountry(id)
@@ -65,8 +65,6 @@ export default function CountryPage() {
   const [activeIndicator, setActiveIndicator] = useState<IndicatorId>(INDICATOR.gdp)
   const { history, isPending: isHistoryPending } = useCountryHistory(id, activeIndicator)
 
-  // An unknown (but well-formed) id resolves to a 404 from the API — render Next's not-found UI.
-  // Any other error propagates to the route's <ErrorBoundary>.
   assertFound(error)
 
   const region = country?.region.trim() ?? ''

@@ -2,11 +2,6 @@
 
 import { useEffect } from 'react'
 
-/**
- * Replaces the root layout when the layout itself throws, so nothing from the app is
- * available here — no providers, no i18n runtime (which may be exactly what failed), no
- * design tokens. Copy is intentionally hardcoded English; styling is inline.
- */
 export default function GlobalError({
   error,
   retry

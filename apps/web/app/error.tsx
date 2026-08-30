@@ -18,8 +18,6 @@ export default function Error({
   const { t } = useTranslation('common')
 
   useEffect(() => {
-    // Dev aid only: Server Component error messages are redacted in production (just `digest`
-    // survives). Real reporting arrives with Sentry.
     // TODO: Sentry.captureException(error)
     console.error(error)
   }, [error])
