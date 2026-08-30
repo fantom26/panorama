@@ -1,17 +1,40 @@
 'use client'
 
+import { useEffect } from 'react'
+
+import { Button, Typography } from '@repo/ui'
+
 import { useTranslation } from '@/i18n'
 
-export default function Error({ reset }: { error: Error; reset: () => void }) {
+import styles from './error.module.css'
+
+export default function Error({
+  error,
+  retry
+}: {
+  error: Error & { digest?: string }
+  retry: () => void
+}) {
   const { t } = useTranslation('common')
 
+  useEffect(() => {
+    // Dev aid only: Server Component error messages are redacted in production (just `digest`
+    // survives). Real reporting arrives with Sentry.
+    // TODO: Sentry.captureException(error)
+    console.error(error)
+  }, [error])
+
   return (
-    <main aria-label={t('errors.generic.title')}>
-      <h1>{t('errors.generic.title')}</h1>
-      <p>{t('errors.generic.description')}</p>
-      <button type='button' onClick={reset}>
+    <main aria-label={t('errors.generic.title')} className={styles.root} role='alert'>
+      <Typography variant='headline-sm' component='h1'>
+        {t('errors.generic.title')}
+      </Typography>
+      <Typography variant='body-default' color='muted' component='p'>
+        {t('errors.generic.description')}
+      </Typography>
+      <Button type='button' variant='contained' onClick={retry}>
         {t('actions.retry')}
-      </button>
+      </Button>
     </main>
   )
 }

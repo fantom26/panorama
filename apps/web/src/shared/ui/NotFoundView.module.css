@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ds-theme-spacing-sm);
+  max-width: 32rem;
+  margin-inline: auto;
+  padding: var(--ds-theme-spacing-xl) var(--ds-theme-spacing-md);
+}
