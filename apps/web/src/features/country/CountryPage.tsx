@@ -23,6 +23,7 @@ import { useCountry, useCountryHistory } from '@/features/country/useCountry'
 import { useTranslation } from '@/i18n'
 import type { IndicatorValue } from '@/shared/api/statistics-api'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/shared/model/indicators'
+import { slugFromRegion } from '@/shared/model/regions'
 import { useCompareList } from '@/shared/store/compare'
 import { serializeCompareParam } from '@/shared/store/compare'
 import AppHeader from '@/shared/ui/AppHeader'
@@ -68,6 +69,7 @@ export default function CountryPage() {
   assertFound(error)
 
   const region = country?.region.trim() ?? ''
+  const regionSlug = region ? slugFromRegion(region) : undefined
   const activeTab = CHART_TABS.find((tab) => tab.id === activeIndicator) ?? CHART_TABS[0]
   const firstYear = history[0]?.year
   const lastYear = history.at(-1)?.year
@@ -147,9 +149,12 @@ export default function CountryPage() {
             {country?.name ?? id}
           </Typography>
           <TitleMeta>
-            <Typography variant='body-sm' color='muted' component='div'>
-              {country ? `${region} · ${country.incomeLevel}` : ''}
-            </Typography>
+            {country && (
+              <Typography variant='body-sm' color='muted' component='div'>
+                {regionSlug ? <Link href={`/region/${regionSlug}`}>{region}</Link> : region}
+                {` · ${country.incomeLevel}`}
+              </Typography>
+            )}
           </TitleMeta>
         </div>
         <div className={styles.actions}>

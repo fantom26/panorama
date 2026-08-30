@@ -17,6 +17,27 @@
   border-bottom: none;
 }
 
+.staticRow {
+  display: block;
+}
+
+.row {
+  display: block;
+  width: 100%;
+  padding-inline: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.row:focus-visible {
+  outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+  outline-offset: calc(-1 * var(--ds-theme-border-width-md));
+}
+
 .value {
   text-align: end;
 }

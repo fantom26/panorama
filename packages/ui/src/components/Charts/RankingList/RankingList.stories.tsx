@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
+import { expect, fn, userEvent } from 'storybook/test'
 
 import RankingList from '@/components/Charts/RankingList'
 
@@ -46,5 +46,19 @@ export const SingleItem: Story = {
 
     await expect(canvas.getByText('Asia')).toBeInTheDocument()
     await expect(canvas.getByText('$38.4T')).toBeInTheDocument()
+  }
+}
+
+export const Interactive: Story = {
+  args: {
+    data: gdpByRegion.map((datum) => ({ ...datum, id: datum.label.toLowerCase() })),
+    onSelect: fn()
+  },
+  play: async ({ args, canvas }) => {
+    const rows = canvas.getAllByRole('button')
+    await expect(rows).toHaveLength(gdpByRegion.length)
+
+    await userEvent.click(rows[0])
+    await expect(args.onSelect).toHaveBeenCalledWith('asia')
   }
 }

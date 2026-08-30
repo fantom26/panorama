@@ -65,3 +65,11 @@ export const Region: Story = {
     highlight: europe
   }
 }
+
+export const RegionScoped: Story = {
+  args: {
+    mode: 'lit',
+    highlight: europe,
+    disableUnhighlighted: true
+  }
+}
