@@ -58,7 +58,8 @@ export const Interactive: Story = {
     const rows = canvas.getAllByRole('button')
     await expect(rows).toHaveLength(gdpByRegion.length)
 
-    await userEvent.click(rows[0])
+    const [firstRow] = rows as [HTMLElement, ...HTMLElement[]]
+    await userEvent.click(firstRow)
     await expect(args.onSelect).toHaveBeenCalledWith('asia')
   }
 }
