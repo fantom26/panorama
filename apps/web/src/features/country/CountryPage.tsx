@@ -134,6 +134,13 @@ export default function CountryPage() {
               {t('breadcrumb.global')}
             </Typography>
           </Link>
+          {regionSlug && (
+            <Link href={`/region/${regionSlug}`}>
+              <Typography variant='body-sm' color='muted' component='span'>
+                {region}
+              </Typography>
+            </Link>
+          )}
           <Typography variant='body-sm' color='knockout' component='span' aria-current='page'>
             {country?.name ?? id}
           </Typography>
@@ -149,12 +156,9 @@ export default function CountryPage() {
             {country?.name ?? id}
           </Typography>
           <TitleMeta>
-            {country && (
-              <Typography variant='body-sm' color='muted' component='div'>
-                {regionSlug ? <Link href={`/region/${regionSlug}`}>{region}</Link> : region}
-                {` · ${country.incomeLevel}`}
-              </Typography>
-            )}
+            <Typography variant='body-sm' color='muted' component='div'>
+              {country ? `${region} · ${country.incomeLevel}` : ''}
+            </Typography>
           </TitleMeta>
         </div>
         <div className={styles.actions}>
