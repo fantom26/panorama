@@ -1,0 +1,78 @@
+.rightMeta {
+  align-items: flex-start;
+}
+
+.twoColRow {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.column {
+  padding-inline: var(--ds-theme-spacing-md);
+  min-width: 0;
+}
+
+.mapBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-theme-spacing-sm);
+}
+
+.hint {
+  align-self: flex-end;
+}
+
+.economies {
+  padding-inline: var(--ds-theme-spacing-md);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--ds-theme-spacing-md);
+}
+
+.showAll {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--ds-theme-spacing-md);
+}
+
+@media (min-width: 768px) {
+  .titleBlock {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--ds-theme-spacing-lg) var(--ds-theme-spacing-lg) var(--ds-theme-spacing-md);
+  }
+
+  .twoColRow {
+    grid-template-columns: 1.4fr 1fr;
+  }
+
+  .column {
+    padding-inline: var(--ds-theme-spacing-lg);
+  }
+
+  .columnDivided {
+    border-right: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  }
+
+  .economies {
+    padding-inline: var(--ds-theme-spacing-lg);
+  }
+}
+
+@media (min-width: 1440px) {
+  .titleBlock {
+    padding: var(--ds-theme-spacing-xl) var(--ds-theme-spacing-xl) var(--ds-theme-spacing-lg);
+  }
+
+  .column {
+    padding-inline: var(--ds-theme-spacing-xl);
+  }
+
+  .economies {
+    padding-inline: var(--ds-theme-spacing-xl);
+  }
+}
