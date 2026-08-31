@@ -6,17 +6,18 @@ import {
   RankingList,
   Section,
   Skeleton,
-  StatCard,
   Typography,
   WorldMap
 } from '@repo/ui'
 
 import { useGlobalStats } from '@/features/global/hooks/useGlobalStats'
 import { useTranslation } from '@/i18n'
+import { useChartHeight } from '@/shared/hooks/useChartHeight'
 import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
 import AppHeader from '@/shared/ui/AppHeader'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
+import StatTiles from '@/shared/ui/StatTiles'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'
 import { formatGdp, formatPercent } from '@/shared/utils/format'
@@ -27,8 +28,7 @@ export default function GlobalOverviewPage() {
   const { t } = useTranslation('global')
   const { overview, isPending, refetch } = useGlobalStats()
   const isTablet = useMediaQuery('(min-width: 768px)')
-  const isDesktop = useMediaQuery('(min-width: 1440px)')
-  const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
+  const heatmapHeight = useChartHeight({ mobile: 200, tablet: 260, desktop: 340 })
   const donutSize = isTablet ? 160 : 130
 
   const handleCountrySelect = useCountryMapSelect(overview.countryIdByAlpha2)
@@ -61,17 +61,12 @@ export default function GlobalOverviewPage() {
       </TitleBlock>
 
       <ErrorBoundary onReset={refetch}>
-        <div className={styles.stats}>
-          {overview.tiles.map((stat) => (
-            <StatCard
-              key={stat.key}
-              variant='row'
-              label={t(`tiles.${stat.key}`)}
-              value={stat.value}
-              loading={isPending}
-            />
-          ))}
-        </div>
+        <StatTiles
+          tiles={overview.tiles}
+          labelFor={(key) => t(`tiles.${key}`)}
+          loading={isPending}
+          columns={4}
+        />
 
         <div className={`${styles.twoColRow} ${styles.heatmapRow}`}>
           <Section

@@ -1,0 +1,35 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ds-theme-spacing-md);
+  padding-block: var(--ds-theme-spacing-sm);
+  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-soft);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:focus-visible {
+  outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+  outline-offset: calc(-1 * var(--ds-theme-border-width-md));
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-theme-spacing-3xs);
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-theme-spacing-xs) var(--ds-theme-spacing-md);
+  margin-inline-start: auto;
+}
