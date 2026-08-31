@@ -24,8 +24,8 @@ import { useTranslation } from '@/i18n'
 import type { IndicatorValue } from '@/shared/api/statistics-api'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/shared/model/indicators'
 import { slugFromRegion } from '@/shared/model/regions'
+import { ROUTES } from '@/shared/routes'
 import { useCompareList } from '@/shared/store/compare'
-import { serializeCompareParam } from '@/shared/store/compare'
 import AppHeader from '@/shared/ui/AppHeader'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'
@@ -129,13 +129,13 @@ export default function CountryPage() {
     <>
       <AppHeader>
         <Breadcrumbs>
-          <Link href='/'>
+          <Link href={ROUTES.home()}>
             <Typography variant='body-sm' color='muted' component='span'>
               {t('breadcrumb.global')}
             </Typography>
           </Link>
           {regionSlug && (
-            <Link href={`/region/${regionSlug}`}>
+            <Link href={ROUTES.region(regionSlug)}>
               <Typography variant='body-sm' color='muted' component='span'>
                 {region}
               </Typography>
@@ -163,10 +163,7 @@ export default function CountryPage() {
         </div>
         <div className={styles.actions}>
           {inCompare ? (
-            <Button
-              variant='outlined'
-              render={<Link href={`/compare?countries=${serializeCompareParam(compare.codes)}`} />}
-            >
+            <Button variant='outlined' render={<Link href={ROUTES.compare(compare.codes)} />}>
               {t('buttons.inCompare')}
             </Button>
           ) : (

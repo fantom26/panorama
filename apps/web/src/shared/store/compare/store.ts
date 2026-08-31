@@ -2,15 +2,13 @@ import type { Mutate, StoreApi } from 'zustand'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
+import { alpha3Schema } from '@/shared/api/schemas'
 import type { Alpha3Code } from '@/shared/types/iso'
 
 export const MAX_COMPARE = 5
 const STORAGE_KEY = 'panorama:compare'
-const ALPHA3_RE = /^[A-Z]{3}$/
 
-export function isAlpha3Code(value: string): value is Alpha3Code {
-  return ALPHA3_RE.test(value)
-}
+const isAlpha3 = (value: string): value is Alpha3Code => alpha3Schema.safeParse(value).success
 
 /** Upper-cases, trims, drops non-ISO3 and duplicate entries, and caps the list at `MAX_COMPARE`. */
 export function normalizeCodes(values: readonly string[]): Alpha3Code[] {
@@ -19,7 +17,7 @@ export function normalizeCodes(values: readonly string[]): Alpha3Code[] {
 
   for (const value of values) {
     const code = value.trim().toUpperCase()
-    if (!isAlpha3Code(code) || seen.has(code)) continue
+    if (!isAlpha3(code) || seen.has(code)) continue
     seen.add(code)
     result.push(code)
     if (result.length >= MAX_COMPARE) break
@@ -77,7 +75,7 @@ export const useCompareStore = create<CompareState>()(
       codes: [],
       add: (code) => {
         const upper = code.toUpperCase()
-        if (!isAlpha3Code(upper)) return
+        if (!isAlpha3(upper)) return
 
         const { codes } = get()
         if (codes.includes(upper) || codes.length >= MAX_COMPARE) return
@@ -93,7 +91,7 @@ export const useCompareStore = create<CompareState>()(
       },
       toggle: (code) => {
         const upper = code.toUpperCase()
-        if (!isAlpha3Code(upper)) return
+        if (!isAlpha3(upper)) return
 
         if (get().codes.includes(upper)) get().remove(upper)
         else get().add(upper)

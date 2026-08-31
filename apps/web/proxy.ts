@@ -26,6 +26,8 @@ export function proxy(request: NextRequest) {
   return NextResponse.next()
 }
 
+// Literal paths: Next statically analyses `matcher`, and the `startsWith` above runs in the
+// edge runtime. Keep these in sync with `@/shared/routes`.
 export const config = {
   matcher: ['/countries/:id', '/region/:region']
 }

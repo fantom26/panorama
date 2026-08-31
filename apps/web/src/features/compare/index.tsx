@@ -10,6 +10,7 @@ import { Breadcrumbs, Chip, Flag, Section, Skeleton, Typography } from '@repo/ui
 import CompareMatrix from '@/features/compare/components/CompareMatrix'
 import { useCompareCountries } from '@/features/compare/hooks/useCompareCountries'
 import { useTranslation } from '@/i18n'
+import { ROUTES } from '@/shared/routes'
 import {
   MAX_COMPARE,
   parseCompareParam,
@@ -45,14 +46,14 @@ export default function CompareView() {
     const next = serializeCompareParam(codes)
     if (next === (searchParams.get('countries') ?? '')) return
 
-    router.replace(next ? `/compare?countries=${next}` : '/compare', { scroll: false })
+    router.replace(ROUTES.compare(codes), { scroll: false })
   }, [hydrated, codes, router, searchParams])
 
   return (
     <>
       <AppHeader>
         <Breadcrumbs>
-          <Link href='/'>
+          <Link href={ROUTES.home()}>
             <Typography variant='body-sm' color='muted' component='span'>
               {t('breadcrumb.global')}
             </Typography>
@@ -86,7 +87,7 @@ export default function CompareView() {
           <Typography variant='body-sm' color='muted' component='p'>
             {t('empty.body')}
           </Typography>
-          <Link href='/' className={styles.emptyCta}>
+          <Link href={ROUTES.home()} className={styles.emptyCta}>
             <Typography variant='body-sm' component='span'>
               {t('empty.cta')}
             </Typography>
