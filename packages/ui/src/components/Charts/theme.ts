@@ -122,8 +122,18 @@ export function mountReactiveChart(
 ): () => void {
   let root: am5.Root | undefined
 
-  const observer = new MutationObserver(() => {
+  // amCharts writes `document.body.style.cursor` from a shape's `cursorOverStyle` on hover
+  // and only restores it on `pointerout`. Disposing the root while a shape is still hovered
+  // — e.g. a map click that navigates and unmounts the chart before `pointerout` fires —
+  // strands the pointer cursor on `<body>` for the rest of the session. Clear it on every
+  // dispose so the CSS/UA default takes over.
+  function disposeRoot() {
+    document.body.style.cursor = ''
     root?.dispose()
+  }
+
+  const observer = new MutationObserver(() => {
+    disposeRoot()
     root = build(container)
   })
   observer.observe(document.documentElement, {
@@ -137,6 +147,6 @@ export function mountReactiveChart(
 
   return () => {
     observer.disconnect()
-    root?.dispose()
+    disposeRoot()
   }
 }
