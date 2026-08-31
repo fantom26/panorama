@@ -86,6 +86,54 @@ describe('selectRegionOverview', () => {
     ])
   })
 
+  test('narrows every derived slice to the intersection when a level filter is passed', () => {
+    const countries = [
+      make({
+        id: 'DEU',
+        iso2: 'de',
+        incomeLevel: 'High income',
+        population: 84,
+        gdp: 4,
+        gdpPerCapita: 54_000
+      }),
+      make({
+        id: 'FRA',
+        iso2: 'fr',
+        incomeLevel: 'High income',
+        population: 68,
+        gdp: 3,
+        gdpPerCapita: 44_000
+      }),
+      make({ id: 'UKR', iso2: 'ua', incomeLevel: 'Lower middle income', gdpPerCapita: 5_000 }),
+      make({ id: 'IND', iso2: 'in', region: 'South Asia', incomeLevel: 'High income' })
+    ]
+
+    const scoped = selectRegionOverview(EUROPE, countries, 'High income')
+
+    expect(scoped.tiles.find((tile) => tile.key === 'countries')?.value).toBe('2')
+    expect(scoped.memberAlpha2).toEqual(['DE', 'FR'])
+    expect(scoped.topGdpPerCapita.map((row) => row.id)).toEqual(['DEU', 'FRA'])
+    expect(scoped.incomeBreakdown).toEqual([
+      { level: 'High income', slug: 'high', count: 2, population: 152, gdp: 7 }
+    ])
+  })
+
+  test('omitting the level filter leaves the region-wide dataset intact', () => {
+    const countries = [
+      make({ id: 'DEU', iso2: 'de', incomeLevel: 'High income' }),
+      make({ id: 'UKR', iso2: 'ua', incomeLevel: 'Lower middle income' })
+    ]
+
+    expect(selectRegionOverview(EUROPE, countries).memberAlpha2).toEqual(['DE', 'UA'])
+    expect(selectRegionOverview(EUROPE, countries, undefined).memberAlpha2).toEqual(['DE', 'UA'])
+  })
+
+  test('returns the empty overview when the level intersection has no members', () => {
+    const countries = [make({ id: 'DEU', iso2: 'de', incomeLevel: 'High income' })]
+
+    expect(selectRegionOverview(EUROPE, countries, 'Low income')).toBe(EMPTY_REGION_OVERVIEW)
+  })
+
   test('orders the income breakdown high → low and caps top economies at 10', () => {
     const members = Array.from({ length: 12 }, (_, index) =>
       make({

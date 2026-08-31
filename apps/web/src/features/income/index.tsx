@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 import { Breadcrumbs, Button, Section, Select, Skeleton, Typography, WorldMap } from '@repo/ui'
 
@@ -13,6 +13,7 @@ import { useTranslation } from '@/i18n'
 import { useChartHeight } from '@/shared/hooks/useChartHeight'
 import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { INCOME_LEVELS, INCOME_SLUGS, levelFromSlug } from '@/shared/model/income-levels'
+import { regionFromSlug, slugFromRegion } from '@/shared/model/regions'
 import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
 import BreakdownList from '@/shared/ui/BreakdownList'
@@ -35,7 +36,12 @@ export default function IncomeLevelPage() {
   const levelName = levelFromSlug(level)
   const { t } = useTranslation('income')
   const router = useRouter()
-  const { overview, isPending, refetch } = useIncomeLevelOverview(levelName)
+  const searchParams = useSearchParams()
+
+  const regionName = regionFromSlug(searchParams.get('region') ?? '')
+  const regionSlug = regionName ? slugFromRegion(regionName) : undefined
+
+  const { overview, isPending, refetch } = useIncomeLevelOverview(levelName, regionName)
 
   const mapHeight = useChartHeight({ mobile: 220, tablet: 280, desktop: 360 })
   const handleCountrySelect = useCountryMapSelect(overview.countryIdByAlpha2, overview.memberIds)
@@ -46,7 +52,7 @@ export default function IncomeLevelPage() {
   const regionRows = overview.regionBreakdown.map((row) => ({
     key: row.region,
     label: row.region,
-    href: row.slug ? ROUTES.region(row.slug) : undefined,
+    href: row.slug ? ROUTES.region(row.slug, { level }) : undefined,
     metrics: [
       t('regionRow.count', { count: row.count }),
       t('regionRow.population', { value: formatCompactNumber(row.population) }),
@@ -80,12 +86,26 @@ export default function IncomeLevelPage() {
           <Typography variant='meta-sm' color='muted' component='div'>
             {t('header.count', { count: overview.cards.length })}
           </Typography>
+          {regionName && (
+            <div className={styles.filterNote}>
+              <Typography variant='meta-sm' color='muted' component='span'>
+                {t('filter.activeBy', { name: regionName })}
+              </Typography>{' '}
+              <Link href={ROUTES.incomeLevel(level)} className={styles.filterClear}>
+                <Typography variant='meta-sm' component='span'>
+                  {t('filter.clear')}
+                </Typography>
+              </Link>
+            </div>
+          )}
         </div>
         <TitleMeta className={styles.rightMeta}>
           <Select
             options={INCOME_OPTIONS}
             value={level}
-            onValueChange={(value) => value && router.push(ROUTES.incomeLevel(value))}
+            onValueChange={(value) =>
+              value && router.push(ROUTES.incomeLevel(value, { region: regionSlug }))
+            }
             aria-label={t('switcher.label')}
           />
         </TitleMeta>

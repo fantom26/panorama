@@ -8,6 +8,10 @@ export default {
   switcher: {
     label: 'تغيير المنطقة'
   },
+  filter: {
+    activeBy: 'مُصفّى حسب {{name}}',
+    clear: 'مسح التصفية'
+  },
   tiles: {
     countries: 'الدول',
     totalPopulation: 'إجمالي عدد السكان',

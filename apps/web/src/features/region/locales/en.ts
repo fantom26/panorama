@@ -8,6 +8,10 @@ export default {
   switcher: {
     label: 'Switch region'
   },
+  filter: {
+    activeBy: 'Filtered by {{name}}',
+    clear: 'Clear filter'
+  },
   tiles: {
     countries: 'Countries',
     totalPopulation: 'Total population',

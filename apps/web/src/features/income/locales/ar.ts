@@ -11,6 +11,10 @@ export default {
   switcher: {
     label: 'تغيير فئة الدخل'
   },
+  filter: {
+    activeBy: 'مُصفّى حسب {{name}}',
+    clear: 'مسح التصفية'
+  },
   tiles: {
     economies: 'الاقتصادات',
     totalPopulation: 'إجمالي عدد السكان',

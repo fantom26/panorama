@@ -95,6 +95,49 @@ describe('selectIncomeLevelOverview', () => {
     expect(overview.cards.map((card) => card.id)).toEqual(['USA', 'DEU', 'FRA'])
   })
 
+  test('narrows every derived slice to the intersection when a region filter is passed', () => {
+    const countries = [
+      make({ id: 'DEU', iso2: 'de', region: 'Europe & Central Asia', population: 84, gdp: 4 }),
+      make({ id: 'FRA', iso2: 'fr', region: 'Europe & Central Asia', population: 68, gdp: 3 }),
+      make({ id: 'USA', iso2: 'us', region: 'North America', population: 335, gdp: 27 }),
+      make({ id: 'IND', iso2: 'in', region: 'South Asia', incomeLevel: 'Lower middle income' })
+    ]
+
+    const scoped = selectIncomeLevelOverview(HIGH, countries, 'Europe & Central Asia')
+
+    expect(scoped.tiles.find((tile) => tile.key === 'economies')?.value).toBe('2')
+    expect(scoped.memberAlpha2).toEqual(['DE', 'FR'])
+    expect(scoped.cards.map((card) => card.id)).toEqual(['DEU', 'FRA'])
+    expect(scoped.mapData.map((datum) => datum.id)).toEqual(['DE', 'FR'])
+    expect(scoped.regionBreakdown).toEqual([
+      {
+        region: 'Europe & Central Asia',
+        slug: 'europe-central-asia',
+        count: 2,
+        population: 152,
+        gdp: 7
+      }
+    ])
+  })
+
+  test('omitting the region filter leaves the tier-wide dataset intact', () => {
+    const countries = [
+      make({ id: 'DEU', iso2: 'de', region: 'Europe & Central Asia' }),
+      make({ id: 'USA', iso2: 'us', region: 'North America' })
+    ]
+
+    expect(selectIncomeLevelOverview(HIGH, countries).memberAlpha2).toEqual(['DE', 'US'])
+    expect(selectIncomeLevelOverview(HIGH, countries, undefined).memberAlpha2).toEqual(['DE', 'US'])
+  })
+
+  test('returns the empty overview when the region intersection has no members', () => {
+    const countries = [make({ id: 'DEU', iso2: 'de', region: 'Europe & Central Asia' })]
+
+    expect(selectIncomeLevelOverview(HIGH, countries, 'North America')).toBe(
+      EMPTY_INCOME_LEVEL_OVERVIEW
+    )
+  })
+
   test('cards with no GDP per capita sort last', () => {
     const overview = selectIncomeLevelOverview(HIGH, [
       make({ id: 'AAA', iso2: 'aa', gdpPerCapita: null }),
