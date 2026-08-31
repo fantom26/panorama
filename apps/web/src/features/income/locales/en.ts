@@ -11,6 +11,10 @@ export default {
   switcher: {
     label: 'Switch income tier'
   },
+  filter: {
+    activeBy: 'Filtered by {{name}}',
+    clear: 'Clear filter'
+  },
   tiles: {
     economies: 'Economies',
     totalPopulation: 'Total population',

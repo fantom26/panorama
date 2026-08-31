@@ -2,6 +2,15 @@
   align-items: flex-start;
 }
 
+.filterNote {
+  margin-top: var(--ds-theme-spacing-2xs);
+}
+
+.filterClear {
+  color: var(--ds-theme-color-content-brand);
+  text-decoration: underline;
+}
+
 .twoColRow {
   display: grid;
   grid-template-columns: 1fr;

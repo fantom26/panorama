@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 import { Breadcrumbs, RankingList, Section, Select, Skeleton, Typography, WorldMap } from '@repo/ui'
 
@@ -10,6 +10,7 @@ import { assertRegionSlug } from '@/features/region/model/region-not-found'
 import { useTranslation } from '@/i18n'
 import { useChartHeight } from '@/shared/hooks/useChartHeight'
 import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
+import { levelFromSlug, slugFromLevel } from '@/shared/model/income-levels'
 import { REGION_NAMES, REGION_SLUGS, regionFromSlug } from '@/shared/model/regions'
 import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
@@ -31,7 +32,12 @@ export default function RegionPage() {
   const regionName = regionFromSlug(region)
   const { t } = useTranslation('region')
   const router = useRouter()
-  const { overview, isPending, refetch } = useRegionOverview(regionName)
+  const searchParams = useSearchParams()
+
+  const levelName = levelFromSlug(searchParams.get('level') ?? '')
+  const levelSlug = levelName ? slugFromLevel(levelName) : undefined
+
+  const { overview, isPending, refetch } = useRegionOverview(regionName, levelName)
 
   const mapHeight = useChartHeight({ mobile: 220, tablet: 280, desktop: 360 })
 
@@ -41,7 +47,7 @@ export default function RegionPage() {
     key: row.level,
     label: row.level,
     sublabel: row.slug ? `/${row.slug}` : undefined,
-    href: row.slug ? ROUTES.incomeLevel(row.slug) : undefined,
+    href: row.slug ? ROUTES.incomeLevel(row.slug, { region }) : undefined,
     metrics: [
       t('incomeRow.count', { count: row.count }),
       t('incomeRow.population', { value: formatCompactNumber(row.population) }),
@@ -72,12 +78,26 @@ export default function RegionPage() {
           <Typography variant='headline-sm' component='h1'>
             {regionName}
           </Typography>
+          {levelName && (
+            <div className={styles.filterNote}>
+              <Typography variant='meta-sm' color='muted' component='span'>
+                {t('filter.activeBy', { name: levelName })}
+              </Typography>{' '}
+              <Link href={ROUTES.region(region)} className={styles.filterClear}>
+                <Typography variant='meta-sm' component='span'>
+                  {t('filter.clear')}
+                </Typography>
+              </Link>
+            </div>
+          )}
         </div>
         <TitleMeta className={styles.rightMeta}>
           <Select
             options={REGION_OPTIONS}
             value={region}
-            onValueChange={(value) => value && router.push(ROUTES.region(value))}
+            onValueChange={(value) =>
+              value && router.push(ROUTES.region(value, { level: levelSlug }))
+            }
             aria-label={t('switcher.label')}
           />
         </TitleMeta>

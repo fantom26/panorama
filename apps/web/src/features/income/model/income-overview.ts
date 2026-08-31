@@ -1,6 +1,10 @@
 import type { Country } from '@/shared/model/country'
 import { type RegionSlug, slugFromRegion } from '@/shared/model/regions'
-import { selectCountryIdByAlpha2, selectIncomeLevelCountries } from '@/shared/model/selectors'
+import {
+  selectCountryIdByAlpha2,
+  selectIncomeLevelCountries,
+  selectRegionCountries
+} from '@/shared/model/selectors'
 import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 import { avg, sum } from '@/shared/utils/aggregate'
@@ -62,9 +66,11 @@ export const EMPTY_INCOME_LEVEL_OVERVIEW: IncomeLevelOverview = {
 
 export function selectIncomeLevelOverview(
   levelName: string,
-  countries: readonly Country[]
+  countries: readonly Country[],
+  regionName?: string
 ): IncomeLevelOverview {
-  const members = selectIncomeLevelCountries(levelName, countries)
+  let members = selectIncomeLevelCountries(levelName, countries)
+  if (regionName) members = selectRegionCountries(regionName, members)
   if (members.length === 0) return EMPTY_INCOME_LEVEL_OVERVIEW
 
   const tileValues: Record<IncomeTileKey, string> = {
