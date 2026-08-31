@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 
 import MapLegend from '@/components/Charts/MapLegend'
 import WorldMap from '@/components/Charts/WorldMap'
@@ -71,5 +72,18 @@ export const RegionScoped: Story = {
     mode: 'lit',
     highlight: europe,
     disableUnhighlighted: true
+  }
+}
+
+/**
+ * `onSelect` turns on `cursorOverStyle: 'pointer'`. Hover a country, then navigate away in
+ * the consuming app (or switch stories here) — the pointer cursor must not stay stuck on
+ * `<body>`; `mountReactiveChart` clears it on dispose.
+ */
+export const Selectable: Story = {
+  args: {
+    data: gdpByCountry,
+    format: (value: number) => `$${value.toFixed(1)}T`,
+    onSelect: fn()
   }
 }
