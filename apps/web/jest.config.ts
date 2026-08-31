@@ -20,8 +20,17 @@ const config: Config = {
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
 
-  // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  // An array of glob patterns indicating a set of files for which coverage information should be collected.
+  // Tests live in a separate `test/` tree, so scope coverage to source explicitly —
+  // otherwise untested files would never show up in the report.
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    'app/**/*.{ts,tsx}',
+    'proxy.ts',
+    '!**/*.d.ts',
+    '!src/**/locales/**',
+    '!**/__fixtures__/**'
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -190,6 +199,7 @@ const config: Config = {
   // Indicates whether each individual test should be reported during the run
   // verbose: undefined,
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  roots: ['<rootDir>/src', '<rootDir>/app', '<rootDir>/test'],
   testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   // The app tsconfig sets `jsx: "preserve"` for Next's compiler; ts-jest needs a real transform.
@@ -198,6 +208,7 @@ const config: Config = {
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^@app/(.*)$': '<rootDir>/app/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
   }
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
