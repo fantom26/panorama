@@ -19,7 +19,7 @@ export default {
   tiles: {
     countries: 'الدول',
     totalPopulation: 'إجمالي عدد السكان',
-    averageGdp: 'متوسط الناتج المحلي الإجمالي',
+    avgGdp: 'متوسط الناتج المحلي الإجمالي',
     avgInflation: 'متوسط التضخم',
     avgUnemployment: 'متوسط البطالة'
   },

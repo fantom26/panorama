@@ -23,6 +23,11 @@ export type WorldMapProps = {
   mode?: 'heat' | 'lit'
   /** ISO 3166-1 alpha-2 country codes rendered at full ink, e.g. selection or region scope. */
   highlight?: string[]
+  /**
+   * Disable pointer interaction (hover, tooltip, click) on countries not in `highlight`,
+   * dimming the map to a fixed dataset such as a single region or income level.
+   */
+  disableUnhighlighted?: boolean
   /** Choropleth steps down the shared rank ramp. */
   buckets?: number
   /** Formats the tooltip value. Default: the raw value. */
@@ -39,6 +44,7 @@ export default function WorldMap({
   data = [],
   mode = 'heat',
   highlight = [],
+  disableUnhighlighted = false,
   buckets = 4,
   format,
   onSelect,
@@ -76,6 +82,13 @@ export default function WorldMap({
       )
 
       const highlightSet = new Set(highlight)
+
+      function inScope(target: am5map.MapPolygon) {
+        if (!disableUnhighlighted) return true
+        const context = target.dataItem?.dataContext as WorldMapDataContext | undefined
+        return !!context?.id && highlightSet.has(context.id)
+      }
+
       const values = data.map((d) => d.value).filter((v): v is number => v != null)
       const min = values.length ? Math.min(...values) : 0
       const range = (values.length ? Math.max(...values) : 1) - min || 1
@@ -92,6 +105,18 @@ export default function WorldMap({
         strokeOpacity: 1,
         ...(onSelect ? { cursorOverStyle: 'pointer' } : {})
       })
+
+      if (disableUnhighlighted) {
+        series.mapPolygons.template.adapters.add('interactive', (interactive, target) =>
+          inScope(target) ? interactive : false
+        )
+      }
+
+      if (onSelect) {
+        series.mapPolygons.template.adapters.add('cursorOverStyle', (_cursor, target) =>
+          inScope(target) ? 'pointer' : 'default'
+        )
+      }
 
       series.mapPolygons.template.adapters.add('fill', (fill, target) => {
         const context = target.dataItem?.dataContext as WorldMapDataContext | undefined
@@ -120,6 +145,7 @@ export default function WorldMap({
       })
 
       series.mapPolygons.template.adapters.add('tooltipText', (_text, target) => {
+        if (!inScope(target)) return ''
         const context = target.dataItem?.dataContext as WorldMapDataContext | undefined
         const value = context?.value
         const label =
@@ -136,6 +162,7 @@ export default function WorldMap({
 
       if (onSelect) {
         series.mapPolygons.template.events.on('click', (ev) => {
+          if (!inScope(ev.target)) return
           const context = ev.target.dataItem?.dataContext as WorldMapDataContext | undefined
           if (context?.id) onSelect(context.id, context.name ?? '')
         })
@@ -147,7 +174,7 @@ export default function WorldMap({
     }
 
     return mountReactiveChart(container, build)
-  }, [data, mode, highlight, buckets, format, onSelect, t])
+  }, [data, mode, highlight, disableUnhighlighted, buckets, format, onSelect, t])
 
   return (
     <div ref={chartRef} className={clsx(styles.root, className)} style={{ height, ...style }} />

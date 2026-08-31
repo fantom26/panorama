@@ -19,7 +19,7 @@ export default {
   tiles: {
     countries: 'Countries',
     totalPopulation: 'Total population',
-    averageGdp: 'Average GDP',
+    avgGdp: 'Average GDP',
     avgInflation: 'Avg inflation',
     avgUnemployment: 'Avg unemployment'
   },

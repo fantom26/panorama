@@ -23,6 +23,7 @@ import { useCountry, useCountryHistory } from '@/features/country/useCountry'
 import { useTranslation } from '@/i18n'
 import type { IndicatorValue } from '@/shared/api/statistics-api'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/shared/model/indicators'
+import { slugFromRegion } from '@/shared/model/regions'
 import { useCompareList } from '@/shared/store/compare'
 import { serializeCompareParam } from '@/shared/store/compare'
 import AppHeader from '@/shared/ui/AppHeader'
@@ -68,6 +69,7 @@ export default function CountryPage() {
   assertFound(error)
 
   const region = country?.region.trim() ?? ''
+  const regionSlug = region ? slugFromRegion(region) : undefined
   const activeTab = CHART_TABS.find((tab) => tab.id === activeIndicator) ?? CHART_TABS[0]
   const firstYear = history[0]?.year
   const lastYear = history.at(-1)?.year
@@ -132,6 +134,13 @@ export default function CountryPage() {
               {t('breadcrumb.global')}
             </Typography>
           </Link>
+          {regionSlug && (
+            <Link href={`/region/${regionSlug}`}>
+              <Typography variant='body-sm' color='muted' component='span'>
+                {region}
+              </Typography>
+            </Link>
+          )}
           <Typography variant='body-sm' color='knockout' component='span' aria-current='page'>
             {country?.name ?? id}
           </Typography>

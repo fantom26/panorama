@@ -22,6 +22,8 @@ export function slugFromRegion(region: string): RegionSlug | undefined {
   return REGION_SLUGS[region as RegionName]
 }
 
+export function regionFromSlug(slug: RegionSlug): RegionName
+export function regionFromSlug(slug: string): RegionName | undefined
 export function regionFromSlug(slug: string): RegionName | undefined {
   return REGION_BY_SLUG[slug as RegionSlug]
 }
