@@ -2,15 +2,6 @@
   align-items: flex-start;
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.stats > * {
-  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
-}
-
 .twoColRow {
   display: grid;
   grid-template-columns: 1fr;
@@ -31,42 +22,6 @@
   align-self: flex-end;
 }
 
-.incomeList {
-  display: flex;
-  flex-direction: column;
-}
-
-.incomeRow {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--ds-theme-spacing-md);
-  padding-block: var(--ds-theme-spacing-sm);
-  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-soft);
-}
-
-.incomeRow:last-child {
-  border-bottom: none;
-}
-
-.incomeRow:focus-visible {
-  outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
-  outline-offset: calc(-1 * var(--ds-theme-border-width-md));
-}
-
-.incomeName {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-theme-spacing-3xs);
-}
-
-.incomeMetrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-theme-spacing-xs) var(--ds-theme-spacing-md);
-  margin-inline-start: auto;
-}
-
 .topEconomies {
   padding-inline: var(--ds-theme-spacing-md);
 }
@@ -77,10 +32,6 @@
     align-items: flex-end;
     justify-content: space-between;
     padding: var(--ds-theme-spacing-lg) var(--ds-theme-spacing-lg) var(--ds-theme-spacing-md);
-  }
-
-  .stats {
-    grid-template-columns: repeat(5, 1fr);
   }
 
   .twoColRow {

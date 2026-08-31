@@ -1,0 +1,24 @@
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stats > * {
+  border-bottom: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+}
+
+@media (min-width: 768px) {
+  .cols5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .cols4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .cols4 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
