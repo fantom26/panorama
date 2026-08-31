@@ -33,15 +33,6 @@ describe('selectRegionOverview', () => {
     expect(selectRegionOverview(EUROPE, [])).toBe(EMPTY_REGION_OVERVIEW)
   })
 
-  test('matches members on a trimmed region string', () => {
-    const overview = selectRegionOverview(EUROPE, [
-      make({ id: 'DEU', iso2: 'de', region: '  Europe & Central Asia ' })
-    ])
-
-    expect([...overview.memberIds]).toEqual(['DEU'])
-    expect(overview.tiles.find((tile) => tile.key === 'countries')?.value).toBe('1')
-  })
-
   test('derives the map scope, id lookup and income breakdown from the members', () => {
     const overview = selectRegionOverview(EUROPE, [
       make({

@@ -1,19 +1,20 @@
 import type { Country } from '@/shared/model/country'
 import { selectGlobalMetrics } from '@/shared/model/selectors'
+import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/shared/utils/format'
 
 const TILE_KEYS = [
   'countries',
   'totalPopulation',
-  'averageGdp',
+  'avgGdp',
   'avgInflation',
   'avgUnemployment'
 ] as const
 
 export type TileKey = (typeof TILE_KEYS)[number]
 
-export type GlobalStat = { key: TileKey; value: string }
+export type GlobalStat = Stat<TileKey>
 export type CountryValue = { id: string; value: number }
 export type LabelledValue = { label: string; value: number }
 
@@ -28,7 +29,7 @@ export type GlobalOverview = {
 }
 
 export const EMPTY_OVERVIEW: GlobalOverview = {
-  tiles: TILE_KEYS.map((key) => ({ key, value: '—' })),
+  tiles: toStats(TILE_KEYS),
   gdpByCountry: [],
   gdpRange: '',
   gdpByRegion: [],
@@ -70,13 +71,13 @@ export function selectGlobalOverview(countries: readonly Country[]): GlobalOverv
   const tileValues: Record<TileKey, string> = {
     countries: String(metrics.total),
     totalPopulation: formatCompactNumber(metrics.totalPopulation),
-    averageGdp: formatCompactUsd(metrics.avgGdp ?? 0),
+    avgGdp: formatCompactUsd(metrics.avgGdp ?? 0),
     avgInflation: formatPercent(metrics.avgInflation ?? 0),
     avgUnemployment: formatPercent(metrics.avgUnemployment ?? 0)
   }
 
   return {
-    tiles: TILE_KEYS.map((key) => ({ key, value: tileValues[key] })),
+    tiles: toStats(TILE_KEYS, tileValues),
     gdpByCountry,
     gdpRange,
     gdpByRegion: byRegion(countries, 'gdp'),

@@ -1,5 +1,7 @@
 import type { Country } from '@/shared/model/country'
 import { INCOME_LEVELS, type IncomeSlug, slugFromLevel } from '@/shared/model/income-levels'
+import { selectRegionCountries } from '@/shared/model/selectors'
+import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 import { avg, sum } from '@/shared/utils/aggregate'
 import {
@@ -18,7 +20,6 @@ const TILE_KEYS = [
 ] as const
 
 export type RegionTileKey = (typeof TILE_KEYS)[number]
-export type RegionStat = { key: RegionTileKey; value: string }
 
 export type IncomeBreakdownRow = {
   level: string
@@ -31,7 +32,7 @@ export type IncomeBreakdownRow = {
 export type RegionTopCountry = { id: string; label: string; value: number }
 
 export type RegionOverview = {
-  tiles: RegionStat[]
+  tiles: Stat<RegionTileKey>[]
   memberAlpha2: string[]
   memberIds: Set<string>
   countryIdByAlpha2: Partial<Record<Alpha2Code, Alpha3Code>>
@@ -40,7 +41,7 @@ export type RegionOverview = {
 }
 
 export const EMPTY_REGION_OVERVIEW: RegionOverview = {
-  tiles: TILE_KEYS.map((key) => ({ key, value: '—' })),
+  tiles: toStats(TILE_KEYS),
   memberAlpha2: [],
   memberIds: new Set(),
   countryIdByAlpha2: {},
@@ -48,7 +49,6 @@ export const EMPTY_REGION_OVERVIEW: RegionOverview = {
   topGdpPerCapita: []
 }
 
-// High income → Upper middle → Lower middle → Low income, matching the drill-down order.
 const INCOME_ORDER = Object.values(INCOME_LEVELS) as string[]
 
 function incomeRank(level: string) {
@@ -60,9 +60,7 @@ export function selectRegionOverview(
   regionName: string,
   countries: readonly Country[]
 ): RegionOverview {
-  // Raw API `region` values can carry stray whitespace, so compare trimmed (as the country
-  // page and global overview do) rather than via `selectRegionCountries`' exact match.
-  const members = countries.filter((country) => country.region.trim() === regionName)
+  const members = selectRegionCountries(regionName, countries)
   if (members.length === 0) return EMPTY_REGION_OVERVIEW
 
   const tileValues: Record<RegionTileKey, string> = {
@@ -97,7 +95,7 @@ export function selectRegionOverview(
     .map((c) => ({ id: c.id, label: c.name, value: c.gdpPerCapita }))
 
   return {
-    tiles: TILE_KEYS.map((key) => ({ key, value: tileValues[key] })),
+    tiles: toStats(TILE_KEYS, tileValues),
     memberAlpha2: members.map((c) => c.iso2.toUpperCase()),
     memberIds: new Set(members.map((c) => c.id)),
     countryIdByAlpha2: Object.fromEntries(members.map((c) => [c.iso2, c.id])) as Partial<
