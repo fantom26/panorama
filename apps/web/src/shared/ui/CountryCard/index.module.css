@@ -1,0 +1,37 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-theme-spacing-sm);
+  padding: var(--ds-theme-spacing-md);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-soft);
+  border-radius: var(--ds-theme-border-radius-md);
+  transition: border-color 120ms ease;
+}
+
+.card:hover {
+  border-color: var(--ds-theme-color-border-default);
+}
+
+.card:focus-visible {
+  outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+  outline-offset: calc(-1 * var(--ds-theme-border-width-md));
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-xs);
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-theme-spacing-xs) var(--ds-theme-spacing-md);
+  margin: 0;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-theme-spacing-3xs);
+}

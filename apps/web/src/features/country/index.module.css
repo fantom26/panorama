@@ -3,6 +3,11 @@
   gap: var(--ds-theme-spacing-xs);
 }
 
+.metaLink {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

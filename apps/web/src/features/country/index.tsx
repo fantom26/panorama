@@ -22,6 +22,7 @@ import { useCountry, useCountryHistory } from '@/features/country/hooks/useCount
 import { assertCountryId, assertFound } from '@/features/country/model/country-not-found'
 import { useTranslation } from '@/i18n'
 import type { IndicatorValue } from '@/shared/api/statistics-api'
+import { slugFromLevel } from '@/shared/model/income-levels'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/shared/model/indicators'
 import { slugFromRegion } from '@/shared/model/regions'
 import { ROUTES } from '@/shared/routes'
@@ -70,6 +71,7 @@ export default function CountryPage() {
 
   const region = country?.region.trim() ?? ''
   const regionSlug = region ? slugFromRegion(region) : undefined
+  const incomeSlug = country ? slugFromLevel(country.incomeLevel) : undefined
   const activeTab = CHART_TABS.find((tab) => tab.id === activeIndicator) ?? CHART_TABS[0]
   const firstYear = history[0]?.year
   const lastYear = history.at(-1)?.year
@@ -157,7 +159,25 @@ export default function CountryPage() {
           </Typography>
           <TitleMeta>
             <Typography variant='body-sm' color='muted' component='div'>
-              {country ? `${region} · ${country.incomeLevel}` : ''}
+              {country && (
+                <>
+                  {regionSlug ? (
+                    <Link href={ROUTES.region(regionSlug)} className={styles.metaLink}>
+                      {region}
+                    </Link>
+                  ) : (
+                    region
+                  )}
+                  {' · '}
+                  {incomeSlug ? (
+                    <Link href={ROUTES.incomeLevel(incomeSlug)} className={styles.metaLink}>
+                      {country.incomeLevel}
+                    </Link>
+                  ) : (
+                    country.incomeLevel
+                  )}
+                </>
+              )}
             </Typography>
           </TitleMeta>
         </div>
