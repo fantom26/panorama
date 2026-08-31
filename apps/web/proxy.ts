@@ -26,6 +26,7 @@ export function proxy(request: NextRequest) {
   return NextResponse.next()
 }
 
+// Literal paths (Next statically analyses `matcher`) — keep in sync with `@/shared/routes`.
 export const config = {
   matcher: ['/countries/:id', '/region/:region']
 }

@@ -12,6 +12,7 @@ import { Dialog, Flag, Icon, Skeleton, Typography } from '@repo/ui'
 import { useTranslation } from '@/i18n'
 import type { CountryRow } from '@/shared/api/statistics-api'
 import { useCountries } from '@/shared/hooks/useCountries'
+import { ROUTES } from '@/shared/routes'
 
 import { filterCountries, moveActiveIndex } from './country-search'
 import styles from './index.module.css'
@@ -63,7 +64,7 @@ export default function CountrySearch() {
   }, [activeIndex])
 
   function goToCountry(country: CountryRow) {
-    router.push(`/countries/${country.id}`)
+    router.push(ROUTES.country(country.id))
     setOpen(false)
   }
 
@@ -184,7 +185,7 @@ export default function CountrySearch() {
                   }}
                 >
                   <Link
-                    href={`/countries/${country.id}`}
+                    href={ROUTES.country(country.id)}
                     className={clsx(styles.row, index === activeIndex && styles.rowActive)}
                     onMouseEnter={() => setActiveIndex(index)}
                     onClick={() => setOpen(false)}

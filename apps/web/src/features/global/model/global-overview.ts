@@ -1,5 +1,5 @@
 import type { Country } from '@/shared/model/country'
-import { selectGlobalMetrics } from '@/shared/model/selectors'
+import { selectCountryIdByAlpha2, selectGlobalMetrics } from '@/shared/model/selectors'
 import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/shared/utils/format'
@@ -83,8 +83,6 @@ export function selectGlobalOverview(countries: readonly Country[]): GlobalOverv
     gdpByRegion: byRegion(countries, 'gdp'),
     populationByRegion: byRegion(countries, 'population'),
     topInflation,
-    countryIdByAlpha2: Object.fromEntries(
-      countries.map((country) => [country.iso2, country.id])
-    ) as Partial<Record<Alpha2Code, Alpha3Code>>
+    countryIdByAlpha2: selectCountryIdByAlpha2(countries)
   }
 }

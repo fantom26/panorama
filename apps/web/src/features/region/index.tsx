@@ -17,9 +17,10 @@ import {
 import { useRegionOverview } from '@/features/region/hooks/useRegionOverview'
 import { assertRegionSlug } from '@/features/region/model/region-not-found'
 import { useTranslation } from '@/i18n'
+import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
 import { REGION_NAMES, REGION_SLUGS, regionFromSlug } from '@/shared/model/regions'
-import type { Alpha2Code } from '@/shared/types/iso'
+import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
 import TitleBlock from '@/shared/ui/TitleBlock'
@@ -44,10 +45,7 @@ export default function RegionPage() {
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const mapHeight = isDesktop ? 360 : isTablet ? 280 : 220
 
-  function handleCountrySelect(alpha2: string) {
-    const id = overview.countryIdByAlpha2[alpha2.toLowerCase() as Alpha2Code]
-    if (id && overview.memberIds.has(id)) router.push(`/countries/${id}`)
-  }
+  const handleCountrySelect = useCountryMapSelect(overview.countryIdByAlpha2, overview.memberIds)
 
   function renderIncomeRow(row: IncomeBreakdownRow) {
     const body = (
@@ -80,7 +78,7 @@ export default function RegionPage() {
     )
 
     return row.slug ? (
-      <Link key={row.level} href={`/income/${row.slug}`} className={styles.incomeRow}>
+      <Link key={row.level} href={ROUTES.incomeLevel(row.slug)} className={styles.incomeRow}>
         {body}
       </Link>
     ) : (
@@ -94,7 +92,7 @@ export default function RegionPage() {
     <>
       <AppHeader>
         <Breadcrumbs>
-          <Link href='/'>
+          <Link href={ROUTES.home()}>
             <Typography variant='body-sm' color='muted' component='span'>
               {t('breadcrumb.global')}
             </Typography>
@@ -118,7 +116,7 @@ export default function RegionPage() {
           <Select
             options={REGION_OPTIONS}
             value={region}
-            onValueChange={(value) => router.push(`/region/${value}`)}
+            onValueChange={(value) => value && router.push(ROUTES.region(value))}
             aria-label={t('switcher.label')}
           />
         </TitleMeta>
@@ -182,7 +180,7 @@ export default function RegionPage() {
             <RankingList
               data={overview.topGdpPerCapita}
               formatValue={formatUsd}
-              onSelect={(id) => router.push(`/countries/${id}`)}
+              onSelect={(id) => router.push(ROUTES.country(id))}
             />
           )}
         </Section>

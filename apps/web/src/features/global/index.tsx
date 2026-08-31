@@ -1,7 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-
 import {
   DonutChart,
   MapLegend,
@@ -15,8 +13,8 @@ import {
 
 import { useGlobalStats } from '@/features/global/hooks/useGlobalStats'
 import { useTranslation } from '@/i18n'
+import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
-import type { Alpha2Code } from '@/shared/types/iso'
 import AppHeader from '@/shared/ui/AppHeader'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
 import TitleBlock from '@/shared/ui/TitleBlock'
@@ -28,16 +26,12 @@ import styles from './index.module.css'
 export default function GlobalOverviewPage() {
   const { t } = useTranslation('global')
   const { overview, isPending, refetch } = useGlobalStats()
-  const router = useRouter()
   const isTablet = useMediaQuery('(min-width: 768px)')
   const isDesktop = useMediaQuery('(min-width: 1440px)')
   const heatmapHeight = isDesktop ? 340 : isTablet ? 260 : 200
   const donutSize = isTablet ? 160 : 130
 
-  function handleCountrySelect(alpha2: string) {
-    const id = overview.countryIdByAlpha2[alpha2.toLowerCase() as Alpha2Code]
-    if (id) router.push(`/countries/${id}`)
-  }
+  const handleCountrySelect = useCountryMapSelect(overview.countryIdByAlpha2)
 
   return (
     <>

@@ -1,6 +1,6 @@
 import type { Country } from '@/shared/model/country'
-import { INCOME_LEVELS, type IncomeSlug, slugFromLevel } from '@/shared/model/income-levels'
-import { selectRegionCountries } from '@/shared/model/selectors'
+import { incomeRank, type IncomeSlug, slugFromLevel } from '@/shared/model/income-levels'
+import { selectCountryIdByAlpha2, selectRegionCountries } from '@/shared/model/selectors'
 import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 import { avg, sum } from '@/shared/utils/aggregate'
@@ -49,13 +49,6 @@ export const EMPTY_REGION_OVERVIEW: RegionOverview = {
   topGdpPerCapita: []
 }
 
-const INCOME_ORDER = Object.values(INCOME_LEVELS) as string[]
-
-function incomeRank(level: string) {
-  const index = INCOME_ORDER.indexOf(level)
-  return index === -1 ? INCOME_ORDER.length : index
-}
-
 export function selectRegionOverview(
   regionName: string,
   countries: readonly Country[]
@@ -98,9 +91,7 @@ export function selectRegionOverview(
     tiles: toStats(TILE_KEYS, tileValues),
     memberAlpha2: members.map((c) => c.iso2.toUpperCase()),
     memberIds: new Set(members.map((c) => c.id)),
-    countryIdByAlpha2: Object.fromEntries(members.map((c) => [c.iso2, c.id])) as Partial<
-      Record<Alpha2Code, Alpha3Code>
-    >,
+    countryIdByAlpha2: selectCountryIdByAlpha2(members),
     incomeBreakdown,
     topGdpPerCapita
   }
