@@ -2,11 +2,7 @@ import type { IncomeSlug } from '@/shared/model/income-levels'
 import type { RegionSlug } from '@/shared/model/regions'
 import type { Alpha3Code } from '@/shared/types/iso'
 
-/**
- * The single source for internal URL paths. Keep this file dependency-free — it is imported
- * by static pages and by header UI on every route. `compare-url.ts` stays the canonical
- * *parser* for `?countries=`; this only builds the string.
- */
+// Keep this file dependency-free — it is imported by the static 404 view and header UI.
 export const ROUTES = {
   home: () => '/',
   country: (id: Alpha3Code | string) => `/countries/${id}`,

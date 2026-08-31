@@ -10,13 +10,11 @@ export type IncomeLevelName = (typeof INCOME_LEVELS)[IncomeSlug]
 
 export const INCOME_SLUGS = Object.keys(INCOME_LEVELS) as IncomeSlug[]
 
-/** Income level display names from richest to poorest — the canonical ordering. */
 export const INCOME_LEVEL_ORDER = Object.values(INCOME_LEVELS) as IncomeLevelName[]
 
-/** The same order as slugs (`INCOME_LEVELS` is declared high → low). */
 export const INCOME_SLUG_ORDER = INCOME_SLUGS
 
-/** Sort rank for an income level display name; unknown levels sort last. */
+/** Unknown levels sort last. */
 export function incomeRank(level: string): number {
   const index = (INCOME_LEVEL_ORDER as readonly string[]).indexOf(level)
   return index === -1 ? INCOME_LEVEL_ORDER.length : index

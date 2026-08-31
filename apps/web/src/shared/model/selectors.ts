@@ -6,7 +6,6 @@ export function selectCountryById(id: string, list: readonly Country[]): Country
   return list.find((country) => country.id === id) ?? null
 }
 
-/** Maps each country's ISO alpha-2 (as stored, lowercase) to its alpha-3 id — for world-map click → route. */
 export function selectCountryIdByAlpha2(
   list: readonly Country[]
 ): Partial<Record<Alpha2Code, Alpha3Code>> {

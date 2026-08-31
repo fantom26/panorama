@@ -5,14 +5,13 @@ import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/shared/routes'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 
-/** `WorldMap.onSelect` → country route. `inScope`, when passed, limits navigation to those ids. */
 export function useCountryMapSelect(
   idByAlpha2: Partial<Record<Alpha2Code, Alpha3Code>>,
   inScope?: ReadonlySet<string>
 ) {
   const router = useRouter()
-  // Kept in a ref so the returned callback stays referentially stable — `idByAlpha2` is a
-  // fresh object every render, which would otherwise re-trigger the WorldMap effect.
+  // Read through a ref so the callback stays stable — `idByAlpha2` is a fresh object each
+  // render and would otherwise re-trigger the WorldMap effect.
   const latest = useRef({ idByAlpha2, inScope })
   latest.current = { idByAlpha2, inScope }
 
