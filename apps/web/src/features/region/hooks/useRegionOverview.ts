@@ -1,8 +1,7 @@
+import { type RegionOverview, selectRegionOverview } from '@/features/region/model/region-overview'
 import { useDashboardCountries } from '@/shared/hooks/useDashboardCountries'
 
-import { type RegionOverview, selectRegionOverview } from '../model/region-overview'
-
-export type { RegionOverview } from '../model/region-overview'
+export type { RegionOverview } from '@/features/region/model/region-overview'
 
 export function useRegionOverview(regionName: string): {
   overview: RegionOverview

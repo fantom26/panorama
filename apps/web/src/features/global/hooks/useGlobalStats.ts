@@ -1,8 +1,12 @@
+import { type GlobalOverview, selectGlobalOverview } from '@/features/global/model/global-overview'
 import { useDashboardCountries } from '@/shared/hooks/useDashboardCountries'
 
-import { type GlobalOverview, selectGlobalOverview } from '../model/global-overview'
-
-export type { GlobalOverview, GlobalStat, LabelledValue, TileKey } from '../model/global-overview'
+export type {
+  GlobalOverview,
+  GlobalStat,
+  LabelledValue,
+  TileKey
+} from '@/features/global/model/global-overview'
 
 export function useGlobalStats(): {
   overview: GlobalOverview
