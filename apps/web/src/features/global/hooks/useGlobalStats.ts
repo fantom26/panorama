@@ -1,0 +1,15 @@
+import { useDashboardCountries } from '@/shared/hooks/useDashboardCountries'
+
+import { type GlobalOverview, selectGlobalOverview } from '../model/global-overview'
+
+export type { GlobalOverview, GlobalStat, LabelledValue, TileKey } from '../model/global-overview'
+
+export function useGlobalStats(): {
+  overview: GlobalOverview
+  isPending: boolean
+  refetch: () => void
+} {
+  const { countries, isPending, refetch } = useDashboardCountries({ throwOnError: true })
+
+  return { overview: selectGlobalOverview(countries), isPending, refetch }
+}

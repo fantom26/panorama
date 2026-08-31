@@ -1,1 +1,1 @@
-export { default } from '@/features/global/GlobalOverviewPage'
+export { default } from '@/features/global'

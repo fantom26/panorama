@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 
-import CompareView from '@/features/compare/CompareView'
+import CompareView from '@/features/compare'
 
 export default function ComparePage() {
   return (

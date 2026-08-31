@@ -1,1 +1,1 @@
-export { default } from '@/features/region/RegionPage'
+export { default } from '@/features/region'
