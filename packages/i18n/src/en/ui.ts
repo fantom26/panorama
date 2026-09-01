@@ -30,6 +30,7 @@ export default {
   },
   themeToggle: {
     ariaLabel: 'Toggle color theme',
+    system: 'System',
     light: 'Light',
     dark: 'Dark'
   },

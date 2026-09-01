@@ -2,7 +2,8 @@
 
 import { Divider, LanguageSwitcher, Logo, ThemeToggle } from '@repo/ui'
 
-import { useTranslation } from '@/i18n'
+import { useLocale } from '@/shared/hooks/useLocale'
+import { useTheme } from '@/shared/hooks/useTheme'
 import CompareIndicator from '@/shared/ui/CompareIndicator'
 import CountrySearch from '@/shared/ui/CountrySearch'
 
@@ -19,14 +20,8 @@ export type AppHeaderProps = {
 }
 
 export default function AppHeader({ children }: AppHeaderProps) {
-  const { i18n } = useTranslation()
-
-  function handleLanguageChange(code: string) {
-    i18n.changeLanguage(code)
-    const root = document.documentElement
-    root.lang = code
-    root.dir = i18n.dir(code)
-  }
+  const { locale, setLocale } = useLocale()
+  const { preference, setPreference } = useTheme()
 
   return (
     <header className={styles.topBar}>
@@ -38,13 +33,13 @@ export default function AppHeader({ children }: AppHeaderProps) {
         <CompareIndicator />
         <LanguageSwitcher
           languages={languages}
-          value={i18n.language}
-          onChange={handleLanguageChange}
+          value={locale}
+          onChange={(code) => setLocale(code === 'ar' ? 'ar' : 'en')}
         />
         <span className={styles.dividerWrap}>
           <Divider orientation='vertical' />
         </span>
-        <ThemeToggle />
+        <ThemeToggle value={preference} onChange={setPreference} />
       </div>
       <div className={styles.search}>
         <CountrySearch />

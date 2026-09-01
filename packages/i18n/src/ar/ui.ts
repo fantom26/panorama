@@ -30,6 +30,7 @@ export default {
   },
   themeToggle: {
     ariaLabel: 'تبديل السمة اللونية',
+    system: 'تلقائي',
     light: 'فاتح',
     dark: 'داكن'
   },
