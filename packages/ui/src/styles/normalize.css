@@ -21,6 +21,7 @@
 }
 
 :where(.panorama-normalize a) {
+  color: inherit;
   text-decoration: none;
 }
 

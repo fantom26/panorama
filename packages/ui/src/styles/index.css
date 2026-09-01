@@ -4,6 +4,16 @@
 @import '@fontsource/geist-sans/500.css';
 @import './normalize.css';
 
+/* Tell the UA which palette to render its own chrome in — scrollbars, form controls,
+   and the default link colour — so they track the active theme like everything else. */
+[data-theme='light'] {
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+
 html {
   line-height: 1.15;
   text-size-adjust: 100%;
