@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-import { useLocalStorage } from 'usehooks-ts'
+import { useIsMounted, useLocalStorage } from 'usehooks-ts'
 
 import i18n from '@/i18n'
 
@@ -24,19 +24,17 @@ export function useLocale() {
   const [stored, setStored] = useLocalStorage<Locale>(LOCALE_STORAGE_KEY, 'en', {
     initializeWithValue: false
   })
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => setMounted(true), [])
+  const isMounted = useIsMounted()
 
   const locale = isLocale(stored) ? stored : 'en'
 
   useEffect(() => {
-    if (!mounted) return
+    if (!isMounted) return
     if (i18n.language !== locale) i18n.changeLanguage(locale)
     const root = document.documentElement
     root.lang = locale
     root.dir = i18n.dir(locale)
-  }, [mounted, locale])
+  }, [isMounted, locale])
 
   return { locale, setLocale: setStored }
 }

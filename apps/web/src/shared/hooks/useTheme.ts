@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-import { useLocalStorage } from 'usehooks-ts'
+import { useIsMounted, useLocalStorage } from 'usehooks-ts'
 
 import type { ThemePreference } from '@repo/ui'
 
@@ -29,18 +29,16 @@ export function useTheme() {
     initializeWithValue: false
   })
   const systemDark = useMediaQuery('(prefers-color-scheme: dark)')
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => setMounted(true), [])
+  const isMounted = useIsMounted()
 
   const preference = isPreference(stored) ? stored : 'system'
   const resolved: ResolvedTheme =
     preference === 'system' ? (systemDark ? 'dark' : 'light') : preference
 
   useEffect(() => {
-    if (!mounted) return
+    if (!isMounted) return
     document.documentElement.dataset.theme = resolved
-  }, [mounted, resolved])
+  }, [isMounted, resolved])
 
   return { preference, setPreference, resolved }
 }
