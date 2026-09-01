@@ -41,8 +41,7 @@ export default function RankingsPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const limitParam = searchParams.get('limit')
-  const limit = parseLimit(limitParam)
+  const limit = parseLimit(searchParams.get('limit'))
   const { view, isPending, refetch } = useRankingView(indicatorFromSlug(indicator), limit)
 
   const chartHeight = useChartHeight({ mobile: 320, tablet: 420, desktop: 480 })
@@ -118,10 +117,7 @@ export default function RankingsPage() {
           <Select
             options={indicatorOptions}
             value={indicator}
-            onValueChange={(value) =>
-              value &&
-              router.push(ROUTES.rankings(value, { limit: limitParam ? limit : undefined }))
-            }
+            onValueChange={(value) => value && router.push(ROUTES.rankings(value, { limit }))}
             aria-label={t('switcher.label')}
           />
         </TitleMeta>

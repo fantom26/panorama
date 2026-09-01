@@ -2,9 +2,7 @@ import { describe, expect, test } from '@jest/globals'
 
 import {
   BAR_COUNT,
-  DEFAULT_LIMIT,
   EMPTY_RANKING_VIEW,
-  MAX_LIMIT,
   parseLimit,
   selectRankingView
 } from '@/features/rankings/model/ranking-view'
@@ -31,52 +29,56 @@ const ranking = (data: RankingRow[], over: Partial<RankingResponse['indicator']>
   }) as RankingResponse
 
 describe('parseLimit', () => {
-  test('defaults when the param is absent or unparseable', () => {
-    expect(parseLimit(null)).toBe(DEFAULT_LIMIT)
-    expect(parseLimit('')).toBe(DEFAULT_LIMIT)
-    expect(parseLimit('all')).toBe(DEFAULT_LIMIT)
-    expect(parseLimit('0')).toBe(DEFAULT_LIMIT)
-    expect(parseLimit('-5')).toBe(DEFAULT_LIMIT)
+  test('means "no cap" when the param is absent or unparseable', () => {
+    expect(parseLimit(null)).toBeUndefined()
+    expect(parseLimit('')).toBeUndefined()
+    expect(parseLimit('all')).toBeUndefined()
+    expect(parseLimit('0')).toBeUndefined()
+    expect(parseLimit('-5')).toBeUndefined()
   })
 
-  test('clamps to the maximum and truncates fractions', () => {
+  test('takes an explicit cap, truncating fractions', () => {
     expect(parseLimit('50')).toBe(50)
-    expect(parseLimit('999')).toBe(MAX_LIMIT)
     expect(parseLimit('10.9')).toBe(10)
   })
 })
 
 describe('selectRankingView', () => {
   test('returns the empty view when there is no ranking or no rows', () => {
-    expect(selectRankingView(undefined, [], DEFAULT_LIMIT)).toBe(EMPTY_RANKING_VIEW)
-    expect(selectRankingView(ranking([]), [], DEFAULT_LIMIT)).toBe(EMPTY_RANKING_VIEW)
+    expect(selectRankingView(undefined, [])).toBe(EMPTY_RANKING_VIEW)
+    expect(selectRankingView(ranking([]), [])).toBe(EMPTY_RANKING_VIEW)
   })
 
-  test('sorts by rank and slices the table to the limit', () => {
-    const view = selectRankingView(
-      ranking([row(3, 'CCC', 30), row(1, 'AAA', 10), row(2, 'BBB', 20)]),
-      [],
-      2
-    )
+  test('lists every ranked country when no limit is given', () => {
+    const rows = Array.from({ length: 217 }, (_, i) => row(i + 1, `C${i}`, 500 - i))
+    const view = selectRankingView(ranking(rows), [])
 
-    expect(view.rows.map((r) => r.id)).toEqual(['AAA', 'BBB'])
-    expect(view.rows.map((r) => r.rank)).toEqual([1, 2])
+    expect(view.rows).toHaveLength(217)
   })
 
-  test('caps the bar chart at BAR_COUNT regardless of the table limit', () => {
+  test('sorts by rank, and slices only when given an explicit limit', () => {
+    const data = [row(3, 'CCC', 30), row(1, 'AAA', 10), row(2, 'BBB', 20)]
+
+    expect(selectRankingView(ranking(data), []).rows.map((r) => r.id)).toEqual([
+      'AAA',
+      'BBB',
+      'CCC'
+    ])
+    expect(selectRankingView(ranking(data), [], 2).rows.map((r) => r.rank)).toEqual([1, 2])
+  })
+
+  test('caps the bar chart at BAR_COUNT however long the table is', () => {
     const rows = Array.from({ length: 40 }, (_, i) => row(i + 1, `C${i}`, 100 - i))
-    const view = selectRankingView(ranking(rows), [], MAX_LIMIT)
+    const view = selectRankingView(ranking(rows), [])
 
     expect(view.bars).toHaveLength(BAR_COUNT)
     expect(view.rows).toHaveLength(40)
   })
 
   test('joins iso2 from the catalog and leaves unknown countries without one', () => {
-    const view = selectRankingView(
-      ranking([row(1, 'DEU', 4), row(2, 'XKX', 1)]),
-      [country('DEU', 'de')],
-      DEFAULT_LIMIT
-    )
+    const view = selectRankingView(ranking([row(1, 'DEU', 4), row(2, 'XKX', 1)]), [
+      country('DEU', 'de')
+    ])
 
     expect(view.rows[0]?.iso2).toBe('de')
     expect(view.rows[1]?.iso2).toBeUndefined()
@@ -85,8 +87,7 @@ describe('selectRankingView', () => {
   test('derives leader / median / lowest / category / ranked tiles in the indicator format', () => {
     const view = selectRankingView(
       ranking([row(1, 'AAA', 3.24e12), row(2, 'BBB', 2e12), row(3, 'CCC', 1e12)]),
-      [],
-      DEFAULT_LIMIT
+      []
     )
     const tiles = Object.fromEntries(view.tiles.map((tile) => [tile.key, tile.value]))
 
@@ -100,8 +101,7 @@ describe('selectRankingView', () => {
   test('carries the indicator meta through', () => {
     const view = selectRankingView(
       ranking([row(1, 'AAA', 5)], { label: 'Inflation', format: 'percent' }),
-      [],
-      DEFAULT_LIMIT
+      []
     )
 
     expect(view.meta).toEqual({

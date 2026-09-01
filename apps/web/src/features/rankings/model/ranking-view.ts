@@ -8,8 +8,6 @@ const TILE_KEYS = ['leader', 'median', 'lowest', 'category', 'ranked'] as const
 
 export type RankingTileKey = (typeof TILE_KEYS)[number]
 
-export const DEFAULT_LIMIT = 25
-export const MAX_LIMIT = 100
 export const BAR_COUNT = 15
 
 export type RankingTableRow = {
@@ -46,17 +44,17 @@ export const EMPTY_RANKING_VIEW: RankingView = {
   meta: undefined
 }
 
-/** Clamps `?limit=` to [1, MAX_LIMIT]; anything unparseable falls back to the default. */
-export function parseLimit(raw: string | null): number {
+/** `?limit=` optionally caps the table; absent or unparseable means every ranked country. */
+export function parseLimit(raw: string | null): number | undefined {
   const parsed = Number(raw)
-  if (!Number.isFinite(parsed) || parsed < 1) return DEFAULT_LIMIT
-  return Math.min(Math.trunc(parsed), MAX_LIMIT)
+  if (raw === null || raw === '' || !Number.isFinite(parsed) || parsed < 1) return undefined
+  return Math.trunc(parsed)
 }
 
 export function selectRankingView(
   ranking: RankingResponse | undefined,
   countries: readonly CountryRow[],
-  limit: number
+  limit?: number
 ): RankingView {
   if (!ranking) return EMPTY_RANKING_VIEW
 
@@ -79,7 +77,7 @@ export function selectRankingView(
 
   return {
     tiles: toStats(TILE_KEYS, tileValues),
-    rows: sorted.slice(0, limit).map((row) => ({
+    rows: (limit === undefined ? sorted : sorted.slice(0, limit)).map((row) => ({
       rank: row.rank,
       id: row.countryId,
       iso2: iso2ById.get(row.countryId),
