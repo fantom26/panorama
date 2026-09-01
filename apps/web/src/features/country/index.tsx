@@ -24,10 +24,12 @@ import { useTranslation } from '@/i18n'
 import type { IndicatorValue } from '@/shared/api/statistics-api'
 import { slugFromLevel } from '@/shared/model/income-levels'
 import { CHART_INDICATORS, INDICATOR, type IndicatorId } from '@/shared/model/indicators'
+import { slugFromIndicator } from '@/shared/model/ranking-indicators'
 import { slugFromRegion } from '@/shared/model/regions'
 import { ROUTES } from '@/shared/routes'
 import { useCompareList } from '@/shared/store/compare'
 import AppHeader from '@/shared/ui/AppHeader'
+import SectionLink from '@/shared/ui/SectionLink'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'
 import {
@@ -73,6 +75,7 @@ export default function CountryPage() {
   const regionSlug = region ? slugFromRegion(region) : undefined
   const incomeSlug = country ? slugFromLevel(country.incomeLevel) : undefined
   const activeTab = CHART_TABS.find((tab) => tab.id === activeIndicator) ?? CHART_TABS[0]
+  const activeRankingSlug = slugFromIndicator(activeIndicator)
   const firstYear = history[0]?.year
   const lastYear = history.at(-1)?.year
   const yearRange =
@@ -246,6 +249,11 @@ export default function CountryPage() {
             )}
           </Tabs.Panel>
         </Tabs.Root>
+        {activeRankingSlug && (
+          <SectionLink href={ROUTES.rankings(activeRankingSlug)}>
+            {t('sections.ranking', { label: t(activeTab.labelKey) })}
+          </SectionLink>
+        )}
       </Section>
 
       <Section

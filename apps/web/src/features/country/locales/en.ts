@@ -19,6 +19,7 @@ export default {
   },
   sections: {
     historical: 'Historical · {{label}} ({{range}})',
+    ranking: 'Global {{label}} ranking →',
     indicators: 'Indicators ({{count}})'
   },
   chart: {

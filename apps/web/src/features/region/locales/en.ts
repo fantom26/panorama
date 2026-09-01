@@ -23,7 +23,8 @@ export default {
     regionalMap: 'Regional map',
     regionalMapHint: 'Click a country to view details',
     incomeLevels: 'Income levels',
-    topEconomies: 'GDP per capita · top economies in {{region}}'
+    topEconomies: 'GDP per capita · top economies in {{region}}',
+    globalRanking: 'Global GDP per capita ranking →'
   },
   incomeRow: {
     count_one: '{{count}} country',

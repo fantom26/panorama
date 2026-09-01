@@ -16,6 +16,7 @@ import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
 import BreakdownList from '@/shared/ui/BreakdownList'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
+import SectionLink from '@/shared/ui/SectionLink'
 import StatTiles from '@/shared/ui/StatTiles'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'
@@ -151,11 +152,16 @@ export default function RegionPage() {
           {isPending ? (
             <Skeleton variant='rectangular' width='100%' height={280} />
           ) : (
-            <RankingList
-              data={overview.topGdpPerCapita}
-              formatValue={formatUsd}
-              onSelect={(id) => router.push(ROUTES.country(id))}
-            />
+            <>
+              <RankingList
+                data={overview.topGdpPerCapita}
+                formatValue={formatUsd}
+                onSelect={(id) => router.push(ROUTES.country(id))}
+              />
+              <SectionLink href={ROUTES.rankings('gdp-per-capita')}>
+                {t('sections.globalRanking')}
+              </SectionLink>
+            </>
           )}
         </Section>
       </ErrorBoundary>
