@@ -40,7 +40,7 @@
   }
 
   .columnDivided {
-    border-right: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+    border-inline-end: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   }
 }
 

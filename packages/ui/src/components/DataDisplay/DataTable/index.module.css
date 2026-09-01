@@ -22,7 +22,7 @@
 
 .headerCell {
   padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md);
-  text-align: left;
+  text-align: start;
   white-space: nowrap;
 }
 

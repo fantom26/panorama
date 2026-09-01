@@ -24,7 +24,7 @@ export default {
     regionalMapHint: 'انقر على دولة لعرض التفاصيل',
     incomeLevels: 'مستويات الدخل',
     topEconomies: 'نصيب الفرد من الناتج المحلي · أكبر الاقتصادات في {{region}}',
-    globalRanking: '← الترتيب العالمي لنصيب الفرد من الناتج'
+    globalRanking: 'الترتيب العالمي لنصيب الفرد من الناتج'
   },
   incomeRow: {
     count_one: 'دولة واحدة',

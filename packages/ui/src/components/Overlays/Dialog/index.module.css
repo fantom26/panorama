@@ -28,11 +28,11 @@
 }
 
 .title {
-  padding-right: var(--ds-theme-spacing-xl);
+  padding-inline-end: var(--ds-theme-spacing-xl);
 }
 
 .close {
   position: absolute;
   top: var(--ds-theme-spacing-sm);
-  right: var(--ds-theme-spacing-sm);
+  inset-inline-end: var(--ds-theme-spacing-sm);
 }

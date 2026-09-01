@@ -5,9 +5,21 @@
 }
 
 .link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-3xs);
   color: var(--ds-theme-color-content-brand);
 }
 
 .link:hover {
   text-decoration: underline;
+}
+
+/* `arrow-left` rotated to point at the inline-end edge in LTR; upright again in RTL. */
+.arrow {
+  transform: rotate(180deg);
+}
+
+[dir='rtl'] .arrow {
+  transform: none;
 }
