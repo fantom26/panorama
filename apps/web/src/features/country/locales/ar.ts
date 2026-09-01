@@ -19,6 +19,7 @@ export default {
   },
   sections: {
     historical: 'تاريخي · {{label}} ({{range}})',
+    ranking: '← الترتيب العالمي لـ {{label}}',
     indicators: 'المؤشرات ({{count}})'
   },
   chart: {

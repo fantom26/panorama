@@ -27,7 +27,8 @@ export default {
     gdpHeatmap: 'الخريطة الحرارية للناتج المحلي الإجمالي — انقر على دولة للتفاصيل',
     gdpByRegion: 'الناتج المحلي الإجمالي حسب المنطقة',
     populationByRegion: 'عدد السكان حسب المنطقة',
-    highestInflation: 'أعلى معدلات التضخم'
+    highestInflation: 'أعلى معدلات التضخم',
+    inflationRanking: '← الترتيب الكامل للتضخم'
   },
   compareIndicator: {
     aria: 'عرض مقارنة الدول ({{count}})'

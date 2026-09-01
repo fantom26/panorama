@@ -27,7 +27,8 @@ export default {
     gdpHeatmap: 'GDP heatmap — click a country to drill down',
     gdpByRegion: 'GDP by region',
     populationByRegion: 'Population by region',
-    highestInflation: 'Highest inflation'
+    highestInflation: 'Highest inflation',
+    inflationRanking: 'Full inflation ranking →'
   },
   compareIndicator: {
     aria: 'View country comparison ({{count}})'

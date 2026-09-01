@@ -61,4 +61,21 @@ describe('proxy', () => {
       expect(response.headers.get('x-middleware-next')).toBe('1')
     }
   )
+
+  test.each(['/rankings/mars', '/rankings/IMF.NGDPD', '/rankings/gdp_per_capita'])(
+    'rewrites an unknown ranking slug (%s) to the not-found route with a 404',
+    (path) => {
+      const response = proxy(request(path))
+      expect(response.status).toBe(404)
+      expect(response.headers.get('x-middleware-rewrite')).toContain('/_not-found')
+    }
+  )
+
+  test.each(['/rankings/gdp', '/rankings/gdp-per-capita', '/rankings/area'])(
+    'passes a known ranking slug through (%s)',
+    (path) => {
+      const response = proxy(request(path))
+      expect(response.headers.get('x-middleware-next')).toBe('1')
+    }
+  )
 })

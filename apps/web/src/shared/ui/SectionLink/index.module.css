@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--ds-theme-spacing-sm);
+}
+
+.link {
+  color: var(--ds-theme-color-content-brand);
+}
+
+.link:hover {
+  text-decoration: underline;
+}

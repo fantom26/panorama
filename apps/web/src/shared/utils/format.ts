@@ -20,6 +20,15 @@ const usd = new Intl.NumberFormat('en-US', {
 
 const number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 })
 
+// Compact currency keeps a decimal here: at whole-dollar precision the top of a GDP
+// ranking collapses into four bars all labelled "$4T".
+const compactUsdPrecise = new Intl.NumberFormat('en-US', {
+  notation: 'compact',
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 1
+})
+
 /** e.g. 8192078152 -> "8.19B" */
 export const formatCompactNumber = (value: number) => compactNumber.format(value)
 
@@ -50,5 +59,18 @@ export function formatIndicatorValue(value: number, format: IndicatorFormat) {
       return formatPercent(value)
     default:
       return formatNumber(value)
+  }
+}
+
+/** As `formatIndicatorValue`, abbreviated — for chart labels and tiles, where a
+ *  population's full 1,428,627,663 would crowd out everything around it. */
+export function formatIndicatorValueCompact(value: number, format: IndicatorFormat) {
+  switch (format) {
+    case 'currency':
+      return compactUsdPrecise.format(value)
+    case 'percent':
+      return formatPercent(value)
+    default:
+      return formatCompactNumber(value)
   }
 }

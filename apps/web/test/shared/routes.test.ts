@@ -23,6 +23,12 @@ describe('ROUTES', () => {
     expect(ROUTES.incomeLevel('high', { region: undefined })).toBe('/income/high')
   })
 
+  test('rankings() carries an explicit limit only', () => {
+    expect(ROUTES.rankings('gdp')).toBe('/rankings/gdp')
+    expect(ROUTES.rankings('gdp', {})).toBe('/rankings/gdp')
+    expect(ROUTES.rankings('gdp', { limit: 50 })).toBe('/rankings/gdp?limit=50')
+  })
+
   test('compare() omits the query string when there are no codes', () => {
     expect(ROUTES.compare()).toBe('/compare')
     expect(ROUTES.compare([])).toBe('/compare')

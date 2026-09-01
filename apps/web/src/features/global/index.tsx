@@ -15,8 +15,10 @@ import { useTranslation } from '@/i18n'
 import { useChartHeight } from '@/shared/hooks/useChartHeight'
 import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
+import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
+import SectionLink from '@/shared/ui/SectionLink'
 import StatTiles from '@/shared/ui/StatTiles'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'
@@ -122,7 +124,12 @@ export default function GlobalOverviewPage() {
             {isPending ? (
               <Skeleton variant='rectangular' width='100%' height={220} />
             ) : (
-              <RankingList data={overview.topInflation} formatValue={formatPercent} />
+              <>
+                <RankingList data={overview.topInflation} formatValue={formatPercent} />
+                <SectionLink href={ROUTES.rankings('inflation')}>
+                  {t('sections.inflationRanking')}
+                </SectionLink>
+              </>
             )}
           </Section>
         </div>
