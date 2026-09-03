@@ -1,0 +1,45 @@
+# After (perf/core-web-vitals) client JS chunks — Turbopack production build
+# Generated 2026-09-03T16:19:44Z
+#
+#      raw(B)   gzip(B)  chunk
+      403987     94476  27ptl0ogaow2i.js
+      308275     97051  3x854lers4ldt.js
+      306242    113778  2yauzlxvci5ek.js
+      231556     60513  01qmck0k414up.js
+      229062     71622  2w6sp_j-ul6cz.js
+      160412     43691  3ouzyerx-_vh5.js
+      113809     27865  0cgf5rqxl47f8.js
+      112594     39490  0cz1d0mv5g_q7.js
+       51803     16934  0k0mubcm114i0.js
+       51015     15524  2-s4n1xm30eso.js
+       39275     11659  02gw0lvdjiq8p.js
+       32953      8769  43uod7_djsrjs.js
+       32789     10702  12-cb5mqe834x.js
+       31924     10507  3cn9vgwgawes7.js
+       30969      9389  23yevew7kpb35.js
+       29469      9155  31jlqo2vhzlu-.js
+       28802      9561  2rm21z3goejwz.js
+       28320      9480  05806akb_a-6t.js
+       26159      9025  2fnqw_d2_c6-g.js
+       21692      7772  143i3t0mvg6ds.js
+       16246      5422  3yl5omdbk8b42.js
+       14376      3677  1pxnftioiqz3m.js
+       12226      4647  0154616qhjudm.js
+        9652      3869  turbopack-3ujihs_uyuba4.js
+        5363      1972  1h25qu2378ke7.js
+        3087      1066  1h73uaf66bot-.js
+         851       363  3y7he6izwoa8e.js
+#
+# TOTAL  raw=2332908  gzip=679368  across 27 chunks
+#
+# rootMainFiles + polyfills (every route):
+  1h25qu2378ke7.js
+  43uod7_djsrjs.js
+  2w6sp_j-ul6cz.js
+  3ouzyerx-_vh5.js
+  turbopack-3ujihs_uyuba4.js
+  0cz1d0mv5g_q7.js
+# rootMain+polyfill gzip: 166762
+#
+# amCharts chunk(s): 2yauzlxvci5ek.js
+# amCharts gzip: 113761  (lazy — not in any route initial load)

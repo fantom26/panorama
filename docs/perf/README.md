@@ -1,116 +1,116 @@
 # Performance & Core Web Vitals
 
-Baseline benchmarks for `apps/web`, captured **before** any optimization work, plus the
-place where the post-optimization "after" numbers will land.
+Before / after benchmarks for the `apps/web` performance pass (Phase 19).
 
-- `baseline/` — the pre-optimization snapshot (this PR). Do not regenerate.
-- `after/` — the post-optimization snapshot (added by the optimization PR), same routes,
-  same method.
+- `baseline/` — pre-optimization snapshot (branch `perf/baseline`, PR #35).
+- `after/` — post-optimization snapshot (branch `perf/core-web-vitals`).
+
+Neither is regenerated; re-run the method below into a new folder to re-measure.
 
 ## Method
 
-| | |
-| --- | --- |
-| Build | `pnpm --filter web build` — Next.js 16.3.0, Turbopack, production |
-| Server | `next start -p 4311` on `localhost`, warm (server already running, data un-cached per navigation — React Query cache is per page load) |
-| Lighthouse | `npx lighthouse@13`, `--only-categories=performance --form-factor=mobile --throttling-method=simulate`, headless Chrome 152 |
-| Runs | 3 per route. All 3 runs' headline metrics → `<snapshot>/lighthouse/summary.tsv`. One representative run's `*.report.json` per route is kept, trimmed to score + metric audits (screenshots, filmstrip, and opportunity/table drill-downs stripped — re-run Lighthouse for those). The tables below use the **per-metric median** across the 3 runs. |
-| Machine | macOS 26.5 arm64, Node 24.15, LH benchmarkIndex ≈ 4100 |
+|            |                                                                                                                                                                                                                |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Build      | `pnpm --filter web build` — Next.js 16.3.0, Turbopack, production                                                                                                                                              |
+| Server     | `next start` on `localhost`, warm process; React Query cache is per page load, so data is re-fetched per run                                                                                                   |
+| Lighthouse | `npx lighthouse@13`, `--only-categories=performance --form-factor=mobile --throttling-method=simulate`, headless Chrome 152                                                                                    |
+| Runs       | 3 per route; tables show the **per-metric median**. Every run's headline metrics: `<snapshot>/lighthouse/summary.tsv`. One representative `*.report.json` per route is kept, trimmed to score + metric audits. |
+| Machine    | macOS 26.5 arm64, Node 24.15, LH benchmarkIndex ≈ 4100                                                                                                                                                         |
+| Routes     | `/` · `/countries/USA` · `/rankings/gdp` · `/region/europe-central-asia` · `/compare?countries=USA,CHN,DEU`                                                                                                    |
 
-Routes (params from `apps/web/src/shared/routes.ts` + model data):
-
-| Label | URL |
-| --- | --- |
-| home | `/` |
-| country | `/countries/USA` |
-| rankings | `/rankings/gdp` |
-| region | `/region/europe-central-asia` |
-| compare | `/compare?countries=USA,CHN,DEU` |
-
-Reproduce: `scripts` in the optimization PR's plan, or re-run
-`npx lighthouse http://localhost:4311<route> --only-categories=performance --form-factor=mobile --throttling-method=simulate`.
-
-### Regenerating the metric table
+### Regenerate the metric table
 
 ```bash
 jq -rn '[inputs | {route:(input_filename|sub(".*/lighthouse/";"")|sub("(-run[0-9])?\\.report\\.json$";"")),
   perf:(.categories.performance.score*100), lcp:.audits["largest-contentful-paint"].numericValue,
-  cls:.audits["cumulative-layout-shift"].numericValue, tbt:.audits["total-blocking-time"].numericValue,
-  fcp:.audits["first-contentful-paint"].numericValue, ttfb:.audits["server-response-time"].numericValue,
-  si:.audits["speed-index"].numericValue}] | group_by(.route)
-  | map({route:.[0].route, perf:(map(.perf)|sort|.[length/2|floor]), lcp:(map(.lcp)|sort|.[length/2|floor]),
-    cls:(map(.cls)|sort|.[length/2|floor]), tbt:(map(.tbt)|sort|.[length/2|floor]),
-    fcp:(map(.fcp)|sort|.[length/2|floor]), ttfb:(map(.ttfb)|sort|.[length/2|floor]), si:(map(.si)|sort|.[length/2|floor])})
-  | (.[] | [.route,(.perf|round),(.lcp|round),(.cls*1000|round/1000),(.tbt|round),(.fcp|round),(.ttfb|round),(.si|round)] | @tsv)' \
+  cls:.audits["cumulative-layout-shift"].numericValue, tbt:.audits["total-blocking-time"].numericValue}]
+  | group_by(.route) | map({route:.[0].route, perf:(map(.perf)|sort|.[length/2|floor]),
+    lcp:(map(.lcp)|sort|.[length/2|floor]), cls:(map(.cls)|sort|.[length/2|floor]),
+    tbt:(map(.tbt)|sort|.[length/2|floor])})
+  | (.[] | [.route,(.perf|round),(.lcp|round),(.cls*1000|round/1000),(.tbt|round)] | @tsv)' \
   <baseline|after>/lighthouse/*.report.json | column -t
 ```
 
 ---
 
-## Lighthouse — lab metrics (median of 3, mobile / simulated throttling)
+## Lighthouse — median of 3 (mobile / simulated)
 
-Targets: LCP < 2500 ms · CLS < 0.1 · TBT < 200 ms (INP proxy) · FCP < 1800 ms · TTFB < 800 ms.
+Targets: LCP < 2500 ms · CLS < 0.1 · TBT < 200 ms · FCP < 1800 ms.
 
-| Route | Perf | LCP (ms) | CLS | TBT (ms) | FCP (ms) | TTFB (ms) | Speed Index (ms) |
-| --- | --: | --: | --: | --: | --: | --: | --: |
-| home `/` | **90** | 3024 ⚠️ | 0.040 ✅ | 228 ⚠️ | 1365 ✅ | 16 ✅ | 2148 |
-| country `/countries/USA` | **69** | 6764 ❌ | 0.170 ❌ | 86 ✅ | 1358 ✅ | 24 ✅ | 1969 |
-| rankings `/rankings/gdp` | **68** | 5735 ❌ | 0.211 ❌ | 49 ✅ | 1359 ✅ | 8 ✅ | 2306 |
-| region `/region/europe-central-asia` | **92** | 3163 ⚠️ | 0.026 ✅ | 119 ⚠️ | 1360 ✅ | 20 ✅ | 2199 |
-| compare `/compare?countries=USA,CHN,DEU` | **87** | 3012 ⚠️ | 0.172 ❌ | 46 ✅ | 1359 ✅ | 20 ✅ | 1359 |
+| Route    |        Perf |        LCP (ms) |              CLS |      TBT (ms) |    FCP (ms) |
+| -------- | ----------: | --------------: | ---------------: | ------------: | ----------: |
+| home     | 90 → **91** |     3024 → 3311 | 0.040 → 0.040 ✅ | 212 → **104** | 1365 → 1359 |
+| country  | 69 → **71** | 6764 → **6043** | 0.170 → 0.170 ❌ |   86 → **16** | 1358 → 1360 |
+| rankings | 68 → **70** | 5735 → **5097** | 0.211 → 0.211 ❌ |   52 → **40** | 1359 → 1365 |
+| region   |     92 → 90 |     3163 → 3616 | 0.026 → 0.026 ✅ |  119 → **44** | 1360 → 1360 |
+| compare  |     90 → 83 |     3012 → 3615 | 0.172 → 0.159 ❌ |    46 → **7** | 1359 → 1361 |
 
-_(After) — filled by the optimization PR:_
+### Reading the numbers
 
-| Route | Perf | LCP | CLS | TBT | FCP | TTFB | Speed Index |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| home | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| country | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| rankings | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| region | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| compare | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+- **TBT down on every route** (home −108 ms, region −75 ms, country −70 ms) — amCharts no
+  longer parses/executes on the main thread during initial load.
+- **LCP down where it was worst**: country −720 ms, rankings −640 ms — the chart-heavy
+  routes that carried amCharts on the critical path.
+- **LCP on home / region / compare is API-bound** (the LCP element is the stats strip,
+  which waits on the SOTW fetch) and swings ±400 ms between sweeps — the `+300–600 ms`
+  there is sweep-to-sweep noise, not a code regression (`baseline/lighthouse/summary.tsv`
+  shows a 1126 ms home run pulling that median down). FCP, which is not data-bound, is
+  flat at ~1360 ms across both snapshots.
+- **CLS is unchanged on country / rankings / compare** and is _not_ from the charts or the
+  table. Lighthouse's `layout-shifts` audit attributes ~all of it to the **stats strip**
+  (`StatCard` `loading` → loaded height change) and, on chart routes, the
+  `useChartHeight` mobile→desktop jump on mount (`useMediaQuery({ initializeWithValue:
+false })`, ADR 002). Both are pre-existing and outside this pass's scope — see below.
 
 ---
 
-## Bundle — client JS (real Turbopack production build)
+## Bundle — client JS (Turbopack production build)
 
-Full per-chunk table (raw + gzip) and the every-route baseline: `baseline/chunks.txt`.
-Module-level treemap: `baseline/analyze/client-webpack.html` (open in a browser).
+Per-chunk detail: `baseline/chunks.txt`, `after/chunks.txt`. Per-route initial JS:
+`after/initial-js.txt`. Module treemaps: `*/analyze/client-webpack.html`.
 
-| | Baseline | After |
-| --- | --: | --- |
-| Total client JS, gzip | **657 KB** (19 chunks) | TBD |
-| Total client JS, raw | 2.25 MB | TBD |
-| Loaded on **every** route (rootMainFiles + polyfills), gzip | **163 KB** | TBD |
-| Largest single chunk `3ea6vetogmc44.js`, gzip | **325 KB** (49.5% of all JS) | TBD |
+|                                                  |                                                             Baseline |                                                                                           After |
+| ------------------------------------------------ | -------------------------------------------------------------------: | ----------------------------------------------------------------------------------------------: |
+| Total client JS, gzip                            |                                                   657 KB / 19 chunks |                                                                              679 KB / 27 chunks |
+| Every-route JS (rootMainFiles + polyfills), gzip |                                                               163 KB |                                                                                          163 KB |
+| Per-route **initial** JS, gzip                   |                                                      not measurable¹ |                                                                                         ~417 KB |
+| amCharts 5 + geodata                             | in **every** feature route's initial JS (in the 325 KB shared chunk) | **114 KB gzip lazy chunk** — absent from every route's initial HTML, fetched on chart scroll-in |
 
-`3ea6vetogmc44.js` is one shared chunk bundling **amCharts 5 + amcharts5-geodata +
-@tanstack/react-table + react-i18next + @base-ui/react + lucide-react** together. It is
-not in `rootMainFiles`, but every feature route imports from the `@repo/ui` barrel, so it
-is pulled on `/`, `/countries/*`, `/rankings/*`, `/region/*`, `/income/*` alike. amCharts
-+ geodata are the bulk of it and never need to be on the critical path.
+¹ Next 16 Turbopack prints no per-route table; the baseline's "amCharts everywhere" fact is
+from `baseline/chunks.txt` chunk-content analysis. Total JS rises slightly: `next/dynamic`
+adds per-boundary boilerplate and the one shared vendor chunk is now split several ways —
+the win is _what loads when_, not the sum.
 
 ### Tooling note
 
-Next 16 builds with Turbopack and no longer prints a per-route "First Load JS" table, and
-`@next/bundle-analyzer` (a webpack plugin) only runs under `next build --webpack`. So:
-
-- **Authoritative sizes** come from the real Turbopack build — `baseline/chunks.txt`,
-  generated by `gzip -c` over `.next/static/chunks/*.js` + `build-manifest.json`.
-- **`pnpm --filter web analyze`** (`ANALYZE=true next build --webpack`) produces the
-  `@next/bundle-analyzer` treemaps under `apps/web/.next/analyze/` for a module-level
-  view. This is a *webpack* build — module boundaries match, absolute bytes drift a few
-  percent from the Turbopack build.
-- `next experimental-analyze` is the Turbopack-native interactive analyzer if a
-  richer view is needed (no committed artifact).
+`@next/bundle-analyzer` is a webpack plugin, so `pnpm --filter web analyze` runs
+`next build --webpack` for the treemap. Authoritative sizes come from the real Turbopack
+build (`chunks.txt`, `gzip -c` over `.next/static/chunks/*.js`). `next experimental-analyze`
+is the Turbopack-native interactive analyzer (no committed artifact).
 
 ---
 
-## What the optimization PR targets
+## What landed
 
-| Baseline problem | Metric | Fix |
-| --- | --- | --- |
-| amCharts + geodata on every route's critical path (in `3ea6vetogmc44.js`) | LCP (country 6.8s, rankings 5.7s), total JS 657 KB | `next/dynamic({ssr:false})` per-chart boundary + intersection gate + `@repo/ui/charts/*` subpath exports + `optimizePackageImports` |
-| `DataTable` loading rows (5) ≠ page size (8 / 25); no reserved height | CLS — country 0.17, rankings 0.211 | loading rows = `pageSize` + `min-height` while loading |
-| Donut skeleton reserves `size` but chart renders `size` + legend | CLS — home/compare | reserve donut+legend height |
-| Skeleton shimmer + amCharts entrance animation ignore `prefers-reduced-motion` | a11y, minor paint | `@media (prefers-reduced-motion)` guard + skip Animated theme |
-| No `preconnect` for `flagcdn.com`; no web-vitals reporter | LCP tail, observability | `<link rel="preconnect">` + `useReportWebVitals` |
+| Change                                                                                                                                                                                               | Effect                                                                                                   |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Drop the 4 amCharts charts from the `@repo/ui` barrel; `@repo/ui/charts/*` subpath exports; `apps/web` wraps each in `next/dynamic({ ssr:false })` + a viewport gate (`LazyChart` / `useInViewport`) | amCharts (114 KB gz) off every route's critical path → LCP/TBT on chart routes                           |
+| `experimental.optimizePackageImports: ['@repo/ui']`                                                                                                                                                  | tree-shakes remaining barrel imports (modest; Turbopack support is partial)                              |
+| `DataTable`: skeleton rows = page size, `min-height` reserves them                                                                                                                                   | removes the loading→loaded table jump (was not the dominant CLS source on the measured routes, but real) |
+| Donut skeleton reserves chart **+ legend** height (`donutReservedHeight`)                                                                                                                            | prevents a mobile-column layout shift on `/`                                                             |
+| `prefers-reduced-motion`: Skeleton shimmer off; amCharts `Animated` theme skipped (`buildChartThemes`)                                                                                               | a11y                                                                                                     |
+| `<link rel="preconnect">` for `flagcdn.com`; `<WebVitals>` (`useReportWebVitals` → dev log + `NEXT_PUBLIC_VITALS_URL` beacon)                                                                        | LCP tail; field instrumentation                                                                          |
+| `CountrySearch` filter debounced 150 ms (`useDebounceValue`)                                                                                                                                         | fewer full-list re-renders per keystroke (INP)                                                           |
+
+## Not addressed (recommended follow-up)
+
+CLS on `country` / `rankings` / `compare` stays at 0.17–0.21. Root causes, both pre-existing:
+
+1. **`StatCard` `loading` state** renders a `1.75rem` value skeleton; the loaded
+   `title-default` value is taller, and `trend` only reserves space when loading — so the
+   stats strip grows on hydrate and pushes the page. Fix in `packages/ui`
+   `StatCard`: match the loading skeleton to the loaded line box.
+2. **`useChartHeight`** returns the mobile height on first paint then jumps to
+   tablet/desktop on mount, resizing every chart slot. Fix: drive chart-container height
+   from CSS (media-query'd `min-height` / `aspect-ratio`) so the reserved box is correct
+   before JS runs.

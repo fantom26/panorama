@@ -1,0 +1,7 @@
+# Per-route initial JS (scripts referenced in the served HTML) — after
+# route | #chunks | initial JS gzip (B) | amCharts in initial?
+# /                              | 16 |   417891 | no
+# /compare                       | 15 |   415723 | no
+# /countries/USA                 | 16 |   418198 | no
+# /rankings/gdp                  | 16 |   417367 | no
+# /region/europe-central-asia    | 16 |   419240 | no
