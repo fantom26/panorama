@@ -9,3 +9,7 @@ pnpm-lock.yaml
 **/public/mockServiceWorker.js
 **/*.tsbuildinfo
 **/next-env.d.ts
+
+# Generated benchmark artifacts — committed as-is, not for hand-editing
+docs/perf/**/*.json
+docs/perf/**/*.html

@@ -1,0 +1,16 @@
+route	run	perf	LCP_ms	CLS	TBT_ms	FCP_ms	TTFB_ms	SpeedIndex_ms
+_compare_countries_USA_CHN_DEU-run1		86	3017	0.172	53	1363	20	1363
+_compare_countries_USA_CHN_DEU-run2		90	3012	0.133	46	1359	24	1359
+_compare_countries_USA_CHN_DEU-run3		87	3011	0.173	42	1358	15	1358
+_countries_USA-run1		68	6767	0.17	103	1363	32	2021
+_countries_USA-run2		70	6306	0.17	80	1357	12	1876
+_countries_USA-run3		69	6764	0.17	86	1358	24	1969
+_rankings_gdp-run1		69	5434	0.211	49	1361	31	2441
+_rankings_gdp-run2		68	5735	0.211	52	1359	7	2306
+_rankings_gdp-run3		68	5876	0.211	47	1357	8	2080
+_region_europe_central_asia-run1		92	3163	0.026	119	1360	32	2212
+_region_europe_central_asia-run2		92	3161	0.026	105	1358	20	2199
+_region_europe_central_asia-run3		92	3163	0.026	121	1360	11	2182
+home-run1		73	5032	0.04	354	1365	14	2587
+home-run2		90	3024	0.04	212	1368	17	2127
+home-run3		96	1126	0.04	228	976	16	2148
