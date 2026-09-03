@@ -8,8 +8,10 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import {
+  applyPanoramaChartLocale,
   CHART_RANK_OPACITIES,
   createPanoramaChartTheme,
+  isRtlContainer,
   mountReactiveChart,
   readPanoramaChartPalette
 } from '../theme'
@@ -61,8 +63,10 @@ export default function WorldMap({
 
     function build(container: HTMLDivElement) {
       const root = am5.Root.new(container)
+      const rtl = isRtlContainer(container)
       const palette = readPanoramaChartPalette(container)
-      root.setThemes([am5themes_Animated.new(root), createPanoramaChartTheme(root, palette)])
+      root.setThemes([am5themes_Animated.new(root), createPanoramaChartTheme(root, palette, rtl)])
+      applyPanoramaChartLocale(root, rtl)
 
       const chart = root.container.children.push(
         am5map.MapChart.new(root, {
