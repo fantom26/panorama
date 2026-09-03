@@ -28,7 +28,7 @@ export default {
     gdpByRegion: 'GDP by region',
     populationByRegion: 'Population by region',
     highestInflation: 'Highest inflation',
-    inflationRanking: 'Full inflation ranking →'
+    inflationRanking: 'Full inflation ranking'
   },
   compareIndicator: {
     aria: 'View country comparison ({{count}})'

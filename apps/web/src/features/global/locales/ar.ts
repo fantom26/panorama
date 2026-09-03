@@ -28,7 +28,7 @@ export default {
     gdpByRegion: 'الناتج المحلي الإجمالي حسب المنطقة',
     populationByRegion: 'عدد السكان حسب المنطقة',
     highestInflation: 'أعلى معدلات التضخم',
-    inflationRanking: '← الترتيب الكامل للتضخم'
+    inflationRanking: 'الترتيب الكامل للتضخم'
   },
   compareIndicator: {
     aria: 'عرض مقارنة الدول ({{count}})'

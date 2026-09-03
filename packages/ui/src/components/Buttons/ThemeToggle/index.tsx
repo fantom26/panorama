@@ -1,40 +1,44 @@
-import { useState } from 'react'
-
 import { Button as BaseButton } from '@base-ui/react/button'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import Icon from '../../DataDisplay/Icon'
+import Icon, { type IconName } from '../../DataDisplay/Icon'
 import styles from './index.module.css'
 
-export type Theme = 'light' | 'dark'
+export type ThemePreference = 'light' | 'dark'
 
-export type ThemeToggleProps = Omit<React.ComponentProps<typeof BaseButton>, 'children' | 'onClick'>
-
-function readDocumentTheme(): Theme {
-  if (typeof document === 'undefined') return 'light'
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
+/** Click order: whatever you're on → the other one. */
+const NEXT: Record<ThemePreference, ThemePreference> = {
+  light: 'dark',
+  dark: 'light'
 }
 
-export default function ThemeToggle({ className, ...rest }: ThemeToggleProps) {
-  const { t } = useTranslation()
-  const [theme, setTheme] = useState<Theme>(readDocumentTheme)
+const ICON: Record<ThemePreference, IconName> = {
+  light: 'sun',
+  dark: 'moon'
+}
 
-  function handleClick() {
-    const next = theme === 'light' ? 'dark' : 'light'
-    document.documentElement.dataset.theme = next
-    setTheme(next)
-  }
+export type ThemeToggleProps = Omit<
+  React.ComponentProps<typeof BaseButton>,
+  'children' | 'onClick' | 'onChange' | 'value'
+> & {
+  value: ThemePreference
+  onChange: (next: ThemePreference) => void
+}
+
+export default function ThemeToggle({ value, onChange, className, ...rest }: ThemeToggleProps) {
+  const { t } = useTranslation()
 
   return (
     <BaseButton
       className={clsx(styles.toggle, className)}
       aria-label={t('themeToggle.ariaLabel')}
-      onClick={handleClick}
+      title={t(`themeToggle.${value}`)}
+      onClick={() => onChange(NEXT[value])}
       {...rest}
     >
-      <Icon name={theme === 'light' ? 'sun' : 'moon'} />
-      <span className='visually-hidden'>{t(`themeToggle.${theme}`)}</span>
+      <Icon name={ICON[value]} />
+      <span className='visually-hidden'>{t(`themeToggle.${value}`)}</span>
     </BaseButton>
   )
 }

@@ -7,10 +7,16 @@ Accepted
 ## Context
 
 `apps/web` needs a handful of cross-cutting client hooks that aren't domain logic: media-query
-matching, `localStorage`-backed preferences (theme, language), intersection observation and
-window-size tracking for chart performance, and input debouncing for search. These are solved
-problems with well-known edge cases (SSR hydration mismatches, listener cleanup, Safari's older
-`MediaQueryList` API, `matchMedia` being absent in tests).
+matching, intersection observation and window-size tracking for chart performance, and input
+debouncing for search. These are solved problems with well-known edge cases (SSR hydration
+mismatches, listener cleanup, Safari's older `MediaQueryList` API, `matchMedia` being absent in
+tests).
+
+Theme and language preference were originally `localStorage`-backed via `usehooks-ts`'s
+`useLocalStorage`, but were later moved to cookies (`js-cookie` on the client, `next/headers`'s
+`cookies()` in `app/layout.tsx`) so the server can render the correct `<html data-theme/lang/dir>`
+on the first response instead of patching it in with a pre-paint script. `useTheme`/`useLocale`
+no longer use `usehooks-ts`.
 
 A hand-rolled `useMediaQuery` had already drifted into `src/shared/hooks/`. It reimplemented — slightly
 differently — what a library hook already does, and it was the only such hook, so there was no

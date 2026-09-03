@@ -5,7 +5,7 @@
 }
 
 .label[data-required]::after {
-  margin-left: var(--ds-theme-spacing-2xs);
+  margin-inline-start: var(--ds-theme-spacing-2xs);
   color: var(--ds-theme-color-content-utility-error);
   content: '*';
 }

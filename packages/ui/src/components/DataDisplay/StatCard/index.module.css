@@ -11,12 +11,12 @@
   min-width: 0;
   padding: var(--ds-theme-spacing-lg);
   border: none;
-  border-right: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-inline-end: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   border-radius: 0;
   background-color: transparent;
 
   &:last-child {
-    border-right: none;
+    border-inline-end: none;
   }
 }
 
