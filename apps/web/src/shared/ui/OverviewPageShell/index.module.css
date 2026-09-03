@@ -1,0 +1,18 @@
+.rightMeta {
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .titleBlock {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--ds-theme-spacing-lg) var(--ds-theme-spacing-lg) var(--ds-theme-spacing-md);
+  }
+}
+
+@media (min-width: 1440px) {
+  .titleBlock {
+    padding: var(--ds-theme-spacing-xl) var(--ds-theme-spacing-xl) var(--ds-theme-spacing-lg);
+  }
+}

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
-import { Breadcrumbs, Button, Section, Select, Skeleton, Typography, WorldMap } from '@repo/ui'
+import { Button, Section, Select, Skeleton, Typography, WorldMap } from '@repo/ui'
 
 import { useIncomeLevelOverview } from '@/features/income/hooks/useIncomeLevelOverview'
 import { assertIncomeSlug } from '@/features/income/model/income-not-found'
@@ -15,13 +15,10 @@ import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { INCOME_LEVELS, INCOME_SLUGS, levelFromSlug } from '@/shared/model/income-levels'
 import { regionFromSlug, slugFromRegion } from '@/shared/model/regions'
 import { ROUTES } from '@/shared/routes'
-import AppHeader from '@/shared/ui/AppHeader'
 import BreakdownList from '@/shared/ui/BreakdownList'
 import CountryCard from '@/shared/ui/CountryCard'
-import ErrorBoundary from '@/shared/ui/ErrorBoundary'
+import OverviewPageShell from '@/shared/ui/OverviewPageShell'
 import StatTiles from '@/shared/ui/StatTiles'
-import TitleBlock from '@/shared/ui/TitleBlock'
-import TitleMeta from '@/shared/ui/TitleMeta'
 import { formatCompactNumber, formatCompactUsd, formatGdp, formatUsd } from '@/shared/utils/format'
 
 import styles from './index.module.css'
@@ -61,28 +58,13 @@ export default function IncomeLevelPage() {
   }))
 
   return (
-    <>
-      <AppHeader>
-        <Breadcrumbs>
-          <Link href={ROUTES.home()}>
-            <Typography variant='body-sm' color='muted' component='span'>
-              {t('breadcrumb.global')}
-            </Typography>
-          </Link>
-          <Typography variant='body-sm' color='knockout' component='span' aria-current='page'>
-            {t('header.title', { name: levelName })}
-          </Typography>
-        </Breadcrumbs>
-      </AppHeader>
-
-      <TitleBlock className={styles.titleBlock}>
-        <div>
-          <Typography variant='meta-sm' color='subtle' component='div'>
-            {t('header.eyebrow')}
-          </Typography>
-          <Typography variant='headline-sm' component='h1'>
-            {t('header.title', { name: levelName })}
-          </Typography>
+    <OverviewPageShell
+      homeLabel={t('breadcrumb.global')}
+      crumb={t('header.title', { name: levelName })}
+      eyebrow={t('header.eyebrow')}
+      title={t('header.title', { name: levelName })}
+      subtitle={
+        <>
           <Typography variant='meta-sm' color='muted' component='div'>
             {t('header.count', { count: overview.cards.length })}
           </Typography>
@@ -98,101 +80,100 @@ export default function IncomeLevelPage() {
               </Link>
             </div>
           )}
-        </div>
-        <TitleMeta className={styles.rightMeta}>
-          <Select
-            options={INCOME_OPTIONS}
-            value={level}
-            onValueChange={(value) =>
-              value && router.push(ROUTES.incomeLevel(value, { region: regionSlug }))
-            }
-            aria-label={t('switcher.label')}
-          />
-        </TitleMeta>
-      </TitleBlock>
-
-      <ErrorBoundary onReset={refetch}>
-        <StatTiles
-          tiles={overview.tiles}
-          labelFor={(key) => t(`tiles.${key}`)}
-          loading={isPending}
-          columns={5}
+        </>
+      }
+      switcher={
+        <Select
+          options={INCOME_OPTIONS}
+          value={level}
+          onValueChange={(value) =>
+            value && router.push(ROUTES.incomeLevel(value, { region: regionSlug }))
+          }
+          aria-label={t('switcher.label')}
         />
+      }
+      onReset={refetch}
+    >
+      <StatTiles
+        tiles={overview.tiles}
+        labelFor={(key) => t(`tiles.${key}`)}
+        loading={isPending}
+        columns={5}
+      />
 
-        <div className={styles.twoColRow}>
-          <Section title={t('sections.map')} className={`${styles.column} ${styles.columnDivided}`}>
-            <div className={styles.mapBody}>
-              <Typography variant='meta-sm' color='muted' component='p' className={styles.hint}>
-                {t('sections.mapHint')}
-              </Typography>
-              {isPending ? (
-                <Skeleton variant='rectangular' width='100%' height={mapHeight} />
-              ) : (
-                <WorldMap
-                  mode='lit'
-                  highlight={overview.memberAlpha2}
-                  data={overview.mapData}
-                  disableUnhighlighted
-                  format={formatUsd}
-                  onSelect={handleCountrySelect}
-                  height={mapHeight}
-                />
-              )}
-            </div>
-          </Section>
-
-          <Section title={t('sections.regions')} className={styles.column}>
+      <div className={styles.twoColRow}>
+        <Section title={t('sections.map')} className={`${styles.column} ${styles.columnDivided}`}>
+          <div className={styles.mapBody}>
+            <Typography variant='meta-sm' color='muted' component='p' className={styles.hint}>
+              {t('sections.mapHint')}
+            </Typography>
             {isPending ? (
               <Skeleton variant='rectangular' width='100%' height={mapHeight} />
             ) : (
-              <BreakdownList rows={regionRows} />
+              <WorldMap
+                mode='lit'
+                highlight={overview.memberAlpha2}
+                data={overview.mapData}
+                disableUnhighlighted
+                format={formatUsd}
+                onSelect={handleCountrySelect}
+                height={mapHeight}
+              />
             )}
-          </Section>
-        </div>
+          </div>
+        </Section>
 
-        <Section
-          title={t('sections.economies', { count: overview.cards.length })}
-          className={styles.economies}
-        >
+        <Section title={t('sections.regions')} className={styles.column}>
           {isPending ? (
-            <Skeleton variant='rectangular' width='100%' height={280} />
+            <Skeleton variant='rectangular' width='100%' height={mapHeight} />
           ) : (
-            <>
-              <div className={styles.cardGrid}>
-                {visibleCards.map((card) => (
-                  <CountryCard
-                    key={card.id}
-                    id={card.id}
-                    iso2={card.iso2}
-                    name={card.name}
-                    metrics={[
-                      {
-                        label: t('card.population'),
-                        value: card.population == null ? '—' : formatCompactNumber(card.population)
-                      },
-                      {
-                        label: t('card.gdp'),
-                        value: card.gdp == null ? '—' : formatGdp(card.gdp)
-                      },
-                      {
-                        label: t('card.gdpPerCapita'),
-                        value: card.gdpPerCapita == null ? '—' : formatUsd(card.gdpPerCapita)
-                      }
-                    ]}
-                  />
-                ))}
-              </div>
-              {!showAll && overview.cards.length > CARD_CAP && (
-                <div className={styles.showAll}>
-                  <Button variant='outlined' onClick={() => setShowAll(true)}>
-                    {t('showAll', { count: overview.cards.length })}
-                  </Button>
-                </div>
-              )}
-            </>
+            <BreakdownList rows={regionRows} />
           )}
         </Section>
-      </ErrorBoundary>
-    </>
+      </div>
+
+      <Section
+        title={t('sections.economies', { count: overview.cards.length })}
+        className={styles.economies}
+      >
+        {isPending ? (
+          <Skeleton variant='rectangular' width='100%' height={280} />
+        ) : (
+          <>
+            <div className={styles.cardGrid}>
+              {visibleCards.map((card) => (
+                <CountryCard
+                  key={card.id}
+                  id={card.id}
+                  iso2={card.iso2}
+                  name={card.name}
+                  metrics={[
+                    {
+                      label: t('card.population'),
+                      value: card.population == null ? '—' : formatCompactNumber(card.population)
+                    },
+                    {
+                      label: t('card.gdp'),
+                      value: card.gdp == null ? '—' : formatGdp(card.gdp)
+                    },
+                    {
+                      label: t('card.gdpPerCapita'),
+                      value: card.gdpPerCapita == null ? '—' : formatUsd(card.gdpPerCapita)
+                    }
+                  ]}
+                />
+              ))}
+            </div>
+            {!showAll && overview.cards.length > CARD_CAP && (
+              <div className={styles.showAll}>
+                <Button variant='outlined' onClick={() => setShowAll(true)}>
+                  {t('showAll', { count: overview.cards.length })}
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+      </Section>
+    </OverviewPageShell>
   )
 }

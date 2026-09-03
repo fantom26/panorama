@@ -1,7 +1,3 @@
-.rightMeta {
-  align-items: flex-start;
-}
-
 .filterNote {
   margin-top: var(--ds-theme-spacing-2xs);
 }
@@ -36,13 +32,6 @@
 }
 
 @media (min-width: 768px) {
-  .titleBlock {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: var(--ds-theme-spacing-lg) var(--ds-theme-spacing-lg) var(--ds-theme-spacing-md);
-  }
-
   .twoColRow {
     grid-template-columns: 1.4fr 1fr;
   }
@@ -61,10 +50,6 @@
 }
 
 @media (min-width: 1440px) {
-  .titleBlock {
-    padding: var(--ds-theme-spacing-xl) var(--ds-theme-spacing-xl) var(--ds-theme-spacing-lg);
-  }
-
   .column {
     padding-inline: var(--ds-theme-spacing-xl);
   }
