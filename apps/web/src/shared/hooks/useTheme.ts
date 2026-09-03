@@ -1,44 +1,25 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useState } from 'react'
 
-import { useIsMounted, useLocalStorage } from 'usehooks-ts'
+import Cookies from 'js-cookie'
 
 import type { ThemePreference } from '@repo/ui'
 
-import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
+import { useInitialTheme } from '@/providers/ThemeProvider'
+import { THEME_COOKIE_KEY } from '@/shared/utils/cookies'
 
 export type { ThemePreference }
-export type ResolvedTheme = 'light' | 'dark'
 
-/** Read by the pre-paint script in app/layout.tsx — keep the key in sync. */
-export const THEME_STORAGE_KEY = 'panorama.theme'
-
-const isPreference = (value: unknown): value is ThemePreference =>
-  value === 'system' || value === 'light' || value === 'dark'
-
-/**
- * Tri-state theme preference, persisted to localStorage. The inline script in
- * app/layout.tsx has already applied the correct `data-theme` before paint; this
- * hook keeps it in sync afterwards. The `mounted` gate stops the first client
- * render (which sees the storage default, not the stored value) from briefly
- * clobbering what the script set.
- */
 export function useTheme() {
-  const [stored, setPreference] = useLocalStorage<ThemePreference>(THEME_STORAGE_KEY, 'system', {
-    initializeWithValue: false
-  })
-  const systemDark = useMediaQuery('(prefers-color-scheme: dark)')
-  const isMounted = useIsMounted()
+  const initialTheme = useInitialTheme()
+  const [theme, setThemeState] = useState<ThemePreference>(initialTheme)
 
-  const preference = isPreference(stored) ? stored : 'system'
-  const resolved: ResolvedTheme =
-    preference === 'system' ? (systemDark ? 'dark' : 'light') : preference
+  const setTheme = (next: ThemePreference) => {
+    setThemeState(next)
+    document.documentElement.dataset.theme = next
+    Cookies.set(THEME_COOKIE_KEY, next, { expires: 365, path: '/', sameSite: 'lax' })
+  }
 
-  useEffect(() => {
-    if (!isMounted) return
-    document.documentElement.dataset.theme = resolved
-  }, [isMounted, resolved])
-
-  return { preference, setPreference, resolved }
+  return { theme, setTheme }
 }

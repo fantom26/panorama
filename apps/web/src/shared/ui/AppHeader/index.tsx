@@ -21,7 +21,7 @@ export type AppHeaderProps = {
 
 export default function AppHeader({ children }: AppHeaderProps) {
   const { locale, setLocale } = useLocale()
-  const { preference, setPreference } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   return (
     <header className={styles.topBar}>
@@ -39,7 +39,7 @@ export default function AppHeader({ children }: AppHeaderProps) {
         <span className={styles.dividerWrap}>
           <Divider orientation='vertical' />
         </span>
-        <ThemeToggle value={preference} onChange={setPreference} />
+        <ThemeToggle value={theme} onChange={setTheme} />
       </div>
       <div className={styles.search}>
         <CountrySearch />

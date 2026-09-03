@@ -5,17 +5,15 @@ import { useTranslation } from 'react-i18next'
 import Icon, { type IconName } from '../../DataDisplay/Icon'
 import styles from './index.module.css'
 
-export type ThemePreference = 'system' | 'light' | 'dark'
+export type ThemePreference = 'light' | 'dark'
 
-/** Click order: whatever you're on → the next one, wrapping back to `system`. */
+/** Click order: whatever you're on → the other one. */
 const NEXT: Record<ThemePreference, ThemePreference> = {
-  system: 'light',
   light: 'dark',
-  dark: 'system'
+  dark: 'light'
 }
 
 const ICON: Record<ThemePreference, IconName> = {
-  system: 'monitor',
   light: 'sun',
   dark: 'moon'
 }

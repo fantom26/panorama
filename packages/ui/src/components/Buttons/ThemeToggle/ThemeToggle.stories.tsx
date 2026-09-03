@@ -6,7 +6,7 @@ import ThemeToggle, { type ThemePreference } from '@/components/Buttons/ThemeTog
 
 const meta = {
   component: ThemeToggle,
-  args: { value: 'system', onChange: () => {} },
+  args: { value: 'light', onChange: () => {} },
   render: function Render(args) {
     const [value, setValue] = useState<ThemePreference>(args.value)
     return <ThemeToggle {...args} value={value} onChange={setValue} />
@@ -16,6 +16,5 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const System: Story = { args: { value: 'system' } }
 export const Light: Story = { args: { value: 'light' } }
 export const Dark: Story = { args: { value: 'dark' } }

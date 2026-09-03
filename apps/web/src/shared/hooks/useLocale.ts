@@ -1,40 +1,32 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import { useIsMounted, useLocalStorage } from 'usehooks-ts'
+import Cookies from 'js-cookie'
 
 import i18n from '@/i18n'
+import { useInitialLocale } from '@/providers/LocaleProvider'
+import type { Locale } from '@/shared/types/locale'
+import { LOCALE_COOKIE_KEY } from '@/shared/utils/cookies'
 
-export const SUPPORTED_LOCALES = ['en', 'ar'] as const
-export type Locale = (typeof SUPPORTED_LOCALES)[number]
+export { SUPPORTED_LOCALES } from '@/shared/types/locale'
+export type { Locale }
 
-/** Read by the pre-paint script in app/layout.tsx — keep the key in sync. */
-export const LOCALE_STORAGE_KEY = 'panorama.locale'
-
-const isLocale = (value: unknown): value is Locale => SUPPORTED_LOCALES.includes(value as Locale)
-
-/**
- * Persisted UI language. The inline script in app/layout.tsx has already set
- * `<html lang>`/`dir` before paint; this hook drives i18next once React is
- * mounted and on every later change. The `mounted` gate keeps the first client
- * render (storage default) from switching the language back to `en`.
- */
 export function useLocale() {
-  const [stored, setStored] = useLocalStorage<Locale>(LOCALE_STORAGE_KEY, 'en', {
-    initializeWithValue: false
-  })
-  const isMounted = useIsMounted()
-
-  const locale = isLocale(stored) ? stored : 'en'
+  const initialLocale = useInitialLocale()
+  const [locale, setLocaleState] = useState<Locale>(initialLocale)
 
   useEffect(() => {
-    if (!isMounted) return
     if (i18n.language !== locale) i18n.changeLanguage(locale)
-    const root = document.documentElement
-    root.lang = locale
-    root.dir = i18n.dir(locale)
-  }, [isMounted, locale])
+  }, [locale])
 
-  return { locale, setLocale: setStored }
+  const setLocale = (next: Locale) => {
+    setLocaleState(next)
+    const root = document.documentElement
+    root.lang = next
+    root.dir = i18n.dir(next)
+    Cookies.set(LOCALE_COOKIE_KEY, next, { expires: 365, path: '/', sameSite: 'lax' })
+  }
+
+  return { locale, setLocale }
 }
