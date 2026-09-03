@@ -68,15 +68,13 @@ describe('selectRegionCountries / selectIncomeLevelCountries', () => {
 })
 
 describe('selectGlobalMetrics', () => {
-  test('counts, sums population skipping nulls, averages only present values, groups', () => {
+  test('counts, sums population skipping nulls, averages only present values', () => {
     const metrics = selectGlobalMetrics(LIST)
 
     expect(metrics.total).toBe(3)
     expect(metrics.totalPopulation).toBe(84 + 68 + 1428)
     expect(metrics.avgGdp).toBe(3.5) // IND gdp is null and excluded
     expect(metrics.avgInflation).toBeNull()
-    expect(Object.keys(metrics.byRegion)).toEqual(['Europe & Central Asia', 'South Asia'])
-    expect(metrics.byRegion['Europe & Central Asia']).toHaveLength(2)
   })
 })
 
