@@ -1,4 +1,6 @@
 import * as am5 from '@amcharts/amcharts5'
+import am5locales_ar from '@amcharts/amcharts5/locales/ar'
+import am5locales_en from '@amcharts/amcharts5/locales/en'
 
 // Rank-based series ramp: one ink color (textDefault) at five opacity steps, never a
 // distinct hue. Clamps rather than wraps — a 6th-ranked slice must reuse the last step,
@@ -64,9 +66,21 @@ export function readPanoramaChartPalette(el: Element): Partial<PanoramaChartPale
   return palette
 }
 
+// The app only ships two locales, `en` and `ar`, and `ar` is its only RTL one — so
+// direction alone is enough to pick the amCharts locale without packages/ui needing to
+// know the app's actual i18n language.
+export function isRtlContainer(container: Element): boolean {
+  return getComputedStyle(container).direction === 'rtl'
+}
+
+export function applyPanoramaChartLocale(root: am5.Root, rtl: boolean) {
+  root.locale = rtl ? am5locales_ar : am5locales_en
+}
+
 export function createPanoramaChartTheme(
   root: am5.Root,
-  palette: Partial<PanoramaChartPalette>
+  palette: Partial<PanoramaChartPalette>,
+  rtl: boolean
 ): am5.Theme {
   class PanoramaChartTheme extends am5.Theme {
     override setupDefaultRules() {
@@ -76,6 +90,12 @@ export function createPanoramaChartTheme(
       if (palette.fontFamily) label.set('fontFamily', palette.fontFamily)
       if (palette.fontWeight) label.set('fontWeight', palette.fontWeight)
       if (palette.textDefault) label.set('fill', palette.textDefault)
+      // amCharts draws labels on <canvas>, whose 2D context direction defaults to
+      // "inherit" from the page's ambient CSS `direction` — so under `dir="rtl"` every
+      // label silently flips its text-align anchor unless its own `direction` setting is
+      // set explicitly, which is what causes axis labels to overflow/clip even with no
+      // other RTL chart config. Pin it here for every label instead of leaving it default.
+      label.set('direction', rtl ? 'rtl' : 'ltr')
 
       if (palette.textSubtle) {
         this.rule('AxisLabel').set('fill', palette.textSubtle)
@@ -138,7 +158,9 @@ export function mountReactiveChart(
   })
   observer.observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ['data-theme']
+    // `dir` flips when the locale switches to/from RTL, and needs the same rebuild-on-attribute
+    // treatment as `data-theme` since RTL axis/label settings are baked in at build time.
+    attributeFilter: ['data-theme', 'dir']
   })
 
   if (document.documentElement.hasAttribute('data-theme')) {

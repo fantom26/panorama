@@ -6,8 +6,10 @@ import * as am5xy from '@amcharts/amcharts5/xy'
 import clsx from 'clsx'
 
 import {
+  applyPanoramaChartLocale,
   CHART_RANK_OPACITIES,
   createPanoramaChartTheme,
+  isRtlContainer,
   mountReactiveChart,
   readPanoramaChartPalette
 } from '../theme'
@@ -50,8 +52,10 @@ export default function BarChart({
 
     function build(container: HTMLDivElement) {
       const root = am5.Root.new(container)
+      const rtl = isRtlContainer(container)
       const palette = readPanoramaChartPalette(container)
-      root.setThemes([am5themes_Animated.new(root), createPanoramaChartTheme(root, palette)])
+      root.setThemes([am5themes_Animated.new(root), createPanoramaChartTheme(root, palette, rtl)])
+      applyPanoramaChartLocale(root, rtl)
 
       const chart = root.container.children.push(
         am5xy.XYChart.new(root, {
@@ -83,7 +87,8 @@ export default function BarChart({
       categoryAxis.data.setAll(dataset)
 
       // The bar's own end label carries the value, so the axis scale is redundant.
-      const xRenderer = am5xy.AxisRendererX.new(root, {})
+      // `inversed` under RTL grows bars right-to-left, mirroring the plot.
+      const xRenderer = am5xy.AxisRendererX.new(root, { inversed: rtl })
       xRenderer.grid.template.set('visible', false)
       xRenderer.ticks.template.set('visible', false)
       xRenderer.labels.template.set('visible', false)
@@ -137,8 +142,11 @@ export default function BarChart({
             text: '{valueLabel}',
             populateText: true,
             centerY: am5.p50,
-            centerX: am5.p0,
-            paddingLeft: 8,
+            // Flip the label to the bar's visual trailing edge under RTL (the anchor point
+            // itself, `locationX: 1`, already tracks the bar's end regardless of `inversed`).
+            centerX: rtl ? am5.p100 : am5.p0,
+            paddingLeft: rtl ? 0 : 8,
+            paddingRight: rtl ? 8 : 0,
             ...(palette.textSubtle ? { fill: palette.textSubtle } : {})
           })
         })
