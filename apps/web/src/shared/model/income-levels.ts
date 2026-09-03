@@ -1,3 +1,5 @@
+import { createSlugMap } from '@/shared/model/slug-map'
+
 export const INCOME_LEVELS = {
   high: 'High income',
   'upper-middle': 'Upper middle income',
@@ -8,9 +10,12 @@ export const INCOME_LEVELS = {
 export type IncomeSlug = keyof typeof INCOME_LEVELS
 export type IncomeLevelName = (typeof INCOME_LEVELS)[IncomeSlug]
 
-export const INCOME_SLUGS = Object.keys(INCOME_LEVELS) as IncomeSlug[]
+const levels = createSlugMap(INCOME_LEVELS)
 
-export const INCOME_LEVEL_ORDER = Object.values(INCOME_LEVELS) as IncomeLevelName[]
+export const INCOME_SLUGS = levels.keys
+
+/** Display names, richest → poorest (the declaration order of `INCOME_LEVELS`). */
+export const INCOME_LEVEL_ORDER = levels.values
 
 export const INCOME_SLUG_ORDER = INCOME_SLUGS
 
@@ -20,16 +25,12 @@ export function incomeRank(level: string): number {
   return index === -1 ? INCOME_LEVEL_ORDER.length : index
 }
 
-const SLUG_BY_LEVEL = Object.fromEntries(
-  Object.entries(INCOME_LEVELS).map(([slug, name]) => [name, slug])
-) as Record<IncomeLevelName, IncomeSlug>
-
 export function levelFromSlug(slug: IncomeSlug): IncomeLevelName
 export function levelFromSlug(slug: string): IncomeLevelName | undefined
 export function levelFromSlug(slug: string): IncomeLevelName | undefined {
-  return INCOME_LEVELS[slug as IncomeSlug]
+  return levels.forward(slug)
 }
 
 export function slugFromLevel(level: string): IncomeSlug | undefined {
-  return SLUG_BY_LEVEL[level as IncomeLevelName]
+  return levels.reverse(level)
 }
