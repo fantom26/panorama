@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
-import { act, render, screen } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 const mockPush = jest.fn()
@@ -125,7 +125,8 @@ describe('CountrySearch', () => {
 
     await user.type(screen.getByRole('combobox'), 'geo')
 
-    expect(screen.getAllByRole('option')).toHaveLength(1)
+    // The filter input is debounced (150ms), so the list settles asynchronously.
+    await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(1))
     expect(screen.getByRole('option')).toHaveTextContent('Georgia')
     expect(screen.getByText('search.resultsCount:1')).toBeInTheDocument()
   })

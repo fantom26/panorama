@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import clsx from 'clsx'
+import { useDebounceValue } from 'usehooks-ts'
 
 import { Dialog, Flag, Icon, Skeleton, Typography } from '@repo/ui'
 
@@ -25,10 +26,15 @@ export default function CountrySearch() {
 
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
+  // Input stays immediate; the filter over ~200 rows runs at most every 150ms.
+  const [debouncedQuery, setDebouncedQuery] = useDebounceValue('', 150)
   const [activeIndex, setActiveIndex] = useState(0)
 
   const { countries, isLoading, isError } = useCountries(open)
-  const results = useMemo(() => filterCountries(countries, query), [countries, query])
+  const results = useMemo(
+    () => filterCountries(countries, debouncedQuery),
+    [countries, debouncedQuery]
+  )
 
   const itemRefs = useRef<(HTMLLIElement | null)[]>([])
   itemRefs.current.length = results.length
@@ -46,13 +52,16 @@ export default function CountrySearch() {
   }, [])
 
   useEffect(() => {
-    if (!open) setQuery('')
-  }, [open])
+    if (!open) {
+      setQuery('')
+      setDebouncedQuery('')
+    }
+  }, [open, setDebouncedQuery])
 
   // Keep the highlight on the first row as the result set changes.
   useEffect(() => {
     setActiveIndex(0)
-  }, [query])
+  }, [debouncedQuery])
 
   useEffect(() => {
     setActiveIndex((index) => Math.min(index, Math.max(results.length - 1, 0)))
@@ -123,7 +132,10 @@ export default function CountrySearch() {
               className={styles.input}
               autoFocus
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => {
+                setQuery(event.target.value)
+                setDebouncedQuery(event.target.value)
+              }}
               placeholder={placeholder}
               role='combobox'
               aria-expanded='true'

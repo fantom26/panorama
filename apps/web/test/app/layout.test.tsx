@@ -1,3 +1,5 @@
+import { Children } from 'react'
+
 import { describe, expect, jest, test } from '@jest/globals'
 
 type CookieStore = { get: (name: string) => { value: string } | undefined }
@@ -9,15 +11,21 @@ import RootLayout from '@app/layout'
 
 import { LOCALE_COOKIE_KEY, THEME_COOKIE_KEY } from '@/shared/utils/cookies'
 
+type BodyElement = React.ReactElement<{
+  children: React.ReactElement<{ children: React.ReactElement<{ theme: string; locale: string }> }>
+}>
+
 type HtmlElement = React.ReactElement<{
   lang: string
   dir: string
   'data-theme': string
-  children: React.ReactElement<{ children: React.ReactElement<{ theme: string; locale: string }> }>
+  children: React.ReactNode
 }>
 
 function providersProps(html: HtmlElement) {
-  return html.props.children.props.children.props
+  const children = Children.toArray(html.props.children) as React.ReactElement[]
+  const body = children.find((child) => child.type === 'body') as BodyElement
+  return body.props.children.props
 }
 
 describe('RootLayout', () => {
