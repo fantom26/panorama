@@ -1,13 +1,14 @@
 import type { Country } from '@/shared/model/country'
 import { type RegionSlug, slugFromRegion } from '@/shared/model/regions'
 import {
-  selectCountryIdByAlpha2,
+  bucketTotals,
   selectIncomeLevelCountries,
+  selectMemberProjection,
   selectRegionCountries
 } from '@/shared/model/selectors'
 import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
-import { avg, sum } from '@/shared/utils/aggregate'
+import { avg, groupBy, sum } from '@/shared/utils/aggregate'
 import {
   formatCompactNumber,
   formatCompactUsd,
@@ -81,20 +82,11 @@ export function selectIncomeLevelOverview(
     avgInflation: formatPercent(avg(members.map((c) => c.inflation)) ?? 0)
   }
 
-  const byRegion = new Map<string, Country[]>()
-  for (const country of members) {
-    const bucket = byRegion.get(country.region) ?? []
-    bucket.push(country)
-    byRegion.set(country.region, bucket)
-  }
-
-  const regionBreakdown: RegionBreakdownRow[] = [...byRegion.entries()]
+  const regionBreakdown: RegionBreakdownRow[] = Object.entries(groupBy(members, 'region'))
     .map(([region, bucket]) => ({
       region,
       slug: slugFromRegion(region),
-      count: bucket.length,
-      population: sum(bucket.map((c) => c.population)),
-      gdp: sum(bucket.map((c) => c.gdp))
+      ...bucketTotals(bucket)
     }))
     .sort((a, b) => b.count - a.count)
 
@@ -111,9 +103,7 @@ export function selectIncomeLevelOverview(
 
   return {
     tiles: toStats(TILE_KEYS, tileValues),
-    memberAlpha2: members.map((c) => c.iso2.toUpperCase()),
-    memberIds: new Set(members.map((c) => c.id)),
-    countryIdByAlpha2: selectCountryIdByAlpha2(members),
+    ...selectMemberProjection(members),
     mapData: members.map((c) => ({ id: c.iso2.toUpperCase(), value: c.gdpPerCapita })),
     regionBreakdown,
     cards
