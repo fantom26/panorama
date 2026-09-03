@@ -1,4 +1,5 @@
 import { INDICATOR, type IndicatorId } from '@/shared/model/indicators'
+import { createSlugMap } from '@/shared/model/slug-map'
 
 /** URL slugs for `/rankings/[indicator]` — readable stand-ins for the SOTW codes. */
 export const RANKING_INDICATORS = {
@@ -12,18 +13,16 @@ export const RANKING_INDICATORS = {
 
 export type RankingSlug = keyof typeof RANKING_INDICATORS
 
-export const RANKING_SLUGS = Object.keys(RANKING_INDICATORS) as RankingSlug[]
+const indicators = createSlugMap(RANKING_INDICATORS)
 
-const SLUG_BY_INDICATOR = Object.fromEntries(
-  Object.entries(RANKING_INDICATORS).map(([slug, id]) => [id, slug])
-) as Record<IndicatorId, RankingSlug>
+export const RANKING_SLUGS = indicators.keys
 
 export function indicatorFromSlug(slug: RankingSlug): IndicatorId
 export function indicatorFromSlug(slug: string): IndicatorId | undefined
 export function indicatorFromSlug(slug: string): IndicatorId | undefined {
-  return RANKING_INDICATORS[slug as RankingSlug]
+  return indicators.forward(slug)
 }
 
 export function slugFromIndicator(indicator: string): RankingSlug | undefined {
-  return SLUG_BY_INDICATOR[indicator as IndicatorId]
+  return indicators.reverse(indicator)
 }

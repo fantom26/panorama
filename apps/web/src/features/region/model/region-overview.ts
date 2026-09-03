@@ -1,13 +1,15 @@
 import type { Country } from '@/shared/model/country'
 import { incomeRank, type IncomeSlug, slugFromLevel } from '@/shared/model/income-levels'
 import {
-  selectCountryIdByAlpha2,
+  bucketTotals,
   selectIncomeLevelCountries,
-  selectRegionCountries
+  selectMemberProjection,
+  selectRegionCountries,
+  topByMetric
 } from '@/shared/model/selectors'
 import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
-import { avg, sum } from '@/shared/utils/aggregate'
+import { avg, groupBy, sum } from '@/shared/utils/aggregate'
 import {
   formatCompactNumber,
   formatCompactUsd,
@@ -70,34 +72,23 @@ export function selectRegionOverview(
     avgInflation: formatPercent(avg(members.map((c) => c.inflation)) ?? 0)
   }
 
-  const byLevel = new Map<string, Country[]>()
-  for (const country of members) {
-    const bucket = byLevel.get(country.incomeLevel) ?? []
-    bucket.push(country)
-    byLevel.set(country.incomeLevel, bucket)
-  }
-
-  const incomeBreakdown: IncomeBreakdownRow[] = [...byLevel.entries()]
+  const incomeBreakdown: IncomeBreakdownRow[] = Object.entries(groupBy(members, 'incomeLevel'))
     .sort(([a], [b]) => incomeRank(a) - incomeRank(b))
     .map(([level, bucket]) => ({
       level,
       slug: slugFromLevel(level),
-      count: bucket.length,
-      population: sum(bucket.map((c) => c.population)),
-      gdp: sum(bucket.map((c) => c.gdp))
+      ...bucketTotals(bucket)
     }))
 
-  const topGdpPerCapita = members
-    .filter((c): c is Country & { gdpPerCapita: number } => c.gdpPerCapita != null)
-    .sort((a, b) => b.gdpPerCapita - a.gdpPerCapita)
-    .slice(0, 10)
-    .map((c) => ({ id: c.id, label: c.name, value: c.gdpPerCapita }))
+  const topGdpPerCapita = topByMetric(members, 'gdpPerCapita', 10, (country, value) => ({
+    id: country.id,
+    label: country.name,
+    value
+  }))
 
   return {
     tiles: toStats(TILE_KEYS, tileValues),
-    memberAlpha2: members.map((c) => c.iso2.toUpperCase()),
-    memberIds: new Set(members.map((c) => c.id)),
-    countryIdByAlpha2: selectCountryIdByAlpha2(members),
+    ...selectMemberProjection(members),
     incomeBreakdown,
     topGdpPerCapita
   }

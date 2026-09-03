@@ -73,28 +73,22 @@ export const useCompareStore = create<CompareState>()(
   persist(
     (set, get) => ({
       codes: [],
-      add: (code) => {
-        const upper = code.toUpperCase()
-        if (!isAlpha3(upper)) return
-
-        const { codes } = get()
-        if (codes.includes(upper) || codes.length >= MAX_COMPARE) return
-
-        set({ codes: [...codes, upper] })
-      },
+      // Every mutation funnels through `normalizeCodes`, so validation, de-duping and the
+      // `MAX_COMPARE` cap live in exactly one place. Invalid / duplicate / over-cap inputs
+      // are no-ops because `normalizeCodes` drops them.
+      add: (code) => set({ codes: normalizeCodes([...get().codes, code]) }),
       remove: (code) => {
         const upper = code.toUpperCase()
-        const { codes } = get()
-        if (!codes.includes(upper as Alpha3Code)) return
-
-        set({ codes: codes.filter((entry) => entry !== upper) })
+        set({ codes: get().codes.filter((entry) => entry !== upper) })
       },
       toggle: (code) => {
         const upper = code.toUpperCase()
-        if (!isAlpha3(upper)) return
-
-        if (get().codes.includes(upper)) get().remove(upper)
-        else get().add(upper)
+        const { codes } = get()
+        set({
+          codes: codes.includes(upper as Alpha3Code)
+            ? codes.filter((entry) => entry !== upper)
+            : normalizeCodes([...codes, code])
+        })
       },
       set: (codes) => set({ codes: normalizeCodes(codes) }),
       clear: () => set({ codes: [] })

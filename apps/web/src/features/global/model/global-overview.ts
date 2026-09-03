@@ -1,5 +1,5 @@
 import type { Country } from '@/shared/model/country'
-import { selectCountryIdByAlpha2, selectGlobalMetrics } from '@/shared/model/selectors'
+import { selectCountryIdByAlpha2, selectGlobalMetrics, topByMetric } from '@/shared/model/selectors'
 import { type Stat, toStats } from '@/shared/model/stat'
 import type { Alpha2Code, Alpha3Code } from '@/shared/types/iso'
 import { formatCompactNumber, formatCompactUsd, formatPercent } from '@/shared/utils/format'
@@ -60,13 +60,14 @@ export function selectGlobalOverview(countries: readonly Country[]): GlobalOverv
     country.gdp == null ? [] : [{ id: country.iso2.toUpperCase(), value: country.gdp }]
   )
   const gdpValues = gdpByCountry.map((entry) => entry.value)
-  const gdpRange = `${formatCompactUsd(Math.min(...gdpValues))} ─────── ${formatCompactUsd(Math.max(...gdpValues))}`
+  const gdpRange = gdpValues.length
+    ? `${formatCompactUsd(Math.min(...gdpValues))} ─────── ${formatCompactUsd(Math.max(...gdpValues))}`
+    : ''
 
-  const topInflation = countries
-    .filter((country): country is Country & { inflation: number } => country.inflation != null)
-    .sort((a, b) => b.inflation - a.inflation)
-    .slice(0, 8)
-    .map((country) => ({ label: country.name, value: country.inflation }))
+  const topInflation = topByMetric(countries, 'inflation', 8, (country, value) => ({
+    label: country.name,
+    value
+  }))
 
   const tileValues: Record<TileKey, string> = {
     countries: String(metrics.total),
