@@ -1,7 +1,7 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
-  "globalEnv": ["NODE_ENV", "SOTW_CONTRACT"],
+  "globalEnv": ["NODE_ENV", "SOTW_CONTRACT", "ANALYZE"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

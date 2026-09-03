@@ -1,0 +1,47 @@
+# Baseline client JS chunks — real Turbopack production build (pnpm --filter web build)
+# Generated 2026-09-03T15:41:07Z on branch perf/baseline
+#
+#      raw(B)   gzip(B)  chunk
+     1052001    325054  3ea6vetogmc44.js
+      403295     94242  3nz58ayvvsfsb.js
+      229062     71622  2w6sp_j-ul6cz.js
+      160412     43691  3ouzyerx-_vh5.js
+      112594     39490  0cz1d0mv5g_q7.js
+       64631     20554  04929031de_g7.js
+       32953      8769  43uod7_djsrjs.js
+       29319      8866  2l8f8artir0w7.js
+       24844      8722  1lfgclpy_t0gj.js
+       23979      8525  439k12rs4az76.js
+       20813      7595  3k9lupozb9zp3.js
+       20316      7447  06h9dzliwo_bv.js
+       19532      7257  1_xpaygkzvmwa.js
+       18156      6988  247vr6fwbu-op.js
+       14376      3677  1pxnftioiqz3m.js
+       10066      4124  2ir9lkijig5gu.js
+        9652      3869  turbopack-3ujihs_uyuba4.js
+        5363      1972  1h25qu2378ke7.js
+         927       551  11k7vugzh-mho.js
+#
+# TOTAL  raw=2252291  gzip=657264  across 19 chunks
+#
+# Loaded on every route (build-manifest rootMainFiles + polyfills):
+  1h25qu2378ke7.js
+  43uod7_djsrjs.js
+  2w6sp_j-ul6cz.js
+  3ouzyerx-_vh5.js
+  turbopack-3ujihs_uyuba4.js
+  0cz1d0mv5g_q7.js
+#
+# Chunk contents (minified fingerprint grep):
+#   3ea6vetogmc44.js  325 KB gz  49.5% of all client JS — ONE shared chunk bundling
+#                                amCharts5 + @amcharts5-geodata + @tanstack/react-table
+#                                + react-i18next + @base-ui/react + lucide-react.
+#                                Not in rootMainFiles, but pulled by every feature route
+#                                (all features import from the @repo/ui barrel).
+#   3nz58ayvvsfsb.js   94 KB gz  framework / vendor
+#   2w6sp_j-ul6cz.js   72 KB gz  react-dom (rootMainFiles — every route)
+#   3ouzyerx-_vh5.js   44 KB gz  scheduler / react (rootMainFiles — every route)
+#
+# rootMainFiles + polyfills gzip total (loaded on every route): 162.9 KB
+# PR 2 target: split amCharts + geodata out of 3ea6vetogmc44.js into a lazily-loaded
+# chunk fetched only when a chart nears the viewport.

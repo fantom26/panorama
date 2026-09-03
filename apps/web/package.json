@@ -12,7 +12,8 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write . --ignore-path ../../.prettierignore",
     "format:check": "prettier --check . --ignore-path ../../.prettierignore",
-    "test": "jest"
+    "test": "jest",
+    "analyze": "ANALYZE=true next build --webpack"
   },
   "dependencies": {
     "@repo/i18n": "workspace:*",
@@ -31,6 +32,7 @@
   "prettier": "@repo/prettier-config",
   "devDependencies": {
     "@jest/globals": "^30.4.1",
+    "@next/bundle-analyzer": "16.3.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",

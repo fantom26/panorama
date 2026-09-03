@@ -1,3 +1,4 @@
+import withBundleAnalyzer from '@next/bundle-analyzer'
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
@@ -7,4 +8,7 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@repo/ui']
 }
 
-export default nextConfig
+// Off unless `ANALYZE=true` (the `analyze` script) — no effect on `build` / CI.
+const analyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })
+
+export default analyzer(nextConfig)
