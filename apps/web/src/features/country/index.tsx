@@ -10,7 +10,6 @@ import {
   Button,
   type ColumnDef,
   DataTable,
-  LineChart,
   Section,
   Skeleton,
   StatCard,
@@ -29,6 +28,7 @@ import { slugFromRegion } from '@/shared/model/regions'
 import { ROUTES } from '@/shared/routes'
 import { useCompareList } from '@/shared/store/compare'
 import AppHeader from '@/shared/ui/AppHeader'
+import { LineChart } from '@/shared/ui/charts'
 import SectionLink from '@/shared/ui/SectionLink'
 import TitleBlock from '@/shared/ui/TitleBlock'
 import TitleMeta from '@/shared/ui/TitleMeta'

@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 import {
-  BarChart,
   Breadcrumbs,
   type ColumnDef,
   DataTable,
@@ -25,6 +24,7 @@ import { useChartHeight } from '@/shared/hooks/useChartHeight'
 import { indicatorFromSlug, RANKING_SLUGS } from '@/shared/model/ranking-indicators'
 import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
+import { BarChart } from '@/shared/ui/charts'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
 import StatTiles from '@/shared/ui/StatTiles'
 import TitleBlock from '@/shared/ui/TitleBlock'

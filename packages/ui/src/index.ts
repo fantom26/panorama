@@ -5,12 +5,13 @@ export { default as Button } from './components/Buttons/Button'
 export { default as CloseButton } from './components/Buttons/CloseButton'
 export { default as IconButton } from './components/Buttons/IconButton'
 export { type ThemePreference, default as ThemeToggle } from './components/Buttons/ThemeToggle'
-export { default as BarChart } from './components/Charts/BarChart'
-export { default as DonutChart } from './components/Charts/DonutChart'
-export { default as LineChart } from './components/Charts/LineChart'
+// The amCharts5 charts are intentionally NOT re-exported here: a single barrel
+// import (`import { Button } from '@repo/ui'`) would otherwise pull ~180 KB of
+// amCharts into every consumer. Import them by subpath instead:
+// `import WorldMap from '@repo/ui/charts/WorldMap'`. MapLegend and RankingList
+// are pure DOM (no amCharts) and stay on the barrel.
 export { default as MapLegend } from './components/Charts/MapLegend'
 export { default as RankingList } from './components/Charts/RankingList'
-export { default as WorldMap } from './components/Charts/WorldMap'
 export { default as Chip } from './components/DataDisplay/Chip'
 export type { ColumnDef } from './components/DataDisplay/DataTable'
 export { default as DataTable } from './components/DataDisplay/DataTable'

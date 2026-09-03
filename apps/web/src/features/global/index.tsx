@@ -1,14 +1,6 @@
 'use client'
 
-import {
-  DonutChart,
-  MapLegend,
-  RankingList,
-  Section,
-  Skeleton,
-  Typography,
-  WorldMap
-} from '@repo/ui'
+import { MapLegend, RankingList, Section, Skeleton, Typography } from '@repo/ui'
 
 import { useGlobalStats } from '@/features/global/hooks/useGlobalStats'
 import { useTranslation } from '@/i18n'
@@ -17,6 +9,7 @@ import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
 import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
+import { DonutChart, donutReservedHeight, WorldMap } from '@/shared/ui/charts'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
 import SectionLink from '@/shared/ui/SectionLink'
 import StatTiles from '@/shared/ui/StatTiles'
@@ -110,7 +103,14 @@ export default function GlobalOverviewPage() {
             className={`${styles.column} ${styles.columnDivided}`}
           >
             {isPending ? (
-              <Skeleton variant='rectangular' width='100%' height={donutSize} />
+              <Skeleton
+                variant='rectangular'
+                width='100%'
+                height={donutReservedHeight({
+                  size: donutSize,
+                  layout: isTablet ? 'row' : 'column'
+                })}
+              />
             ) : (
               <DonutChart
                 data={overview.populationByRegion}

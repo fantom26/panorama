@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
-import { Breadcrumbs, RankingList, Section, Select, Skeleton, Typography, WorldMap } from '@repo/ui'
+import { Breadcrumbs, RankingList, Section, Select, Skeleton, Typography } from '@repo/ui'
 
 import { useRegionOverview } from '@/features/region/hooks/useRegionOverview'
 import { assertRegionSlug } from '@/features/region/model/region-not-found'
@@ -15,6 +15,7 @@ import { REGION_NAMES, REGION_SLUGS, regionFromSlug } from '@/shared/model/regio
 import { ROUTES } from '@/shared/routes'
 import AppHeader from '@/shared/ui/AppHeader'
 import BreakdownList from '@/shared/ui/BreakdownList'
+import { WorldMap } from '@/shared/ui/charts'
 import ErrorBoundary from '@/shared/ui/ErrorBoundary'
 import SectionLink from '@/shared/ui/SectionLink'
 import StatTiles from '@/shared/ui/StatTiles'
