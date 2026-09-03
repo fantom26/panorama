@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
-import { Breadcrumbs, RankingList, Section, Select, Skeleton, Typography, WorldMap } from '@repo/ui'
+import { RankingList, Section, Select, Skeleton, Typography, WorldMap } from '@repo/ui'
 
 import { useRegionOverview } from '@/features/region/hooks/useRegionOverview'
 import { assertRegionSlug } from '@/features/region/model/region-not-found'
@@ -13,13 +13,10 @@ import { useCountryMapSelect } from '@/shared/hooks/useCountryMapSelect'
 import { levelFromSlug, slugFromLevel } from '@/shared/model/income-levels'
 import { REGION_NAMES, REGION_SLUGS, regionFromSlug } from '@/shared/model/regions'
 import { ROUTES } from '@/shared/routes'
-import AppHeader from '@/shared/ui/AppHeader'
 import BreakdownList from '@/shared/ui/BreakdownList'
-import ErrorBoundary from '@/shared/ui/ErrorBoundary'
+import OverviewPageShell from '@/shared/ui/OverviewPageShell'
 import SectionLink from '@/shared/ui/SectionLink'
 import StatTiles from '@/shared/ui/StatTiles'
-import TitleBlock from '@/shared/ui/TitleBlock'
-import TitleMeta from '@/shared/ui/TitleMeta'
 import { formatCompactNumber, formatCompactUsd, formatGdp, formatUsd } from '@/shared/utils/format'
 
 import styles from './index.module.css'
@@ -57,114 +54,96 @@ export default function RegionPage() {
   }))
 
   return (
-    <>
-      <AppHeader>
-        <Breadcrumbs>
-          <Link href={ROUTES.home()}>
-            <Typography variant='body-sm' color='muted' component='span'>
-              {t('breadcrumb.global')}
-            </Typography>
-          </Link>
-          <Typography variant='body-sm' color='knockout' component='span' aria-current='page'>
-            {regionName}
-          </Typography>
-        </Breadcrumbs>
-      </AppHeader>
-
-      <TitleBlock className={styles.titleBlock}>
-        <div>
-          <Typography variant='meta-sm' color='subtle' component='div'>
-            {t('header.eyebrow')}
-          </Typography>
-          <Typography variant='headline-sm' component='h1'>
-            {regionName}
-          </Typography>
-          {levelName && (
-            <div className={styles.filterNote}>
-              <Typography variant='meta-sm' color='muted' component='span'>
-                {t('filter.activeBy', { name: levelName })}
-              </Typography>{' '}
-              <Link href={ROUTES.region(region)} className={styles.filterClear}>
-                <Typography variant='meta-sm' component='span'>
-                  {t('filter.clear')}
-                </Typography>
-              </Link>
-            </div>
-          )}
-        </div>
-        <TitleMeta className={styles.rightMeta}>
-          <Select
-            options={REGION_OPTIONS}
-            value={region}
-            onValueChange={(value) =>
-              value && router.push(ROUTES.region(value, { level: levelSlug }))
-            }
-            aria-label={t('switcher.label')}
-          />
-        </TitleMeta>
-      </TitleBlock>
-
-      <ErrorBoundary onReset={refetch}>
-        <StatTiles
-          tiles={overview.tiles}
-          labelFor={(key) => t(`tiles.${key}`)}
-          loading={isPending}
-          columns={5}
-        />
-
-        <div className={styles.twoColRow}>
-          <Section
-            title={t('sections.regionalMap')}
-            className={`${styles.column} ${styles.columnDivided}`}
-          >
-            <div className={styles.mapBody}>
-              <Typography variant='meta-sm' color='muted' component='p' className={styles.hint}>
-                {t('sections.regionalMapHint')}
+    <OverviewPageShell
+      homeLabel={t('breadcrumb.global')}
+      crumb={regionName}
+      eyebrow={t('header.eyebrow')}
+      title={regionName}
+      subtitle={
+        levelName && (
+          <div className={styles.filterNote}>
+            <Typography variant='meta-sm' color='muted' component='span'>
+              {t('filter.activeBy', { name: levelName })}
+            </Typography>{' '}
+            <Link href={ROUTES.region(region)} className={styles.filterClear}>
+              <Typography variant='meta-sm' component='span'>
+                {t('filter.clear')}
               </Typography>
-              {isPending ? (
-                <Skeleton variant='rectangular' width='100%' height={mapHeight} />
-              ) : (
-                <WorldMap
-                  mode='lit'
-                  highlight={overview.memberAlpha2}
-                  disableUnhighlighted
-                  format={formatGdp}
-                  onSelect={handleCountrySelect}
-                  height={mapHeight}
-                />
-              )}
-            </div>
-          </Section>
+            </Link>
+          </div>
+        )
+      }
+      switcher={
+        <Select
+          options={REGION_OPTIONS}
+          value={region}
+          onValueChange={(value) =>
+            value && router.push(ROUTES.region(value, { level: levelSlug }))
+          }
+          aria-label={t('switcher.label')}
+        />
+      }
+      onReset={refetch}
+    >
+      <StatTiles
+        tiles={overview.tiles}
+        labelFor={(key) => t(`tiles.${key}`)}
+        loading={isPending}
+        columns={5}
+      />
 
-          <Section title={t('sections.incomeLevels')} className={styles.column}>
+      <div className={styles.twoColRow}>
+        <Section
+          title={t('sections.regionalMap')}
+          className={`${styles.column} ${styles.columnDivided}`}
+        >
+          <div className={styles.mapBody}>
+            <Typography variant='meta-sm' color='muted' component='p' className={styles.hint}>
+              {t('sections.regionalMapHint')}
+            </Typography>
             {isPending ? (
               <Skeleton variant='rectangular' width='100%' height={mapHeight} />
             ) : (
-              <BreakdownList rows={incomeRows} />
-            )}
-          </Section>
-        </div>
-
-        <Section
-          title={t('sections.topEconomies', { region: regionName })}
-          className={styles.topEconomies}
-        >
-          {isPending ? (
-            <Skeleton variant='rectangular' width='100%' height={280} />
-          ) : (
-            <>
-              <RankingList
-                data={overview.topGdpPerCapita}
-                formatValue={formatUsd}
-                onSelect={(id) => router.push(ROUTES.country(id))}
+              <WorldMap
+                mode='lit'
+                highlight={overview.memberAlpha2}
+                disableUnhighlighted
+                format={formatGdp}
+                onSelect={handleCountrySelect}
+                height={mapHeight}
               />
-              <SectionLink href={ROUTES.rankings('gdp-per-capita')}>
-                {t('sections.globalRanking')}
-              </SectionLink>
-            </>
+            )}
+          </div>
+        </Section>
+
+        <Section title={t('sections.incomeLevels')} className={styles.column}>
+          {isPending ? (
+            <Skeleton variant='rectangular' width='100%' height={mapHeight} />
+          ) : (
+            <BreakdownList rows={incomeRows} />
           )}
         </Section>
-      </ErrorBoundary>
-    </>
+      </div>
+
+      <Section
+        title={t('sections.topEconomies', { region: regionName })}
+        className={styles.topEconomies}
+      >
+        {isPending ? (
+          <Skeleton variant='rectangular' width='100%' height={280} />
+        ) : (
+          <>
+            <RankingList
+              data={overview.topGdpPerCapita}
+              formatValue={formatUsd}
+              onSelect={(id) => router.push(ROUTES.country(id))}
+            />
+            <SectionLink href={ROUTES.rankings('gdp-per-capita')}>
+              {t('sections.globalRanking')}
+            </SectionLink>
+          </>
+        )}
+      </Section>
+    </OverviewPageShell>
   )
 }

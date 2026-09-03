@@ -1,21 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@/shared/api/query-keys'
-import { fetchCountry, fetchHistory, StatisticsApiError } from '@/shared/api/statistics-api'
+import { fetchCountry, fetchHistory, isNotFoundError } from '@/shared/api/statistics-api'
 import { type CountryStats, selectStats } from '@/shared/model/country-stats'
 import type { IndicatorId } from '@/shared/model/indicators'
 import type { Alpha3Code } from '@/shared/types/iso'
 
 export type { CountryStats }
 
-const isMissingCountry = (error: unknown) =>
-  error instanceof StatisticsApiError && error.status === 404
-
 export function useCountry(id: Alpha3Code) {
   const { data, isPending, error } = useQuery({
     queryKey: queryKeys.country(id),
     queryFn: () => fetchCountry(id),
-    throwOnError: (error) => !isMissingCountry(error)
+    throwOnError: (error) => !isNotFoundError(error)
   })
 
   return {
