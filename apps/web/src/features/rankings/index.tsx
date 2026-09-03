@@ -7,7 +7,6 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 import {
   BarChart,
-  Breadcrumbs,
   type ColumnDef,
   DataTable,
   Flag,
@@ -24,11 +23,8 @@ import { useTranslation } from '@/i18n'
 import { useChartHeight } from '@/shared/hooks/useChartHeight'
 import { indicatorFromSlug, RANKING_SLUGS } from '@/shared/model/ranking-indicators'
 import { ROUTES } from '@/shared/routes'
-import AppHeader from '@/shared/ui/AppHeader'
-import ErrorBoundary from '@/shared/ui/ErrorBoundary'
+import OverviewPageShell from '@/shared/ui/OverviewPageShell'
 import StatTiles from '@/shared/ui/StatTiles'
-import TitleBlock from '@/shared/ui/TitleBlock'
-import TitleMeta from '@/shared/ui/TitleMeta'
 import { formatIndicatorValue, formatIndicatorValueCompact } from '@/shared/utils/format'
 
 import styles from './index.module.css'
@@ -85,78 +81,57 @@ export default function RankingsPage() {
   }))
 
   return (
-    <>
-      <AppHeader>
-        <Breadcrumbs>
-          <Link href={ROUTES.home()}>
-            <Typography variant='body-sm' color='muted' component='span'>
-              {t('breadcrumb.global')}
-            </Typography>
-          </Link>
-          <Typography variant='body-sm' color='knockout' component='span' aria-current='page'>
-            {t('header.title', { name: title })}
+    <OverviewPageShell
+      homeLabel={t('breadcrumb.global')}
+      crumb={t('header.title', { name: title })}
+      eyebrow={t('header.eyebrow')}
+      title={title}
+      subtitle={
+        view.meta && (
+          <Typography variant='meta-sm' color='muted' component='div'>
+            {t('header.meta', { source: view.meta.source, year: view.meta.year })}
           </Typography>
-        </Breadcrumbs>
-      </AppHeader>
-
-      <TitleBlock className={styles.titleBlock}>
-        <div>
-          <Typography variant='meta-sm' color='subtle' component='div'>
-            {t('header.eyebrow')}
-          </Typography>
-          <Typography variant='headline-sm' component='h1'>
-            {title}
-          </Typography>
-          {view.meta && (
-            <Typography variant='meta-sm' color='muted' component='div'>
-              {t('header.meta', { source: view.meta.source, year: view.meta.year })}
-            </Typography>
-          )}
-        </div>
-        <TitleMeta className={styles.rightMeta}>
-          <Select
-            options={indicatorOptions}
-            value={indicator}
-            onValueChange={(value) => value && router.push(ROUTES.rankings(value, { limit }))}
-            aria-label={t('switcher.label')}
-          />
-        </TitleMeta>
-      </TitleBlock>
-
-      <ErrorBoundary onReset={refetch}>
-        <StatTiles
-          tiles={view.tiles}
-          labelFor={(key) => t(`tiles.${key}`)}
-          loading={isPending}
-          columns={4}
+        )
+      }
+      switcher={
+        <Select
+          options={indicatorOptions}
+          value={indicator}
+          onValueChange={(value) => value && router.push(ROUTES.rankings(value, { limit }))}
+          aria-label={t('switcher.label')}
         />
+      }
+      onReset={refetch}
+    >
+      <StatTiles
+        tiles={view.tiles}
+        labelFor={(key) => t(`tiles.${key}`)}
+        loading={isPending}
+        columns={4}
+      />
 
-        <Section title={t('sections.top', { count: view.bars.length })} className={styles.section}>
-          {isPending ? (
-            <Skeleton variant='rectangular' width='100%' height={chartHeight} />
-          ) : (
-            <BarChart
-              data={view.bars}
-              formatValue={formatBarValue}
-              onSelect={handleSelect}
-              height={chartHeight}
-            />
-          )}
-        </Section>
-
-        <Section
-          title={t('sections.table', { count: view.rows.length })}
-          className={styles.section}
-        >
-          <DataTable
-            state={isPending ? { status: 'loading' } : { status: 'ready', data: view.rows }}
-            columns={columns}
-            enablePagination
-            enableColumnFilters
-            pageSize={25}
+      <Section title={t('sections.top', { count: view.bars.length })} className={styles.section}>
+        {isPending ? (
+          <Skeleton variant='rectangular' width='100%' height={chartHeight} />
+        ) : (
+          <BarChart
+            data={view.bars}
+            formatValue={formatBarValue}
+            onSelect={handleSelect}
+            height={chartHeight}
           />
-        </Section>
-      </ErrorBoundary>
-    </>
+        )}
+      </Section>
+
+      <Section title={t('sections.table', { count: view.rows.length })} className={styles.section}>
+        <DataTable
+          state={isPending ? { status: 'loading' } : { status: 'ready', data: view.rows }}
+          columns={columns}
+          enablePagination
+          enableColumnFilters
+          pageSize={25}
+        />
+      </Section>
+    </OverviewPageShell>
   )
 }
