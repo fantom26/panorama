@@ -1,5 +1,9 @@
 import { type CSSProperties, Fragment } from 'react'
 
+import Link from 'next/link'
+
+import clsx from 'clsx'
+
 import { Flag, Skeleton, Typography } from '@repo/ui'
 
 import type { CompareColumn } from '@/features/compare/hooks/useCompareCountries'
@@ -9,6 +13,7 @@ import {
   type CompareRowKey
 } from '@/features/compare/model/compare-matrix'
 import { useTranslation } from '@/i18n'
+import { ROUTES } from '@/shared/routes'
 import { formatCompactNumber, formatGdp, formatPercent, formatUsd } from '@/shared/utils/format'
 
 import styles from './index.module.css'
@@ -30,11 +35,6 @@ export type CompareMatrixProps = {
   loading?: boolean
 }
 
-/**
- * Transposed indicator table: one row per headline indicator, one column per
- * compared country. Each cell shows the value and a bar sized to its share of the
- * row's maximum.
- */
 export default function CompareMatrix({ columns, loading = false }: CompareMatrixProps) {
   const { t } = useTranslation('compare')
   const rows = buildCompareRows(columns.map((column) => column.stats))
@@ -44,23 +44,39 @@ export default function CompareMatrix({ columns, loading = false }: CompareMatri
     <div className={styles.scroll}>
       <div className={styles.matrix} style={gridStyle}>
         <div className={styles.corner} />
-        {columns.map((column) => (
-          <div key={column.code} className={styles.head}>
-            {column.country ? (
-              <Flag code={column.country.iso2} />
-            ) : (
-              <span className={styles.flagFallback} />
-            )}
-            <span className={styles.headText}>
-              <Typography variant='body-sm' component='span'>
-                {column.country?.name ?? column.code}
-              </Typography>
-              <Typography variant='meta-sm' color='muted' component='span'>
-                {column.code}
-              </Typography>
-            </span>
-          </div>
-        ))}
+        {columns.map((column) => {
+          const inner = (
+            <>
+              {column.country ? (
+                <Flag code={column.country.iso2} />
+              ) : (
+                <span className={styles.flagFallback} />
+              )}
+              <span className={styles.headText}>
+                <Typography variant='body-sm' component='span' className={styles.headName}>
+                  {column.country?.name ?? column.code}
+                </Typography>
+                <Typography variant='meta-sm' color='muted' component='span'>
+                  {column.code}
+                </Typography>
+              </span>
+            </>
+          )
+
+          return column.country ? (
+            <Link
+              key={column.code}
+              href={ROUTES.country(column.code)}
+              className={clsx(styles.head, styles.headLink)}
+            >
+              {inner}
+            </Link>
+          ) : (
+            <div key={column.code} className={styles.head}>
+              {inner}
+            </div>
+          )
+        })}
 
         {COMPARE_ROW_KEYS.map((key, rowIndex) => (
           <Fragment key={key}>

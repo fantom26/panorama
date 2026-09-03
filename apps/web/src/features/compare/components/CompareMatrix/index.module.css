@@ -28,6 +28,28 @@
   flex-direction: column;
 }
 
+.headLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.headLink .headName {
+  color: var(--ds-theme-color-content-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.headLink:focus-visible {
+  outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .headLink:hover .headName {
+    text-decoration-thickness: 2px;
+  }
+}
+
 .flagFallback {
   display: block;
   flex-shrink: 0;

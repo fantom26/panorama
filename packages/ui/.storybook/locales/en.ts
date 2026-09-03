@@ -67,6 +67,11 @@ export default {
     unsupportedLocale: 'Unsupported locale',
     region: 'Region'
   },
+  combobox: {
+    label: 'Country',
+    placeholder: 'Search countries',
+    empty: 'No countries match'
+  },
   textField: {
     searchPlaceholder: 'Search countries',
     usdBAdornment: 'USD B',
