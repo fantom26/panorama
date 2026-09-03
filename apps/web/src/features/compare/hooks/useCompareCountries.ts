@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useQueries } from '@tanstack/react-query'
 
 import { queryKeys } from '@/shared/api/query-keys'
-import { type CountryRow, fetchCountry, StatisticsApiError } from '@/shared/api/statistics-api'
+import { type CountryRow, fetchCountry, isNotFoundError } from '@/shared/api/statistics-api'
 import { type CountryStats, selectStats } from '@/shared/model/country-stats'
 import { useCompareStore } from '@/shared/store/compare'
 import type { Alpha3Code } from '@/shared/types/iso'
@@ -37,11 +37,7 @@ export function useCompareCountries(codes: readonly Alpha3Code[]) {
       })
 
       const missing = results
-        .map((result, index) =>
-          result.error instanceof StatisticsApiError && result.error.status === 404
-            ? codes[index]
-            : undefined
-        )
+        .map((result, index) => (isNotFoundError(result.error) ? codes[index] : undefined))
         .filter((code): code is Alpha3Code => Boolean(code))
 
       return { columns, isPending: results.some((result) => result.isPending), missing }
