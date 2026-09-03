@@ -5,7 +5,15 @@ export default {
   },
   eyebrow: 'Compare · {{count}} of {{max}}',
   title: 'Side-by-side comparison',
-  addHint: 'Add countries from their detail page',
+  add: {
+    label: 'Add a country to compare',
+    placeholder: 'Add a country',
+    placeholderFull: 'Remove a country to add another',
+    loading: 'Loading countries…',
+    error: 'Couldn’t load countries.',
+    empty: 'No countries match',
+    added: 'Added'
+  },
   sections: {
     indicators: 'Indicators'
   },
@@ -21,7 +29,7 @@ export default {
   },
   empty: {
     title: 'No countries to compare yet',
-    body: 'Open any country and choose “+ Add to Compare”.',
+    body: 'Search for a country to start comparing.',
     cta: 'Browse the global dashboard'
   }
 } as const
