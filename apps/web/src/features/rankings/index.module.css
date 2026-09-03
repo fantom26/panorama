@@ -11,6 +11,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--ds-theme-spacing-xs);
+  color: var(--ds-theme-color-content-brand);
 }
 
 .countryCell:hover {
