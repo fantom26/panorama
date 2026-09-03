@@ -47,6 +47,10 @@ export class StatisticsApiError extends Error {
   }
 }
 
+/** True when `error` is a 404 from the API — an unknown country/indicator, not a transient failure. */
+export const isNotFoundError = (error: unknown): boolean =>
+  error instanceof StatisticsApiError && error.status === 404
+
 /** Thrown when the body isn't valid JSON — e.g. an HTML error page served behind a 200. */
 export class StatisticsParseError extends Error {
   constructor(

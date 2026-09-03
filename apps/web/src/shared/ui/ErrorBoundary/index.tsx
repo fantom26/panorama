@@ -17,9 +17,10 @@ type ErrorBoundaryProps = {
 }
 
 function Fallback({ error, resetErrorBoundary }: FallbackProps) {
+  const { t } = useTranslation('common')
+
   unstable_rethrow(error)
 
-  const { t } = useTranslation('common')
   const message = error instanceof Error ? error.message : String(error)
 
   return (
