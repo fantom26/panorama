@@ -7,8 +7,7 @@ jest.mock('@repo/ui', () => {
   return {
     Breadcrumbs: ({ children }: Props) =>
       createElement('nav', { 'aria-label': 'Breadcrumb' }, children as never),
-    // Honour `component` so `component='h1'` renders a real heading; drop style-only props.
-    Typography: ({ children, component, variant, color, ...rest }: Props) =>
+    Typography: ({ children, component, ...rest }: Props) =>
       createElement((component as string) ?? 'span', rest, children as never)
   }
 })
