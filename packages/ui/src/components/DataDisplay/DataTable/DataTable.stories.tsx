@@ -64,7 +64,8 @@ export const Loading: Story = {
   render: () => <DataTable state={{ status: 'loading' }} columns={useColumns()} />,
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('table').parentElement).toHaveAttribute('aria-busy', 'true')
-    await expect(canvas.getAllByRole('row')).toHaveLength(6)
+    // 1 header + DEFAULT_LOADING_ROW_COUNT (8) skeleton rows.
+    await expect(canvas.getAllByRole('row')).toHaveLength(9)
   }
 }
 

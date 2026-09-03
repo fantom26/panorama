@@ -1,14 +1,13 @@
 import { useLayoutEffect, useRef } from 'react'
 
 import * as am5 from '@amcharts/amcharts5'
-import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import clsx from 'clsx'
 
 import {
   applyPanoramaChartLocale,
+  buildChartThemes,
   CHART_RANK_OPACITIES,
-  createPanoramaChartTheme,
   isRtlContainer,
   mountReactiveChart,
   readPanoramaChartPalette
@@ -54,7 +53,7 @@ export default function LineChart({
       const root = am5.Root.new(container)
       const rtl = isRtlContainer(container)
       const palette = readPanoramaChartPalette(container)
-      root.setThemes([am5themes_Animated.new(root), createPanoramaChartTheme(root, palette, rtl)])
+      root.setThemes(buildChartThemes(root, palette, rtl))
       applyPanoramaChartLocale(root, rtl)
 
       const chart = root.container.children.push(

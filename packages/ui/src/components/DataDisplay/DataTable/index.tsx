@@ -21,7 +21,8 @@ import styles from './index.module.css'
 
 export type { ColumnDef } from '@tanstack/react-table'
 
-const LOADING_ROW_COUNT = 5
+// Fallback when pagination is off (and thus there is no page size to mirror).
+const DEFAULT_LOADING_ROW_COUNT = 8
 
 export type TableStateLoading = { status: 'loading' }
 export type TableStateError = { status: 'error'; error: unknown; message?: string }
@@ -65,10 +66,14 @@ export default function DataTable<TData>({
   const columnCount = table.getAllLeafColumns().length
   const isEmpty = state.status === 'empty' || (state.status === 'ready' && data.length === 0)
 
+  // Reserve a page's worth of rows so the loading -> loaded (and filtered) swap
+  // doesn't shift the page. Skeleton rows mirror the same count.
+  const reservedRows = enablePagination ? pageSize : DEFAULT_LOADING_ROW_COUNT
+
   let body: React.ReactNode
 
   if (state.status === 'loading') {
-    body = Array.from({ length: LOADING_ROW_COUNT }).map((_, rowIndex) => (
+    body = Array.from({ length: reservedRows }).map((_, rowIndex) => (
       <tr key={rowIndex} className={styles.row}>
         {Array.from({ length: columnCount }).map((_, cellIndex) => (
           <td key={cellIndex} className={styles.cell}>
@@ -128,6 +133,7 @@ export default function DataTable<TData>({
   return (
     <div
       className={clsx(styles.root, className)}
+      style={{ '--dt-reserved-rows': reservedRows } as React.CSSProperties}
       aria-busy={state.status === 'loading' || undefined}
     >
       <table className={styles.table}>

@@ -2,15 +2,14 @@ import { useLayoutEffect, useMemo, useRef } from 'react'
 
 import * as am5 from '@amcharts/amcharts5'
 import * as am5percent from '@amcharts/amcharts5/percent'
-import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '../../DataDisplay/Typography'
 import {
   applyPanoramaChartLocale,
+  buildChartThemes,
   CHART_RANK_OPACITIES,
-  createPanoramaChartTheme,
   isRtlContainer,
   mountReactiveChart,
   readPanoramaChartPalette
@@ -60,7 +59,7 @@ export default function DonutChart({
       const root = am5.Root.new(container)
       const rtl = isRtlContainer(container)
       const palette = readPanoramaChartPalette(container)
-      root.setThemes([am5themes_Animated.new(root), createPanoramaChartTheme(root, palette, rtl)])
+      root.setThemes(buildChartThemes(root, palette, rtl))
       applyPanoramaChartLocale(root, rtl)
 
       const chart = root.container.children.push(

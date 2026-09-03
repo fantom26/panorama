@@ -1,4 +1,7 @@
 .root {
+  /* Approx height of one body row (cell padding + line height); keep in sync with .cell. */
+  --dt-row-height: 2.75rem;
+  min-height: calc(var(--dt-reserved-rows, 0) * var(--dt-row-height));
   overflow-x: auto;
   border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
   border-radius: var(--ds-theme-border-radius-md);

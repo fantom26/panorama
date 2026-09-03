@@ -1,6 +1,7 @@
 import * as am5 from '@amcharts/amcharts5'
 import am5locales_ar from '@amcharts/amcharts5/locales/ar'
 import am5locales_en from '@amcharts/amcharts5/locales/en'
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 
 // Rank-based series ramp: one ink color (textDefault) at five opacity steps, never a
 // distinct hue. Clamps rather than wraps — a 6th-ranked slice must reuse the last step,
@@ -75,6 +76,29 @@ export function isRtlContainer(container: Element): boolean {
 
 export function applyPanoramaChartLocale(root: am5.Root, rtl: boolean) {
   root.locale = rtl ? am5locales_ar : am5locales_en
+}
+
+function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+}
+
+/**
+ * Theme list for `root.setThemes()` — the Panorama theme plus amCharts' Animated
+ * theme, unless the user asked for reduced motion, in which case the entrance/
+ * transition animations are dropped.
+ */
+export function buildChartThemes(
+  root: am5.Root,
+  palette: Partial<PanoramaChartPalette>,
+  rtl: boolean
+): am5.Theme[] {
+  const themes: am5.Theme[] = [createPanoramaChartTheme(root, palette, rtl)]
+  if (!prefersReducedMotion()) themes.unshift(am5themes_Animated.new(root))
+  return themes
 }
 
 export function createPanoramaChartTheme(
