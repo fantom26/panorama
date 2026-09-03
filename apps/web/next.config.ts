@@ -5,7 +5,13 @@ const nextConfig: NextConfig = {
   // @repo/ui ships raw TS/JSX source (no build step) — this tells Next to
   // compile it like first-party app code instead of treating it as a
   // pre-built node_modules package.
-  transpilePackages: ['@repo/ui']
+  transpilePackages: ['@repo/ui'],
+  // @repo/ui is a single barrel; without this a named import pulls the whole
+  // module graph into the route chunk. Rewrites `import { X } from '@repo/ui'`
+  // to a direct path per component so unused ones tree-shake out.
+  experimental: {
+    optimizePackageImports: ['@repo/ui']
+  }
 }
 
 // Off unless `ANALYZE=true` (the `analyze` script) — no effect on `build` / CI.
