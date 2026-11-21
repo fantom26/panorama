@@ -10,16 +10,6 @@
   padding: var(--ds-theme-spacing-md) var(--ds-theme-spacing-md) 0;
 }
 
-.addHint {
-  padding: var(--ds-theme-spacing-2xs) var(--ds-theme-spacing-sm);
-  border: var(--ds-theme-border-width-sm) dashed var(--ds-theme-color-border-default);
-  border-radius: var(--ds-theme-border-radius-sm);
-  color: var(--ds-theme-color-content-muted);
-  font: var(--ds-theme-typography-meta-sm-font-weight)
-    var(--ds-theme-typography-meta-sm-font-size) / var(--ds-theme-typography-meta-sm-line-height)
-    var(--ds-theme-typography-meta-sm-font-family);
-}
-
 .singleHint {
   padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-md) 0;
 }

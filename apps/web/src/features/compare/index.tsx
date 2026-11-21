@@ -1,15 +1,18 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Breadcrumbs, Chip, Flag, Section, Skeleton, Typography } from '@repo/ui'
 
+import AddCountryCombobox from '@/features/compare/components/AddCountryCombobox'
 import CompareMatrix from '@/features/compare/components/CompareMatrix'
 import { useCompareCountries } from '@/features/compare/hooks/useCompareCountries'
+import { toCountryOptions } from '@/features/compare/model/country-options'
 import { useTranslation } from '@/i18n'
+import { useCountries } from '@/shared/hooks/useCountries'
 import { ROUTES } from '@/shared/routes'
 import {
   MAX_COMPARE,
@@ -24,10 +27,14 @@ import styles from './index.module.css'
 
 export default function CompareView() {
   const { t } = useTranslation('compare')
-  const { codes, set, remove, hydrated } = useCompareList()
+  const { codes, set, remove, add, isFull, hydrated } = useCompareList()
   const router = useRouter()
   const searchParams = useSearchParams()
   const { columns, isPending } = useCompareCountries(codes)
+
+  // Warm the catalog on mount so the picker's list is ready on first open.
+  const { countries, isLoading: countriesLoading, isError: countriesError } = useCountries()
+  const countryOptions = useMemo(() => toCountryOptions(countries, codes), [countries, codes])
 
   // On first load, a shared `?countries=` link seeds the store; afterwards the store owns it.
   const seeded = useRef(false)
@@ -87,6 +94,14 @@ export default function CompareView() {
           <Typography variant='body-sm' color='muted' component='p'>
             {t('empty.body')}
           </Typography>
+          <AddCountryCombobox
+            options={countryOptions}
+            isLoading={countriesLoading}
+            isError={countriesError}
+            isFull={isFull}
+            onAdd={add}
+            variant='block'
+          />
           <Link href={ROUTES.home()} className={styles.emptyCta}>
             <Typography variant='body-sm' component='span'>
               {t('empty.cta')}
@@ -104,7 +119,13 @@ export default function CompareView() {
                 onDelete={() => remove(column.code)}
               />
             ))}
-            <span className={styles.addHint}>{t('addHint')}</span>
+            <AddCountryCombobox
+              options={countryOptions}
+              isLoading={countriesLoading}
+              isError={countriesError}
+              isFull={isFull}
+              onAdd={add}
+            />
           </div>
 
           {codes.length === 1 && (

@@ -1,0 +1,86 @@
+.input {
+  width: 100%;
+  height: 2rem;
+  padding: 0 var(--ds-theme-spacing-sm);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: var(--ds-theme-border-radius-md);
+  background-color: var(--ds-theme-color-background-default);
+  color: var(--ds-theme-color-content-default);
+  font-size: 0.875rem;
+  line-height: 1;
+
+  &::placeholder {
+    color: var(--ds-theme-color-content-subtle);
+  }
+
+  &:focus-visible {
+    outline: var(--ds-theme-border-width-md) solid var(--ds-theme-color-border-strong);
+    outline-offset: -1px;
+  }
+
+  &[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.positioner {
+  z-index: var(--ds-z-index-top);
+  width: var(--anchor-width);
+  outline: none;
+}
+
+.popup {
+  overflow-y: auto;
+  width: 100%;
+  max-height: var(--available-height);
+  padding: var(--ds-theme-spacing-2xs);
+  border: var(--ds-theme-border-width-sm) solid var(--ds-theme-color-border-default);
+  border-radius: var(--ds-theme-border-radius-md);
+  background-color: var(--ds-theme-color-background-default);
+  color: var(--ds-theme-color-content-default);
+  transition:
+    opacity var(--ds-theme-animation-fade-quick) var(--ds-theme-animation-ease),
+    transform var(--ds-theme-animation-move-quick) var(--ds-theme-animation-ease);
+
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-theme-spacing-xs);
+  padding: var(--ds-theme-spacing-2xs) var(--ds-theme-spacing-xs);
+  border-radius: var(--ds-theme-border-radius-sm);
+  color: var(--ds-theme-color-content-default);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+
+  &[data-highlighted] {
+    background-color: var(--ds-theme-color-background-default-hover);
+  }
+
+  &[data-disabled] {
+    color: var(--ds-theme-color-content-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.empty,
+.status {
+  padding: var(--ds-theme-spacing-sm) var(--ds-theme-spacing-xs);
+  color: var(--ds-theme-color-content-subtle);
+  font-size: 0.875rem;
+}

@@ -1,0 +1,31 @@
+.field {
+  display: inline-block;
+}
+
+.inline {
+  inline-size: 18rem;
+  max-inline-size: 100%;
+}
+
+.block {
+  inline-size: 100%;
+  max-inline-size: 24rem;
+}
+
+.flag {
+  flex-shrink: 0;
+}
+
+.name {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.added {
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

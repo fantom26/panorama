@@ -67,6 +67,11 @@ export default {
     unsupportedLocale: 'لغة غير مدعومة',
     region: 'المنطقة'
   },
+  combobox: {
+    label: 'الدولة',
+    placeholder: 'البحث عن الدول',
+    empty: 'لا توجد دول مطابقة'
+  },
   textField: {
     searchPlaceholder: 'البحث عن الدول',
     usdBAdornment: 'USD B',
